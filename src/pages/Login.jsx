@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from '../components/navbar'
 
-function Home() {
+function Login() {
   return (
     <>
-      <div className="bg-red-400 h-[100vh]"></div>
+      <div className="bg-red-900 h-[100vh]"></div>
     </>
   )
 }
 
-export default Home
+export default Login

@@ -10,7 +10,8 @@ const footerLinks = {
     links: [
       { name: 'About us', path: '/about' },
       { name: 'Contact', path: '/contact' },
-      { name: 'Privacy policy', path: '/policy' }
+      { name: 'Privacy policy', path: '/policy' },
+      { name: 'Terms & condition', path: '/terms-conditions' }
     ]
   },
   supports: {

@@ -1,13 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
 import About from './pages/About';
 import Cart from './pages/Cart';
-import Home from './pages/home';
-import Login from './pages/Login';
+import Home from './pages/Home';
+import Login from './components/Auth/Login';
 import OrderPlace from './pages/OrderPlace';
 import Policy from './pages/Policy';
 import Return from './pages/Returns';
-import Navbar from './components/navbar';
-import Footer from './components/Footer';
+import Navbar from './components/Navigation/Navbar';
+import Footer from './components/Section/Footer';
+import Register from './components/Auth/Register';
+import Terms from './pages/Terms'
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Route path="/order-place" element={<OrderPlace />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/returns" element={<Return />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/terms-condition" element={<Terms />} />
       </Routes>
       <Footer />
     </div>

@@ -12,7 +12,15 @@ export default {
         'third':'#414042',
         'white': '#FFFFFF',
         'black': '#1A1A1A',
+        'hover-primary':'#9d060b',
+        'hover-white':'#f0f0f0',
       },
+      backgroundImage: {
+        'brandnew': "url('/src/assets/image/brandnew.jpg')",
+        'kids': "url('/src/assets/image/kids-shirt.png')",
+        'training-equipment': "url('/src/assets/image/training-equipment.jpg')",
+        'vintage': "url('/src/assets/image/vintage-shirt.png')",
+      }
     },
   },
   plugins: [require("daisyui")],

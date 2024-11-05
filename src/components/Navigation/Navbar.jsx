@@ -25,7 +25,7 @@ import {
   DisclosurePanel,
 } from '@headlessui/react'
 import { Link, NavLink } from 'react-router-dom';
-import CartIcon from './CartIcon';
+import CartIcon from '../common/CartIcon';
 
 
 const navigations = [
@@ -106,7 +106,7 @@ export default function Navbar() {
                     <Link to="/" className="-m-1.5 p-1.5">
                         <img
                             alt=""
-                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=red&shade=600"
                             className="h-8 w-auto"
                         />
                     </Link>
@@ -199,7 +199,7 @@ export default function Navbar() {
 
                     <CartIcon />
                     
-                    <button className='border-primary py-2 px-4 rounded-full bg-primary text-white hover:bg-white hover:text-primary ease-in duration-200'>
+                    <button className='border-primary py-2 px-4 rounded-full bg-primary text-white hover:bg-hover-primary ease-in duration-200'>
                         <Link to="/login" className="text-sm font-semibold leading-6">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </Link>
@@ -258,10 +258,10 @@ export default function Navbar() {
                                 </Disclosure>
                             ))}
                             </div>
-                            <button className="bg-primary rounded-full w-full border mt-5 hover:bg-white ease-in duration-150">
+                            <button className="bg-primary rounded-full w-full border mt-5 hover:bg-hover-primary ease-in duration-150">
                                 <Link
                                     to="/login"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:text-primary"
+                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Log in

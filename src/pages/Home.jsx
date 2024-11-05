@@ -1,10 +1,17 @@
 import React from 'react'
-import Navbar from '../components/navbar'
+import Hero from '../components/Section/Hero'
+import Collection from '../components/Section/Collection'
+import Categories from '../components/Section/Categories'
+import Promo from '../components/Section/Promo'
 
 function Home() {
   return (
     <>
-      <div className="bg-red-400 h-[100vh]"></div>
+      <Hero />
+      <Categories />
+      <Collection />
+      <Promo />
+      <Collection />
     </>
   )
 }

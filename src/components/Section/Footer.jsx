@@ -9,7 +9,7 @@ const footerLinks = {
     title: 'Legal',
     links: [
       { name: 'About us', path: '/about' },
-      { name: 'Contact', path: '/contact' },
+      { name: 'Returns', path: '/returns' },
       { name: 'Privacy policy', path: '/policy' },
       { name: 'Terms & condition', path: '/terms-conditions' }
     ]
@@ -17,10 +17,10 @@ const footerLinks = {
   supports: {
     title: 'Supports',
     links: [
-      { name: 'FAQ', path: '#' },
-      { name: 'Returns', path: '#' },
-      { name: 'Shipping', path: '#' },
-      { name: 'Track Your Order', path: '#' }
+      { name: 'FAQ', path: '/faq' },
+      { name: 'Contact', path: '/contact' },
+      { name: 'Shipping', path: '/shipping-info' },
+      { name: 'Track Your Order', path: '/track-order' }
     ]
   }
 }

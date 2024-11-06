@@ -1,9 +1,8 @@
 import React from 'react'
+import Legal from '../components/Section/Legal'
 
 const Returns = () => {
-  return (
-    <div>Returns</div>
-  )
+  return <Legal type="returns" />
 }
 
 export default Returns

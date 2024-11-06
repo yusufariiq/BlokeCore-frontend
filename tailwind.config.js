@@ -20,6 +20,7 @@ export default {
         'kids': "url('/src/assets/image/kids-shirt.png')",
         'training-equipment': "url('/src/assets/image/training-equipment.jpg')",
         'vintage': "url('/src/assets/image/vintage-shirt.png')",
+        'hero': "url('/src/assets/image/hero.webp')",
       }
     },
   },

@@ -1,17 +1,17 @@
 import React from 'react'
-import Hero from '../components/Section/Hero'
-import Collection from '../components/Section/Collection'
 import Categories from '../components/Section/Categories'
+import Hero from '../components/Section/Hero'
 import Promo from '../components/Section/Promo'
+import Product from '../components/Section/Product'
 
 function Home() {
   return (
     <>
       <Hero />
+      <Product />
       <Categories />
-      <Collection />
       <Promo />
-      <Collection />
+      <Product />
     </>
   )
 }

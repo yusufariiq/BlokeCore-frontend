@@ -16,7 +16,7 @@ const Login = () => {
           <form className="space-y-5">
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text">Email address</span>
+                <span className="label-text text-sm/6 font-semibold text-black">Email address</span>
               </label>
               <input
                 type="email"
@@ -29,7 +29,7 @@ const Login = () => {
             <div className="form-control w-full">
               <div className="flex justify-between items-center">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text text-sm/6 font-semibold text-black">Password</span>
                 </label>
                 <NavLink href="#" className="label-text-alt text-primary hover:text-primary-focus">
                   Forgot password?

@@ -1,9 +1,8 @@
 import React from 'react'
+import Legal from '../components/Section/Legal'
 
-const Terms = () => {
-  return (
-    <div>Terms</div>
-  )
+function Terms() {
+  return <Legal type="terms" />
 }
 
 export default Terms

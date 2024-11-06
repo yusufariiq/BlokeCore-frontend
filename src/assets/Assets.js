@@ -1,7 +1,7 @@
 import googleLogo from './icons/Google.svg'
-import vintageshirt from './image/vintage-shirt.png'
+import heroImage from './image/hero2.webp' 
 
 export const Assets = {
     googleLogo,
-    vintageshirt,
- }
+    heroImage,
+}

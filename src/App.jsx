@@ -13,6 +13,7 @@ import Register from './components/Auth/Register';
 import Terms from './pages/Terms'
 import Faq  from './pages/Faq';
 import Shipping from './pages/Shipping';
+import LatestCollection from './components/Collections/LatestCollection';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/latest" element={<LatestCollection />} />
         <Route path="/order" element={<Order />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/returns" element={<Return />} />

@@ -95,9 +95,9 @@ const Register = () => {
                 </div>
                 <div className="text-sm/6 text-gray-600">
                   By selecting this, you agree to our{' '}
-                  <a href="/policy" className="font-semibold text-primary">
+                  <NavLink href="/policy" className="font-semibold text-primary">
                     privacy&nbsp;policy
-                  </a>
+                  </NavLink>
                 </div>
               </Field>
             </div>

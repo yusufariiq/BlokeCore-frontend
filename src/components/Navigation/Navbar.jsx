@@ -61,52 +61,54 @@ const navigations = [
     {
         name: 'New Arrival',
         product: [
-            { name: 'Latest', description: 'Discover the latest arrivals in jerseys and sportswear', href: '#', icon: faFireFlameCurved },
+            { name: 'Latest', description: 'Discover the latest arrivals in jerseys and sportswear', href: '/latest', icon: faFireFlameCurved },
         ]
     }    
 ]
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeMenu, setActiveMenu] = useState(null)
-  const [menuHovered, setMenuHovered] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [isCartOpen, setIsCartOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [activeMenu, setActiveMenu] = useState(null)
+    const [menuHovered, setMenuHovered] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const handleMouseEnter = (index) => {
-    setActiveMenu(index)
-    setMenuHovered(true)
-  }
+    const handleMouseEnter = (index) => {
+        setActiveMenu(index)
+        setMenuHovered(true)
+    }
 
-  const handleMouseLeave = (index) => {
-    setTimeout(() => {
-        if (!menuHovered) {
-          setActiveMenu(null)
-        }
-      }, 50)
-  }
+    const handleMouseLeave = (index) => {
+        setTimeout(() => {
+            if (!menuHovered) {
+            setActiveMenu(null)
+            }
+        }, 50)
+    }
 
-  const handleProductMenuEnter = () => {
-    setMenuHovered(true)
-  }
+    const handleProductMenuEnter = () => {
+        setMenuHovered(true)
+    }
 
-  const handleProductMenuLeave = () => {
-    setMenuHovered(false)
-    setActiveMenu(null)
-  }
+    const handleProductMenuLeave = () => {
+        setMenuHovered(false)
+        setActiveMenu(null)
+    }
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    console.log('Searching for:', searchQuery)
-  }
+    const handleSearch = (e) => {
+        e.preventDefault()
+        console.log('Searching for:', searchQuery)
+    }
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
+    const toggleCart = () => {
+        setIsCartOpen(!isCartOpen);
+    };
   
-  return (
+    return (
         <>
-            <header className="bg-black text-white">
+            <header 
+                className="bg-black text-white z-40 sticky top-0 left-0 right-0 shadow-md"
+            >
                 <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
                     <div className="flex">
                         <Link to="/" className="-m-1.5 p-1.5">
@@ -184,7 +186,7 @@ export default function Navbar() {
                                             <FontAwesomeIcon icon={item.icon} aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-primary" />
                                         </div>
                                         <div className="flex-auto">
-                                            <NavLink to="#" href={item.href} className="block text-base font-semibold text-black tracking-wider">
+                                            <NavLink to={item.href} className="block text-base font-semibold text-black tracking-wider">
                                             {item.name}
                                             <span className="absolute inset-0" />
                                             </NavLink>
@@ -236,13 +238,13 @@ export default function Navbar() {
                     <div className="fixed inset-0 z-10" />
                     <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 ">
                         <div className="flex items-center justify-between">
-                            <a href="#" className="-m-1.5 p-1.5">
-                            <img
-                                alt=""
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                                className="h-8 w-auto"
-                            />
-                            </a>
+                            <NavLink href="#" className="-m-1.5 p-1.5">
+                                <img
+                                    alt=""
+                                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                                    className="h-8 w-auto"
+                                />
+                            </NavLink>
                             <button
                             type="button"
                             onClick={() => setMobileMenuOpen(false)}
@@ -269,10 +271,11 @@ export default function Navbar() {
                                                     <DisclosureButton
                                                     key={item.name}
                                                     as="a"
-                                                    href={item.href}
                                                     className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-medium text-white group-hover:text-primary hover:bg-primary"
                                                     >
-                                                    {item.name}
+                                                        <Link to={item.href}>
+                                                            {item.name}
+                                                        </Link>
                                                     </DisclosureButton>
                                                 ))}
                                                 </DisclosurePanel>

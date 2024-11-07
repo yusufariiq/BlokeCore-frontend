@@ -1,5 +1,5 @@
 import React from 'react'
-import { Assets } from '../../assets/Assets'
+import { NavLink } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -17,12 +17,12 @@ const Hero = () => {
             Authentic jerseys and streetwear inspired by the culture of football. <br /> Find your perfect fit today!
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
+            <NavLink
               href="#"
               className="rounded-md bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-hover-primary"
             >
               Shop now →
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

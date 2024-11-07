@@ -1,8 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+    faXmark,
+    faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
+import { Link, NavLink } from 'react-router-dom';
 const products = [
     {
       id: 1,
@@ -28,15 +31,15 @@ const products = [
 ]
 
 const Cart = ({ open, setOpen }) => {
-    
+
     return (
-      <Dialog open={open} onClose={setOpen} className="relative z-10">
-        <DialogBackdrop
+      <Dialog open={open} onClose={setOpen} className="relative z-50">
+        {/* <DialogBackdrop
           transition
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
-        />
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
+        /> */}
   
-        <div className="fixed inset-0 overflow-hidden">
+        <div className="fixed inset-0 overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <DialogPanel
@@ -77,7 +80,7 @@ const Cart = ({ open, setOpen }) => {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>
-                                      <a href={product.href}>{product.name}</a>
+                                      <Link href={product.href}>{product.name}</Link>
                                     </h3>
                                     <p className="ml-4">{product.price}</p>
                                   </div>
@@ -87,8 +90,8 @@ const Cart = ({ open, setOpen }) => {
                                   <p className="text-gray-500">Qty {product.quantity}</p>
   
                                   <div className="flex">
-                                    <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                      Remove
+                                    <button type="button">
+                                      <FontAwesomeIcon icon={faTrashCan} className='text-lg text-primary hover:text-hover-primary' />
                                     </button>
                                   </div>
                                 </div>
@@ -101,31 +104,18 @@ const Cart = ({ open, setOpen }) => {
                   </div>
   
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                    <div className="flex justify-between text-base font-medium text-gray-900">
+                    <div className="flex justify-between text-base font-medium text-black">
                       <p>Subtotal</p>
-                      <p>$262.00</p>
+                      <p className='text-xl font-bold'>$262.00</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
-                      <a
+                      <NavLink
                         href="#"
-                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
                       >
                         Checkout
-                      </a>
-                    </div>
-                    <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                      <p>
-                        or{' '}
-                        <button
-                          type="button"
-                          onClick={() => setOpen(false)}
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
-                      </p>
+                      </NavLink>
                     </div>
                   </div>
                 </div>

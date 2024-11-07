@@ -1,5 +1,6 @@
 import React from 'react'
 import Breadcrumbs from '../Common/Breadcrumbs'
+import Title from '../Common/Title';
 
 const policyData = [
     {
@@ -205,9 +206,7 @@ function Legal({ type }) {
       <div className='py-12 sm:py-20 mx-auto w-[50%]'>
         <Breadcrumbs />
         <div className="my-6">
-          <h1 className="mt-4 max-w-lg text-balance text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl">
-            {config.title}
-          </h1>
+          <Title text={config.title} />
           <p className='my-4'>{config.introduction}</p>
   
           {config.data.map((section, index) => (

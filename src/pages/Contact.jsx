@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import Title from '../components/Common/Title'
 
 export default function Contact() {
-  const [agreed, setAgreed] = useState(false)
 
   return (
     <div className="isolate bg-white px-6 py-12 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-balance text-2xl font-semibold tracking-tight text-black sm:text-3xl">Contact us</h2>
+        <Title text={"Contact us"} />
         <p className="mt-2 text-lg/8 text-gray-600">Give us your questions and and we will get back to you as quickly as possible.</p>
       </div>
       <form action="#" method="POST" className="mx-auto max-w-xl sm:mt-10">

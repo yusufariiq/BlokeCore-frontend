@@ -34,6 +34,7 @@ function App() {
         <Route path="/signup" element={<Register />} />
         <Route path="/shipping-info" element={<Shipping />} />
         <Route path="/terms-conditions" element={<Terms />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
     </div>

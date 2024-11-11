@@ -1,6 +1,7 @@
 import React from 'react'
 import { Assets } from '../assets/Assets'
 import Breadcrumbs from '../components/Common/Breadcrumbs'
+import Title from '../components/Common/Title'
 
 const features = [
   {
@@ -38,9 +39,7 @@ const About = () => {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
-              <p className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-                About us
-              </p>
+              <Title text={"About us"} />
               <p className="mt-5 text-lg/8 text-gray-600 text-justify">
                 Welcome to BlokeCore, your ultimate destination for authentic, trendy, and high-quality streetwear and sportswear. Founded by enthusiasts with a passion for the intersection of sport, culture, and style, BlokeCore is more than just a store it’s a lifestyle. Our mission is to bring you unique, curated collections that let you express yourself and stand out with confidence.
               </p>

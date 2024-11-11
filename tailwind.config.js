@@ -16,11 +16,11 @@ export default {
         'hover-white':'#f0f0f0',
       },
       backgroundImage: {
-        'brandnew': "url('/src/assets/image/brandnew.jpg')",
-        'kids': "url('/src/assets/image/kids-shirt.png')",
-        'training-equipment': "url('/src/assets/image/training-equipment.jpg')",
-        'vintage': "url('/src/assets/image/vintage-shirt.png')",
-        'hero': "url('/src/assets/image/hero.webp')",
+        'brandnew': "url('/src/assets/image/bg-brandnew.webp')",
+        'kids': "url('/src/assets/image/bg-kids.webp')",
+        'training-equipment': "url('/src/assets/image/bg-training.webp')",
+        'vintage': "url('/src/assets/image/bg-vintage.webp')",
+        'hero': "url('/src/assets/image/bg-hero.webp')",
       }
     },
   },

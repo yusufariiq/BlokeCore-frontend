@@ -7,7 +7,7 @@ export default function Contact() {
     <div className="isolate bg-white px-6 py-12 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <Title text={"Contact us"} />
-        <p className="mt-2 text-lg/8 text-gray-600">Give us your questions and and we will get back to you as quickly as possible.</p>
+        <p className="text-lg/8 text-gray-600">Give us your questions and and we will get back to you as quickly as possible.</p>
       </div>
       <form action="#" method="POST" className="mx-auto max-w-xl sm:mt-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">

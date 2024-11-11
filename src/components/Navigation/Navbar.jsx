@@ -32,7 +32,7 @@ const navigations = [
     {
         name: 'Clubs',
         product: [
-            { name: 'English', description: 'Jerseys from top English clubs', href: '#', icon: faShirt },
+            { name: 'English', description: 'Jerseys from top English clubs', href: '/clubs', icon: faShirt },
             { name: 'Spanish', description: 'Authentic jerseys from renowned Spanish clubs', href: '#', icon:  faShirt},
             { name: 'French', description: 'Support French clubs with jerseys from teams', href: '#', icon: faShirt },
             { name: 'German', description: 'Get jerseys from popular German clubs', href: '#', icon: faShirt },
@@ -43,7 +43,7 @@ const navigations = [
     {
         name: 'Nation',
         product: [
-            { name: 'Europe', description: 'Jerseys from European national teams like France, Germany, and Italy', href: '#', icon: faEarthEurope },
+            { name: 'Europe', description: 'Jerseys from European national teams like France, Germany, and Italy', href: '/nations', icon: faEarthEurope },
             { name: 'Asia', description: 'National team jerseys from Asia, including Japan, South Korea, and more', href: '#', icon: faEarthAsia },
             { name: 'America', description: 'Represent North and South America with jerseys from Brazil, Argentina, and the USA', href: '#', icon: faEarthAmericas },
             { name: 'Africa', description: 'Authentic jerseys from African national teams like Nigeria, Egypt, and Ghana', href: '#', icon: faEarthAfrica },

@@ -14,6 +14,8 @@ import Terms from './pages/Terms'
 import Faq  from './pages/Faq';
 import Shipping from './pages/Shipping';
 import LatestCollection from './components/Collections/LatestCollection';
+import ClubsPage from './components/Collections/ClubsPage';
+import NationsPage from './components/Collections/NationsPage';
 
 
 function App() {
@@ -24,10 +26,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/login" element={<Login />} />
         <Route path="/latest" element={<LatestCollection />} />
+        <Route path="/nations" element={<NationsPage />} />
         <Route path="/order" element={<Order />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/returns" element={<Return />} />

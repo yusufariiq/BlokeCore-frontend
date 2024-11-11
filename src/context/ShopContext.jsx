@@ -8,11 +8,17 @@ const ShopContextProvider = (props) => {
     const currency = "Rp";
     const deliveryFee = 20000;
 
+    const clubProducts = products.filter((product) => product.subCategory === "Clubs");
+    const nationProducts = products.filter((product) => product.subCategory === "Nation");
+    const latestProducts = products.filter((product) => product.latest === true);
+
     const value = {
-        products,
+        clubProducts,
+        nationProducts,
+        latestProducts,
         currency,
         deliveryFee,
-    }
+    };
 
     return(
         <ShopContext.Provider value={value}>

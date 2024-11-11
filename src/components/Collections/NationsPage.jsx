@@ -11,7 +11,7 @@ const NationsPage = () => {
     const [ filteredProducts, setFilteredProducts ] = useState([]);
     const [ selectedFilters, setSelectedFilters ] = useState({
       condition: [],
-      size: [],
+      sizes: [],
     });
   
     const { currentItems, currentPage, totalPages, paginate } = usePagination(
@@ -26,9 +26,9 @@ const NationsPage = () => {
     const handleFilterChange = (newFilters) => {
       setSelectedFilters(newFilters);
       const filteredProducts = nationProducts.filter((product) => {
-        const conditionMatch = newFilters.condition.length === 0 || newFilters.condition.includes(product.condition);
-        const sizeMatch = newFilters.size.length === 0 || newFilters.size.includes(product.size);
-        return conditionMatch && sizeMatch;
+            const conditionMatch = newFilters.condition.length === 0 || newFilters.condition.includes(product.condition);
+            const sizeMatch = newFilters.sizes.length === 0 || newFilters.sizes.includes(product.sizes);
+            return conditionMatch && sizeMatch;
       });
       setFilteredProducts(filteredProducts);
     };

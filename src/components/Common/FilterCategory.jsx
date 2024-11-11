@@ -6,7 +6,7 @@ const FilterCategory = ({ onFilterChange }) => {
     const [openFilter, setOpenFilter] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
         condition: [],
-        size: []
+        sizes: []
     });
   
     const sortOptions = [
@@ -29,8 +29,8 @@ const FilterCategory = ({ onFilterChange }) => {
             ],
         },
         {
-            id: 'size',
-            name: 'Size',
+            id: 'sizes',
+            name: 'Sizes',
             options: [
                 { value: 'S', label: 'S', checked: false },
                 { value: 'M', label: 'M', checked: false },
@@ -119,7 +119,7 @@ const FilterCategory = ({ onFilterChange }) => {
                                         >
                                             <input
                                                 type="checkbox"
-                                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
                                                 checked={selectedFilters[filter.id].includes(option.value)}
                                                 onChange={() => handleFilterChange(filter.id, option.value)}
                                             />

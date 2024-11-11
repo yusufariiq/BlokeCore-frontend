@@ -11,7 +11,7 @@ const ClubsPage = () => {
     const [ filteredProducts, setFilteredProducts ] = useState([]);
     const [ selectedFilters, setSelectedFilters ] = useState({
       condition: [],
-      size: [],
+      sizes: [],
     });
   
     const { currentItems, currentPage, totalPages, paginate } = usePagination(
@@ -24,14 +24,15 @@ const ClubsPage = () => {
     }, [clubProducts, selectedFilters]);
   
     const handleFilterChange = (newFilters) => {
-      setSelectedFilters(newFilters);
-      const filteredProducts = clubProducts.filter((product) => {
-        const conditionMatch = newFilters.condition.length === 0 || newFilters.condition.includes(product.condition);
-        const sizeMatch = newFilters.size.length === 0 || newFilters.size.includes(product.size);
-        return conditionMatch && sizeMatch;
-      });
-      setFilteredProducts(filteredProducts);
+        setSelectedFilters(newFilters);
+        const filteredProducts = clubProducts.filter((product) => {
+            const conditionMatch = newFilters.condition.length === 0 || newFilters.condition.includes(product.condition);
+            const sizeMatch = newFilters.sizes.length === 0 || newFilters.sizes.includes(product.sizes); 
+            return conditionMatch && sizeMatch;
+        });
+        setFilteredProducts(filteredProducts);
     };
+  
   
     return (
         <div className="min-h-[100vh] mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

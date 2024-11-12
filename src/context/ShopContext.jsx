@@ -13,6 +13,7 @@ const ShopContextProvider = (props) => {
     const latestProducts = products.filter((product) => product.latest === true);
 
     const value = {
+        products,
         clubProducts,
         nationProducts,
         latestProducts,

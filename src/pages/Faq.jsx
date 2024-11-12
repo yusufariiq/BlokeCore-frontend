@@ -80,26 +80,26 @@ const Faq = () => {
                         activeIndex === index ? 'bg-white' : ''
                     }`}
                     >
-                    <button
-                        className={`w-full flex justify-between items-center px-6 py-4 text-left ${
-                        activeIndex === index
-                            ? 'bg-primary text-white'
-                            : 'text-black hover:bg-primary hover:text-white '
-                        } transition ease-linear duration-100 focus:outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-opacity-75`}
-                        onClick={() => toggleAccordion(index)}
-                    >
-                        <h3 className="text-lg font-medium">{faq.question}</h3>
-                        <FontAwesomeIcon icon={
-                            activeIndex === index ? faChevronUp : faChevronDown
-                        }/>
-                    </button>
-                    <div
-                        className={`px-6 pt-4 pb-8 ${
-                        activeIndex === index ? 'block' : 'hidden'
-                        }`}
-                    >
-                        <p className="text-gray-500">{faq.answer}</p>
-                    </div>
+                      <button
+                          className={`w-full flex justify-between items-center px-6 py-4 text-left ${
+                          activeIndex === index
+                              ? 'bg-primary text-white'
+                              : 'text-black hover:bg-primary hover:text-white '
+                          } transition ease-linear duration-100 focus:outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-opacity-75`}
+                          onClick={() => toggleAccordion(index)}
+                      >
+                          <h3 className="text-lg font-medium">{faq.question}</h3>
+                          <FontAwesomeIcon icon={
+                              activeIndex === index ? faChevronUp : faChevronDown
+                          }/>
+                      </button>
+                      <div
+                          className={`px-6 pt-4 pb-8 ${
+                          activeIndex === index ? 'block' : 'hidden'
+                          }`}
+                      >
+                          <p className="text-gray-500">{faq.answer}</p>
+                      </div>
                     </div>
                 ))}
                 </div>

@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../../context/ShopContext';
 import RelatedProduct from '../Section/RelatedProduct';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import Breadcrumbs from '../Common/Breadcrumbs';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -13,8 +14,8 @@ const ProductDetails = () => {
     const [ size, setSize ] = useState('')
     const [ activeIndex, setActiveIndex ] = useState(false);
 
-    const toggleAccordion = () => {
-        setActiveIndex(activeIndex === true ? null : true);
+    const toggleAccordion = (index) => {
+        setActiveIndex(activeIndex === index ? null : index);
     };
 
     const fetchProductData = async () => {
@@ -32,9 +33,11 @@ const ProductDetails = () => {
     }, [productId, products])
 
     return productData ? (
-        <div className="pt-10 mb-10 mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+            <Breadcrumbs/>
+            
             {/* Product Data */}
-            <div className="flex gap-12 flex-col sm:flex-row">
+            <div className="flex tems-center justify-center py-12 gap-12 flex-col sm:flex-row">
                 
                 {/* Product images  */}
                 <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
@@ -56,24 +59,8 @@ const ProductDetails = () => {
                         {productData.name}
                     </h1>
                     <p className="mt-5 text-3xl font-medium text-primary">{currency}{". "}{productData.price}</p>
-                    <p className="mt-5 text-black md:w-4/5">{productData.description}</p>
-
-                    {/* Product Details Section */}
-                    <div className="mt-8 space-y-5">
-                        <h2 className='font-medium text-xl mb-4'>Product Details</h2>
-                        <div className="grid grid-cols-2 gap-y-4 text-base">                            
-                            <div className="text-gray-600">Brand:</div>
-                            <p className="text-primary">{productData.brand || 'Umbro'}</p>
-                            
-                            <div className="text-gray-600">Condition:</div>
-                            <div>{productData.condition || 'Very good'}</div>
-                            
-                            <div className="text-gray-600">SKU:</div>
-                            <div className="text-primary">{productData.sku || 'EVEH14011'}</div>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 my-8">
+                    <p className="mt-5 text-gray-600 md:w-4/5">{productData.description}</p>
+                    <div className="flex flex-col gap-4 mt-5">
                         <p>Select Size:</p>
                         <div className="flex gap-3">
                             { productData.sizes.map((item, index) => (
@@ -83,27 +70,41 @@ const ProductDetails = () => {
                             )) }
                         </div>
                     </div>
-                    <button className="bg-primary text-white px-8 py-3 text-base font-medium hover:bg-hover-primary"> ADD TO CART</button>
-                    <hr className='mt-8 sm:w-4/5' />
-                    <div className="text-sm text-black mt-5 flex flex-col gap-1">
-                        <p>100% Original product</p>
-                        <p>Cash on delivery is available on this product</p>
-                    </div>
-                    {/* <div className="mt-8">
-                        <div className={`bg-gray-50 border-b-2 ${
-                            activeIndex ? 'bg-white' : ''
-                        }`}>
+                    <button className="w-[50%] bg-primary text-white px-8 py-3 mt-5 text-base font-medium hover:bg-hover-primary"> ADD TO CART</button>
+
+                    {/* Product Details Section */}
+                    <div className="mt-8 space-y-5">
+                        <div className="bg-white border-b-2">
+                        <button
+                            className="w-full flex justify-between items-center py-4 text-left transition ease-linear duration-300"
+                            onClick={() => toggleAccordion(0)}
+                        >
+                            <h3 className="text-lg font-medium">Product Details</h3>
+                            <FontAwesomeIcon icon={activeIndex === 0 ? faMinus : faPlus}/>
+                        </button>
+                        <div className={`px-6 pt-4 pb-8 ${activeIndex === 0 ? 'block' : 'hidden'}`}>
+                            <div className="grid grid-cols-2 gap-y-4 text-base">                            
+                                        <div className="text-gray-600">Brand:</div>
+                                        <p className="text-primary">{productData.brand || 'Umbro'}</p>
+                                        
+                                        <div className="text-gray-600">Condition:</div>
+                                        <div>{productData.condition || 'Very good'}</div>
+                                        
+                                        <div className="text-gray-600">SKU:</div>
+                                        <div className="text-primary">{productData.sku || 'EVEH14011'}</div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white border-b-2">
                             <button
-                                className={`w-full flex justify-between items-center py-4 text-left ${
-                                    activeIndex ? 'bg-primary text-white'
-                                        : 'text-black hover:bg-primary hover:text-white '
-                                } transition ease-linear duration-100 focus:outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-opacity-75`}
-                                onClick={() => toggleAccordion(true)}
+                                className="w-full flex justify-between items-center py-4 text-left transition ease-linear duration-300"
+                                onClick={() => toggleAccordion(1)}
                             >
                                 <h3 className="text-lg font-medium">Product Care</h3>
-                                <FontAwesomeIcon icon={ activeIndex ? faChevronUp : faChevronDown}/>
+                                <FontAwesomeIcon icon={activeIndex === 1 ? faMinus : faPlus}/>
                             </button>
-                            <div className={`px-6 pt-4 pb-8 ${ activeIndex ? 'block' : 'hidden'}`}>
+                            <div className={`px-6 pt-4 pb-8 ${activeIndex === 1 ? 'block' : 'hidden'}`}>
                                 <ul className="list-disc pl-5">
                                     <li>Cool wash</li>
                                     <li>Do not tumble dry</li>
@@ -114,12 +115,10 @@ const ProductDetails = () => {
                                 </ul>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             </div>
             
-
-
             {/* Related Products */}
             <RelatedProduct category={productData.category} subcategory={productData.subcategory} />
 

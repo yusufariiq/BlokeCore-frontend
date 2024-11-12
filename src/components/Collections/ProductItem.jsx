@@ -19,10 +19,7 @@ const ProductItem = ({id, image, name, price}) => {
             <div className="mt-4 flex flex-col justify-between">
                 <div>
                   <h3 className="text-base text-black">
-                    <p>
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {name}
-                    </p>
+                    <p>{name}</p>
                   </h3>
                 </div>
                 <p className="mt-2 text-lg font-bold text-primary"> 

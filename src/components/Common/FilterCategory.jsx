@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faSort } from '@fortawesome/free-solid-svg-icons';
 
-const FilterCategory = ({ onFilterChange }) => {
+const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
     const [openFilter, setOpenFilter] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
         condition: [],
@@ -61,6 +61,11 @@ const FilterCategory = ({ onFilterChange }) => {
         onFilterChange(newFilters);
     };
 
+    const handleSortOptionClick = (optionName) => {
+        onSortChange(optionName);
+        setOpenFilter(null);
+    };
+
     const getSelectedCount = (filterType) => {
         return selectedFilters[filterType]?.length || 0;
     };
@@ -72,16 +77,22 @@ const FilterCategory = ({ onFilterChange }) => {
                     onClick={() => handleFilterClick('sort')}
                     className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 border rounded-lg"
                 >
-                    <span>Sort</span>
+                    <span>{currentSort || 'Sort'}</span>
                     <FontAwesomeIcon icon={faSort} className="text-primary w-4 h-4" />
                 </button>
                 {openFilter === 'sort' && (
                     <div className="absolute z-10 w-48 mt-2 bg-white border rounded-lg shadow-lg">
                         <div className="p-2">
                             {sortOptions.map((option) => (
-                                <div key={option.name} className="px-3 py-2 hover:bg-gray-50 cursor-pointer">
-                                    {option.name}
-                                </div>
+                                <div 
+                                key={option.name} 
+                                className={`px-3 py-2 hover:bg-gray-50 cursor-pointer ${
+                                    currentSort === option.name ? 'bg-gray-100' : ''
+                                }`}
+                                onClick={() => handleSortOptionClick(option.name)}
+                            >
+                                {option.name}
+                            </div>
                             ))}
                         </div>
                     </div>

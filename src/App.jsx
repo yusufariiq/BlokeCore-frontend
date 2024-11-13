@@ -17,12 +17,17 @@ import Footer from './components/Section/Footer';
 import Register from './components/Auth/Register';
 import Shipping from './pages/Shipping';
 import Terms from './pages/Terms'
-
+import CartSlider from './components/Common/CartSlider';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <div>
       <Navbar />
+      <Toaster 
+        position='top-right'
+        gutter={8}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -39,6 +44,7 @@ function App() {
         <Route path="/returns" element={<Return />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/shipping-info" element={<Shipping />} />
+        <Route path="/slider-cart" element={<CartSlider />} />
         <Route path="/terms-conditions" element={<Terms />} />
         <Route path="*" element={<Error />} />
       </Routes>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faBars,
@@ -26,7 +26,8 @@ import {
   DisclosurePanel,
 } from '@headlessui/react'
 import { Link, NavLink } from 'react-router-dom';
-import Cart from '../Common/Cart';
+import { ShopContext } from '../../context/ShopContext';
+import CartSlider from '../Common/CartSlider';
 
 const navigations = [
     {
@@ -72,6 +73,8 @@ export default function Navbar() {
     const [menuHovered, setMenuHovered] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
     const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const {getCartCount} = useContext(ShopContext);
 
     const handleMouseEnter = (index) => {
         setActiveMenu(index)
@@ -139,7 +142,7 @@ export default function Navbar() {
                                 className="h-6 w-6 text-white flex-shrink-0"
                             />
                             <span className="px-1 text-xs font-medium text-white bg-primary aspect-square rounded-full ">
-                                0
+                                {getCartCount()}
                             </span>
                         </button>
 
@@ -221,7 +224,7 @@ export default function Navbar() {
                                 className="h-6 w-6 text-white flex-shrink-0"
                             />
                             <span className="px-1 text-xs font-medium text-white bg-primary aspect-square rounded-full ">
-                                0
+                                {getCartCount()}
                             </span>
                         </button>
                         
@@ -299,7 +302,7 @@ export default function Navbar() {
                     </DialogPanel>
                 </Dialog>
             </header>
-            <Cart open={isCartOpen} setOpen={setIsCartOpen} />
+            <CartSlider open={isCartOpen} setOpen={setIsCartOpen} />
         </>
   )
 }

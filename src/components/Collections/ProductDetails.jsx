@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import Breadcrumbs from '../Common/Breadcrumbs';
 
+
 const ProductDetails = () => {
     const { productId } = useParams();
-    const { products, currency } = useContext(ShopContext);
+    const { products, currency, addToCart } = useContext(ShopContext);
     const [ productData, setProductData ] = useState(false);
     const [ image, setImage ] = useState('')
     const [ size, setSize ] = useState('')
@@ -70,7 +71,7 @@ const ProductDetails = () => {
                             )) }
                         </div>
                     </div>
-                    <button className="w-[50%] bg-primary text-white px-8 py-3 mt-5 text-base font-medium hover:bg-hover-primary"> ADD TO CART</button>
+                    <button onClick={() => addToCart(productData.id, size)} className="w-[50%] bg-primary text-white px-8 py-3 mt-5 text-base font-medium hover:bg-hover-primary"> ADD TO CART</button>
 
                     {/* Product Details Section */}
                     <div className="mt-8 space-y-5">

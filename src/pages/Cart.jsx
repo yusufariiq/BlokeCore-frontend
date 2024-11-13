@@ -3,9 +3,10 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Common/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import CartTotal from '../components/Common/CartTotal';
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
   const [ cartData, setCartData ] = useState([]);
 
   useEffect(() => {
@@ -25,9 +26,9 @@ const Cart = () => {
 }, [cartItems]);
 
   return (
-    <div className="min-h-[90vh] py-12 sm:py-20">
+    <div className="min-h-[90vh] py-12 sm:py-20 mx-10 sm:mx-20">
       <Title text={"Shopping Cart"}/>
-      <div className="mx-10 my-8 py-12 sm:mx-20 ">
+      <div className="my-8 py-12">
         {
           cartData.map((item, index) => {
             const productData = products.find((product) => product.id === item.id );
@@ -53,6 +54,16 @@ const Cart = () => {
           })
         }
       </div>
+
+      <div className="flex justify-end my-20">
+        <div className="w-full sm:w-[450px]">
+          <CartTotal/>
+          <div className="w-full my-5">
+            <button onClick={() => navigate('/place-order')} className='flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary'>PROCEED TO CHECK OUT</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 }

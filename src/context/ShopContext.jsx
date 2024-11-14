@@ -16,6 +16,13 @@ const ShopContextProvider = (props) => {
     const nationProducts = products.filter((product) => product.subCategory === "Nation");
     const latestProducts = products.filter((product) => product.latest === true);
     
+    const formatIDR = (amount) => {
+        return amount.toLocaleString('id-ID', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        })
+    }
+
     const addToCart = async (itemId, size) => {
         if (!size){
             toast.error('Select product size!');
@@ -61,7 +68,7 @@ const ShopContextProvider = (props) => {
         setCartItems(cartData);
     }
 
-    const getCartAmount = () => {
+    const getCartAmountRaw = () => {
         let totalAmount = 0;
         for(const items in cartItems){
             let itemInfo = products.find((product) => product.id === items);
@@ -71,11 +78,15 @@ const ShopContextProvider = (props) => {
                         totalAmount += itemInfo.price * cartItems[items][item]
                     }
                 } catch (error) {
-
+                    // Handle error
                 }
             }
         }
         return totalAmount;
+    }
+
+    const getCartAmount = () => {
+        return formatIDR(getCartAmountRaw());
     }
 
     useEffect(() => {
@@ -103,8 +114,10 @@ const ShopContextProvider = (props) => {
         cartItems,
         currency,
         clubProducts,
+        formatIDR,
         getCartCount,
         getCartAmount,
+        getCartAmountRaw,
         deliveryFee,
         latestProducts,
         nationProducts,

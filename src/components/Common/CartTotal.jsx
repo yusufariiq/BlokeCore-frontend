@@ -1,29 +1,30 @@
 import React, { useContext } from 'react'
 import { ShopContext } from '../../context/ShopContext'
-import Title from './Title';
 
 const CartTotal = () => {
 
-    const { currency, deliveryFee, getCartAmount } = useContext(ShopContext);
-
+    const { currency, deliveryFee, getCartAmount, getCartAmountRaw, formatIDR } = useContext(ShopContext);
 
     return (
         <div className='w-full'>
-            <Title text={"CART"} />
-            <div className="flex flex-col gap-2 mt-2 text-sm">
+            <p className='text-2xl font-medium text-left'>Summary</p>
+            <hr className='my-3'/>
+            <div className="flex flex-col gap-3 mt-2 text-sm">
                 <div className="flex justify-between">
-                    <p className="">Subtotal</p>
-                    <p className="">{currency}{getCartAmount()}</p>
+                    <p>Subtotal</p>
+                    <p>{currency}{getCartAmount()}</p>
                 </div>
                 <hr />
                 <div className="flex justify-between">
                     <p>Shipping Free</p>
-                    <p>{currency}{deliveryFee}</p>
+                    <p>{currency}{formatIDR(deliveryFee)}</p>
                 </div>
                 <hr />
                 <div className="flex justify-between">
-                    <p>TOTAL</p>
-                    <p>{currency}{getCartAmount() === 0 ? 0 : getCartAmount() + deliveryFee}</p>
+                    <p className='text-2xl'>TOTAL</p>
+                    <p className='text-2xl font-medium'>
+                        {currency}{formatIDR(getCartAmountRaw() + deliveryFee)}
+                    </p>
                 </div>
             </div>
         </div>

@@ -7,27 +7,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
-
+import { useCartData } from '../../hooks/useCartData';
+import EmptyCart from '../Common/EmptyCart';
 
 const CartSlider = ({ open, setOpen }) => {
-    const { products, currency, cartItems, updateQuantity } = useContext(ShopContext);
-    const [ cartData, setCartData ] = useState([]);
-
-    useEffect(() => {
-        const tempData = [];
-        for (const itemId in cartItems) {
-        for (const size in cartItems[itemId]) {
-            if (cartItems[itemId][size] > 0) {
-            tempData.push({
-                id: itemId,
-                sizes: size,
-                quantity: cartItems[itemId][size],
-            });
-            }
-        }
-        }
-        setCartData(tempData);
-    }, [cartItems]);
+  const { products, currency, cartItems, updateQuantity, navigate, getCartAmount, formatIDR } = useContext(ShopContext);
+  const cartData = useCartData(cartItems);
 
     return (
       <Dialog open={open} onClose={setOpen} className="relative z-50">
@@ -57,8 +42,10 @@ const CartSlider = ({ open, setOpen }) => {
   
                     <div className="mt-8">
                       <div className="flow-root">
-                        <ul role="list" className="-my-6 divide-y divide-gray-200">
-
+                        {cartData.length === 0 ? (
+                          <EmptyCart />
+                        ) : (
+                          <ul role="list" className="-my-6 divide-y divide-gray-200">
                           {cartData.map((item, index) => { 
                             const productData = products.find((product) => product.id === item.id);
                             
@@ -76,7 +63,7 @@ const CartSlider = ({ open, setOpen }) => {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>{productData.name}</h3>
-                                    <p className="ml-4">{currency}{productData.price}</p>
+                                    <p className="ml-4">{currency}{formatIDR(productData.price)}</p>
                                   </div>
                                   <p className="mt-1 text-sm text-gray-500">{productData.sizes}</p>
                                 </div>
@@ -91,8 +78,8 @@ const CartSlider = ({ open, setOpen }) => {
                               </div>
                             </li>
                           )})}
-
-                        </ul>
+                          </ul>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -100,21 +87,21 @@ const CartSlider = ({ open, setOpen }) => {
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-black">
                       <p>Subtotal</p>
-                      <p className='text-xl font-bold'>$262.00</p>
+                      <p className='text-xl font-bold'>{currency}{getCartAmount()}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                    <div className="mt-6">
+                    <button onClick={() => navigate('/place-order')} className="w-full mt-6">
                       <NavLink
-                        href="#"
+                        t0="#"
                         className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
                       >
                         CHECKOUT
                       </NavLink>
-                    </div>
-                    <div className="mt-6 ">
+                    </button>
+                    <div className="mt-6">
                       <NavLink
                           to='/cart'
-                          className="mx-auto items-center justify-center">
+                          className="flex justify-center text-primary hover:text-hover-primary font-medium">
                           View & edit
                       </NavLink>
                     </div>

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faBars,
@@ -25,7 +25,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
 import CartSlider from '../Common/CartSlider';
 
@@ -68,13 +68,15 @@ const navigations = [
 ]
 
 export default function Navbar() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [activeMenu, setActiveMenu] = useState(null)
-    const [menuHovered, setMenuHovered] = useState(false)
-    const [searchQuery, setSearchQuery] = useState('')
     const [isCartOpen, setIsCartOpen] = useState(false);
-
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [menuHovered, setMenuHovered] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('');
+    
     const {getCartCount} = useContext(ShopContext);
+
+    const navigate = useNavigate();
 
     const handleMouseEnter = (index) => {
         setActiveMenu(index)
@@ -99,14 +101,14 @@ export default function Navbar() {
     }
 
     const handleSearch = (e) => {
-        e.preventDefault()
-        console.log('Searching for:', searchQuery)
-    }
+        e.preventDefault();
+        navigate(`/search?q=${searchQuery}`);
+    };
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
     };
-  
+
     return (
         <>
             <header 
@@ -213,7 +215,7 @@ export default function Navbar() {
                                 placeholder="Search products..." 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10 pr-4 py-2 w-80 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="pl-10 pr-4 py-2 w-80 border rounded-full text-sm text-black focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                         </form>

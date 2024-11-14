@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import About from './pages/About';
 import Cart from './pages/Cart';
+import CartSlider from './components/Common/CartSlider';
 import ClubsPage from './components/Collections/ClubsPage';
 import Contact from './pages/Contact';
 import Faq  from './pages/Faq';
@@ -15,9 +16,9 @@ import Return from './pages/Returns';
 import Navbar from './components/Navigation/Navbar';
 import Footer from './components/Section/Footer';
 import Register from './components/Auth/Register';
+import SearchResults from './pages/SearchResults';
 import Shipping from './pages/Shipping';
 import Terms from './pages/Terms'
-import CartSlider from './components/Common/CartSlider';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/returns" element={<Return />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/shipping-info" element={<Shipping />} />
         <Route path="/slider-cart" element={<CartSlider />} />

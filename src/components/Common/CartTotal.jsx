@@ -21,7 +21,7 @@ const CartTotal = () => {
                 </div>
                 <hr />
                 <div className="flex justify-between">
-                    <p className='text-2xl'>TOTAL</p>
+                    <p className='text-2xl'>Grand Total</p>
                     <p className='text-2xl font-medium'>
                         {currency}{formatIDR(getCartAmountRaw() + deliveryFee)}
                     </p>

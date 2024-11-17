@@ -1,9 +1,21 @@
 import React, { useContext } from 'react'
 import { ShopContext } from '../../context/ShopContext'
 
-const CartTotal = () => {
+const CartTotal = ({ selectedShippingOption }) => {
+    const { 
+        currency, 
+        getCartAmount, 
+        getCartAmountRaw, 
+        formatIDR,
+        DEFAULT_DELIVERY_FEE 
+    } = useContext(ShopContext);
 
-    const { currency, deliveryFee, getCartAmount, getCartAmountRaw, formatIDR } = useContext(ShopContext);
+    const getShippingFee = () => {
+        if (!selectedShippingOption) return DEFAULT_DELIVERY_FEE;
+        return parseInt(selectedShippingOption.price.replace(/[^\d]/g, ''));
+    };
+
+    const deliveryFee = getShippingFee();
 
     return (
         <div className='w-full'>
@@ -16,7 +28,7 @@ const CartTotal = () => {
                 </div>
                 <hr />
                 <div className="flex justify-between">
-                    <p>Shipping Free</p>
+                    <p>Shipping Fee</p>
                     <p>{currency}{formatIDR(deliveryFee)}</p>
                 </div>
                 <hr />
@@ -28,7 +40,7 @@ const CartTotal = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CartTotal
+export default CartTotal;

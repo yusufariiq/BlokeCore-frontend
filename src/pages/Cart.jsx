@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Common/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,8 +8,18 @@ import { useCartData } from '../hooks/useCartData';
 import EmptyCart from '../components/Common/EmptyCart';
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate, getCartAmount, formatIDR } = useContext(ShopContext);
+  const { 
+    products, 
+    currency, 
+    cartItems, 
+    updateQuantity, 
+    navigate, 
+    getCartAmount, 
+    formatIDR,
+    DEFAULT_DELIVERY_FEE,
+  } = useContext(ShopContext);
   const cartData = useCartData(cartItems);
+  const [selectedShipping, setSelectedShipping] = useState('reguler')
 
   return (
     <div className="min-h-[80vh] py-12 sm:py-20 mx-10 sm:mx-20">
@@ -67,9 +77,14 @@ const Cart = () => {
           <div className="col-span-1">
             <div className="flex justify-end">
               <div className="w-full lg:w-[450px]">
-                <CartTotal/>
+                <CartTotal 
+                  selectedShippingOption={{
+                    id: selectedShipping,
+                    price: String(DEFAULT_DELIVERY_FEE)
+                  }}
+                />
                 <div className="w-full my-5">
-                  <button onClick={() => navigate('/place-order')} className='w-full flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary'>PROCEED TO CHECK OUT</button>
+                  <button onClick={() => navigate('/checkout')} className='w-full flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary'>PROCEED TO CHECK OUT</button>
                 </div>
               </div>
             </div>

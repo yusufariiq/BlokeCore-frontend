@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import About from './pages/About';
 import Cart from './pages/Cart';
 import CartSlider from './components/Common/CartSlider';
+import Checkout from './pages/Checkout';
 import ClubsPage from './components/Collections/ClubsPage';
 import Contact from './pages/Contact';
 import Faq  from './pages/Faq';
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<Faq />} />

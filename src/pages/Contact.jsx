@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Title from '../components/Common/Title'
 
 export default function Contact() {

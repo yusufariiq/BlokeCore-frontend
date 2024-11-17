@@ -1,21 +1,37 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { products } from '../assets/Assets';
+import { products, DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
-    
     const currency = "Rp";
-    const deliveryFee = 20000;
-    const [ cartItems, setCartItems ] = useState({});
+    const DEFAULT_DELIVERY_FEE = 20000;
+    const [cartItems, setCartItems] = useState({});
+    const [selectedCountry, setSelectedCountry] = useState('Indonesia');
+    const [selectedShipping, setSelectedShipping] = useState('reguler');
     const navigate = useNavigate();
+    
+    const getShippingFee = () => {
+        if (!selectedShipping) return DEFAULT_DELIVERY_FEE;
+        
+        const shippingOptions = selectedCountry === 'Indonesia' 
+            ? DomesticShippingOptions 
+            : InternationalShippingOptions;
+        
+        const selectedOption = shippingOptions.find(option => option.id === selectedShipping);
+        return selectedOption 
+            ? parseInt(selectedOption.price.replace(/[^\d]/g, '')) 
+            : DEFAULT_DELIVERY_FEE;
+    };
+
+    const deliveryFee = getShippingFee();
 
     const clubProducts = products.filter((product) => product.subCategory === "Clubs");
     const nationProducts = products.filter((product) => product.subCategory === "Nation");
     const latestProducts = products.filter((product) => product.latest === true);
-    
+
     const formatIDR = (amount) => {
         return amount.toLocaleString('id-ID', {
             minimumFractionDigits: 0,
@@ -89,9 +105,17 @@ const ShopContextProvider = (props) => {
         return formatIDR(getCartAmountRaw());
     }
 
+    const getShippingOptions = () => {
+        return selectedCountry === 'Indonesia' ? DomesticShippingOptions : InternationalShippingOptions;
+    };
+
     useEffect(() => {
-        console.log(cartItems);
-    },[cartItems])
+        if (selectedCountry === 'Indonesia') {
+            setSelectedShipping('reguler');
+        } else {
+            setSelectedShipping('international');
+        }
+    }, [selectedCountry]);
 
     const getCartCount = () => {
         let totalCount = 0;
@@ -119,12 +143,18 @@ const ShopContextProvider = (props) => {
         getCartAmount,
         getCartAmountRaw,
         deliveryFee,
+        DEFAULT_DELIVERY_FEE,
         latestProducts,
         nationProducts,
         navigate,
         products,
         removeFromCart,
         updateQuantity,
+        selectedCountry,
+        setSelectedCountry,
+        selectedShipping,
+        setSelectedShipping,
+        getShippingOptions,
       };
 
     return(

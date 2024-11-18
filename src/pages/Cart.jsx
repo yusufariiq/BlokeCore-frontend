@@ -20,7 +20,7 @@ const Cart = () => {
   } = useContext(ShopContext);
   const cartData = useCartData(cartItems);
   const [selectedShipping, setSelectedShipping] = useState('reguler')
-
+  
   return (
     <div className="min-h-[80vh] py-12 sm:py-20 mx-10 sm:mx-20">
       <Title text={"Shopping Cart"}/>

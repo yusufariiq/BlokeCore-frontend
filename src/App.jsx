@@ -6,16 +6,17 @@ import Checkout from './pages/Checkout';
 import ClubsPage from './components/Collections/ClubsPage';
 import Contact from './pages/Contact';
 import Faq  from './pages/Faq';
+import Footer from './components/Section/Footer';
 import Home from './pages/Home';
 import LatestCollection from './components/Collections/LatestCollection';
 import Login from './components/Auth/Login';
 import NationsPage from './components/Collections/NationsPage';
 import Order from './pages/Order';
+import Payment from './pages/Payment';
 import Policy from './pages/Policy';
 import ProductDetails from './components/Collections/ProductDetails';
 import Return from './pages/Returns';
 import Navbar from './components/Navigation/Navbar';
-import Footer from './components/Section/Footer';
 import Register from './components/Auth/Register';
 import SearchResults from './pages/SearchResults';
 import Shipping from './pages/Shipping';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/latest" element={<LatestCollection />} />
         <Route path="/nations" element={<NationsPage />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/returns" element={<Return />} />

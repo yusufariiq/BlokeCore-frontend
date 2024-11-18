@@ -37,11 +37,9 @@ const ShopContextProvider = ({ children }) => {
     [selectedCountry, selectedShipping]);
 
     const value = {
-        // Constants
         currency: CURRENCY,
         DEFAULT_DELIVERY_FEE,
 
-        // Cart operations
         cartItems,
         addToCart,
         removeFromCart,
@@ -50,7 +48,6 @@ const ShopContextProvider = ({ children }) => {
         getCartAmount: () => formatIDR(CartService.calculateCartTotal(cartItems, products)),
         getCartAmountRaw: () => CartService.calculateCartTotal(cartItems, products),
 
-        // Shipping
         deliveryFee,
         selectedCountry,
         setSelectedCountry,
@@ -62,13 +59,11 @@ const ShopContextProvider = ({ children }) => {
             InternationalShippingOptions
         ),
 
-        // Products
         products,
         clubProducts,
         nationProducts,
         latestProducts,
 
-        // Utilities
         formatIDR,
         navigate,
     };

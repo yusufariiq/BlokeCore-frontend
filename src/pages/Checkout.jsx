@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Countries, DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCreditCard, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import CartTotal from '../components/Common/CartTotal';
+import { ShopContext } from '../context/ShopContext';
 
 const Checkout = () => {
-  const [selectedCountry, setSelectedCountry] = useState('Indonesia');
-  const [selectedShipping, setSelectedShipping] = useState('reguler');
+    const [selectedCountry, setSelectedCountry] = useState('Indonesia');
+    const [selectedShipping, setSelectedShipping] = useState('reguler');
+    const [paymentMethod, setPaymentMethod] = useState('cod')
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-GB', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+    const { navigate } = useContext(ShopContext); 
 
-  const getShippingOptions = () => {
-    return selectedCountry === 'Indonesia' ? DomesticShippingOptions : InternationalShippingOptions;
-  };
+    const formatDate = (date) => {
+        return date.toLocaleDateString('en-GB', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+        });
+    };
 
-  const getSelectedShippingOption = () => {
-    const options = getShippingOptions();
-    return options.find(option => option.id === selectedShipping);
-  };
+    const getShippingOptions = () => {
+        return selectedCountry === 'Indonesia' ? DomesticShippingOptions : InternationalShippingOptions;
+    };
 
-  const handleCountryChange = (e) => {
-    const newCountry = e.target.value;
-    setSelectedCountry(newCountry);
-    setSelectedShipping(newCountry === 'Indonesia' ? 'reguler' : 'international');
-  };
+    const getSelectedShippingOption = () => {
+        const options = getShippingOptions();
+        return options.find(option => option.id === selectedShipping);
+    };
+
+    const handleCountryChange = (e) => {
+        const newCountry = e.target.value;
+        setSelectedCountry(newCountry);
+        setSelectedShipping(newCountry === 'Indonesia' ? 'reguler' : 'international');
+    };
 
   return (
     <div className='py-12 sm:py-20'>
@@ -235,14 +239,14 @@ const Checkout = () => {
 
             <div className="my-12 space-y-4">
                 <p className='text-xl font-medium'>Payment Method</p>
-                <div className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
-                    <p className={`min-w-3.5 h-3.5 border rounded-full`}></p>
+                <div onClick={() => setPaymentMethod('credit')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                    <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'credit' ? 'bg-primary' : ''}`}></p>
                     <FontAwesomeIcon icon={faCreditCard}/>
                     <p className='text-base'>Credit Card</p>
                 </div>
 
-                <div className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
-                    <p className={`min-w-3.5 h-3.5 border rounded-full`}></p>
+                <div onClick={() => setPaymentMethod('cod')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                    <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'cod' ? 'bg-primary' : ''}`}></p>
                     <FontAwesomeIcon icon={faMoneyBill}/>
                     <p className='text-base'>Cash on Delivery</p>
                 </div>
@@ -250,6 +254,7 @@ const Checkout = () => {
             
             <div className="my-12">
                 <button
+                    onClick={() => navigate('/payment')}
                     type="submit"
                     className="w-full min-h-[3rem] border rounded-md bg-primary text-white font-normal hover:bg-hover-primary ease-in-out duration-200">
                     Continue to Payment

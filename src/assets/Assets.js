@@ -7,7 +7,9 @@ import logopuma from './image/logo-puma.webp'
 import logokappa from './image/logo-kappa.webp' 
 import logoumbro from './image/logo-umbro.webp' 
 import logobca from './image/logo-bca.webp' 
-import logostripe from './image/logo-stripe.webp' 
+import logostripe from './image/logo-stripe.webp'
+import logocastore from './image/logo-castore.webp' 
+import logohummel from './image/logo-hummel.webp' 
 
 export const Assets = {
     googleLogo,
@@ -19,6 +21,8 @@ export const Assets = {
     logoumbro,
     logobca,
     logostripe,
+    logocastore,
+    logohummel,
 }
 
 export const Countries = [

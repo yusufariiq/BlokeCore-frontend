@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Countries, DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
+import { Countries, DomesticShippingOptions, InternationalShippingOptions, Assets } from '../assets/Assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCreditCard, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import CartTotal from '../components/Common/CartTotal';
@@ -10,14 +10,14 @@ const Checkout = () => {
     const [selectedShipping, setSelectedShipping] = useState('reguler');
     const [paymentMethod, setPaymentMethod] = useState('cod')
 
-    const { navigate } = useContext(ShopContext); 
+    const { navigate, getCartAmountRaw, deliveryFee } = useContext(ShopContext); 
 
     const formatDate = (date) => {
         return date.toLocaleDateString('en-GB', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
     };
 
@@ -34,6 +34,24 @@ const Checkout = () => {
         const newCountry = e.target.value;
         setSelectedCountry(newCountry);
         setSelectedShipping(newCountry === 'Indonesia' ? 'reguler' : 'international');
+    };
+
+    const calculateGrandTotal = () => {
+        const cartTotal = getCartAmountRaw();
+        return cartTotal + deliveryFee;
+    };
+
+    const handleContinueToPayment = () => {
+        if (paymentMethod === 'bca' || paymentMethod === 'cod') {
+            navigate('/payment', {
+                state: {
+                    paymentMethod: paymentMethod,
+                    grandTotal: calculateGrandTotal()
+                }
+            })
+        } else {
+            navigate('/')
+        }
     };
 
   return (
@@ -239,22 +257,28 @@ const Checkout = () => {
 
             <div className="my-12 space-y-4">
                 <p className='text-xl font-medium'>Payment Method</p>
-                <div onClick={() => setPaymentMethod('credit')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
-                    <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'credit' ? 'bg-primary' : ''}`}></p>
-                    <FontAwesomeIcon icon={faCreditCard}/>
-                    <p className='text-base'>Credit Card</p>
-                </div>
+                <div className="w-full flex flex-col md:flex-row gap-3 justify-between">
+                    <div onClick={() => setPaymentMethod('stripe')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                        <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'stripe' ? 'bg-primary' : ''}`}></p>
+                        <img src={Assets.logostripe} alt="" className='h-7 mx-4' />
+                    </div>
+                    
+                    <div onClick={() => setPaymentMethod('bca')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                        <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'bca' ? 'bg-primary' : ''}`}></p>
+                        <img src={Assets.logobca} alt="" className='h-7 mx-4' />
+                    </div>
 
-                <div onClick={() => setPaymentMethod('cod')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
-                    <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'cod' ? 'bg-primary' : ''}`}></p>
-                    <FontAwesomeIcon icon={faMoneyBill}/>
-                    <p className='text-base'>Cash on Delivery</p>
+                    <div onClick={() => setPaymentMethod('cod')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                        <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'cod' ? 'bg-primary' : ''}`}></p>
+                        <FontAwesomeIcon icon={faMoneyBill}/>
+                        <p className='text-base font-medium'>Cash on Delivery</p>
+                    </div>
                 </div>
             </div>
             
             <div className="my-12">
                 <button
-                    onClick={() => navigate('/payment')}
+                    onClick={handleContinueToPayment}
                     type="submit"
                     className="w-full min-h-[3rem] border rounded-md bg-primary text-white font-normal hover:bg-hover-primary ease-in-out duration-200">
                     Continue to Payment

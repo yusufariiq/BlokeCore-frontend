@@ -4,15 +4,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faCheckCircle, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-hot-toast'
 import { ShopContext } from '../context/ShopContext'
+import { useLocation } from 'react-router-dom'
 
 const Payment = () => {
+    const location = useLocation();
+    const { paymentMethod, grandTotal } = location.state || {};
     const [ virtualAccount, setVirtualAccount ] = useState('');
+    const [ orderNumber, setOrderNumber ] = useState('');
     const [ copied, setCopied ] = useState(false);
-    const { navigate } = useContext(ShopContext)
+    const { navigate, currency, formatIDR } = useContext(ShopContext)
 
     useEffect(() => {
+        if (!paymentMethod || !grandTotal) {
+            navigate('/checkout');
+            return;
+        }
+
         generateVirtualAccount();
-    }, []);
+        generateOrderNumber();
+    }, [paymentMethod, grandTotal, navigate]);
 
     const generateVirtualAccount = () => {
         let result = '';
@@ -21,6 +31,14 @@ const Payment = () => {
             if ((i + 1) % 4 === 0 && i !== 15) result += ' ';
         }
         setVirtualAccount(result);
+    };
+    
+    const generateOrderNumber = () => {
+        let result = '';
+        for (let i = 0; i < 12; i++) {
+            result += Math.floor(Math.random() * 10);
+        }
+        setOrderNumber(result);
     };
     
     const handleCopy = async () => {
@@ -51,32 +69,39 @@ const Payment = () => {
                     <p>Order Number</p>
                     <p>Payment Method</p>
                     <p>Grand Total</p>
-                    <p>Virtual Bank Account</p>
+                    <p>{paymentMethod === 'bca' ? 'Virtual Account' : ''}</p>
                 </div>
                 <div className="text-right">
                     <p>:</p>
                     <p>:</p>
                     <p>:</p>
                     <p>:</p>
-                    <p>:</p>
+                    <p>{paymentMethod === 'bca' ? ':' : ''}</p>
                 </div>
                 <div className="font-semibold">
-                    <p>Unpaid</p>
-                    <p>ORDER123</p>
-                    <p>Bank Transfer</p>
-                    <p>$99.99</p>
+                    <p>{paymentMethod === 'bca' ? 'Unpaid' : 'Paid'} </p>
+                    <p>{orderNumber}</p>
+                    <p>{paymentMethod === 'bca' ? 'Bank BCA' : 'Cash on Delivery'}</p>
+                    <p>{currency}{' '}{formatIDR(grandTotal)}</p>
                     <div className="flex items-center gap-2 text-primary">
-                        {virtualAccount}
-                        <button 
-                            onClick={handleCopy}
-                            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-                        >
-                            {copied ? (
-                                <FontAwesomeIcon icon={faCheck}/>
-                            ) : (
-                                <FontAwesomeIcon icon={faCopy}/>
-                            )}
-                        </button>
+                        {paymentMethod === 'bca' ? (
+                            <>
+                                {virtualAccount}
+                                <button 
+                                    onClick={handleCopy()}
+                                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    {copied ? (
+                                        <FontAwesomeIcon icon={faCheck}/>
+                                    ) : (
+                                        <FontAwesomeIcon icon={faCopy}/>
+                                    )}
+                                </button>
+                            </>) 
+                            : ('')}
+                        
+                        
+                        
                     </div>
                 </div>
             </div>

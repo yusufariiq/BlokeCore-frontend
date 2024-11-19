@@ -6,7 +6,8 @@ import logoadidas from './image/logo-adidas.webp'
 import logopuma from './image/logo-puma.webp' 
 import logokappa from './image/logo-kappa.webp' 
 import logoumbro from './image/logo-umbro.webp' 
-
+import logobca from './image/logo-bca.webp' 
+import logostripe from './image/logo-stripe.webp' 
 
 export const Assets = {
     googleLogo,
@@ -16,6 +17,8 @@ export const Assets = {
     logonike,
     logopuma,
     logoumbro,
+    logobca,
+    logostripe,
 }
 
 export const Countries = [
@@ -156,16 +159,16 @@ export const DomesticShippingOptions = [
   {
     id: 'reguler',
     label: 'JNE Reguler',
-    price: 'Rp 20.000',
+    price: 'Rp 10.000',
     estimatedDelivery: {
-      from: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      to: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+      from: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     }
   },
   {
     id: 'yes',
     label: 'JNE YES (Yakin Esok Sampai)',
-    price: 'Rp 30.000',
+    price: 'Rp 20.000',
     estimatedDelivery: {
       from: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       to: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
@@ -177,10 +180,19 @@ export const InternationalShippingOptions = [
   {
     id: 'international',
     label: 'DHL Express',
-    price: 'Rp 450.000',
+    price: 'Rp 400.000',
     estimatedDelivery: {
-      from: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      to: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000)
+      from: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+      to: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
+    }
+  },
+  {
+    id: 'international2',
+    label: 'DHL Reguler',
+    price: 'Rp 100.000',
+    estimatedDelivery: {
+      from: new Date(Date.now() + 10  * 24 * 60 * 60 * 1000),
+      to: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000)
     }
   }
 ];

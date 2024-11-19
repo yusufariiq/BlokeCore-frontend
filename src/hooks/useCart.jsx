@@ -19,11 +19,10 @@ export const useCart = () => {
                 } else {
                     cartData[itemId][size] = 1;
                 }
-                toast.success("Successfully added product to cart");
             } else {
                 cartData[itemId] = { [size]: 1 };
             }
-
+            toast.success("Successfully added product to cart");
             return cartData;
         });
     }, []);

@@ -28,6 +28,7 @@ import {
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
 import CartSlider from '../Common/CartSlider';
+import Banner from '../Common/Banner';
 
 const navigations = [
     {
@@ -303,6 +304,7 @@ export default function Navbar() {
                         </div>
                     </DialogPanel>
                 </Dialog>
+                <Banner />
             </header>
             <CartSlider open={isCartOpen} setOpen={setIsCartOpen} />
         </>

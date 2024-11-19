@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -96,17 +96,21 @@ const CartSlider = ({ open, setOpen }) => {
                           <p className='text-xl font-bold'>{currency}{getCartAmount()}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                        <button onClick={() => navigate('/checkout')} className="w-full mt-6">
-                          <NavLink
-                            to="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
-                          >
-                            CHECKOUT
-                          </NavLink>
+                        <button onClick={() => {
+                          navigate('/checkout');
+                          setOpen(false);
+                          }} className="w-full mt-6">
+                            <NavLink
+                              to="#"
+                              className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
+                            >
+                              CHECKOUT
+                            </NavLink>
                         </button>
                         <div className="mt-6">
                           <NavLink
                             to='/cart'
+                            onClick={() => setOpen(false)}
                             className="flex justify-center text-primary hover:text-hover-primary font-medium">
                             View & edit
                           </NavLink>

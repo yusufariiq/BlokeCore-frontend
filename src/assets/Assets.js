@@ -48,116 +48,226 @@ export const Countries = [
   "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
 ];
 
+
+
 export const products = [
-    {
-        id: "1",
-        name: 'Finland 2000 - 2001 Match Issue U-18 Home Shirt #14 (Very good) XL',
-        description: 'lorem ipsum',
-        price: 10.99,
-        image: [mu1998],
-        imageAlt: "Finland 2000 - 2001 Match Issue",
-        category: "New",
-        subCategory: "Nation",
-        sizes: ["L"],
-        condition: "Good",
-        latest: false,
-        year:2001
-        
-    },
-    {
-        id: "2",
-        name: 'Finland 2000 - 2001 Match Issue U-18 Home Shirt #14 (Very good) XL',
-        description: 'lorem ipsum',
-        price: 1400000,
-        image: [mu1998],
-        imageAlt: "Finland 2000 - 2001 Match Issue",
-        category: "Vintage",
-        subCategory: "Nation",
-        sizes: ["M"],
-        condition: "Mint",
-        latest: false,
-        year:2001
+  {
+      id: "1",
+      name: 'Finland 2000 - 2001 Match Issue U-18 Home Shirt #14',
+      description: 'lorem ipsum',
+      price: 10.99,
+      images: [mu1998],
+      imageAlt: "Finland 2000 - 2001 Match Issue",
+      category: "Nation",
+      subCategory: {
+          nations: "Europe"
       },
-      {
-        id: "3",
-        name: 'Chelsea 1997 - 1998 Player Issue Home Shirt (Very good) L',
-        description: 'lorem ipsum',
-        price: 3000000,
-        image: [mu1998],
-        imageAlt: "Chelsea 1997 - 1998 Player Issue",
-        category: "Vintage",
-        subCategory: "Clubs",
-        sizes: ["XL"],
-        condition: "Very Good",
-        latest: false,
-        year:1997
+      details: {
+          year: 2001,
+          condition: "Good",
+          size: "L",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: false,
+          isLatest: false
       },
-      {
-        id: "4",
-        name: 'Napoli 2020 - 2021 Match Issue Home Shirt',
-        description: 'lorem ipsum',
-        price: 2800000,
-        image: [mu1998],
-        imageAlt: "Napoli 2020 - 2021 Match Issue",
-        category: "Vintage",
-        subCategory: "Clubs",
-        sizes: ["S","M", "L"],
-        condition: "Brand new",
-        latest: false,
+      metadata: {
+          team: "Finland",
+          league: "International",
+          season: "2000-2001",
+          playerNumber: "14",
+          ageGroup: "U-18"
+      }
+  },
+  {
+      id: "2",
+      name: 'Finland 2000 - 2001 Match Issue U-18 Home Shirt #14',
+      description: 'lorem ipsum',
+      price: 1400000,
+      images: [mu1998],
+      imageAlt: "Finland 2000 - 2001 Match Issue",
+      category: "Nation",
+      subCategory: {
+          nations: "Europe"
       },
-      {
-        id: "5",
-        name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77 (New) L',
-        description: 'lorem ipsum',
-        price: 2800000,
-        image: [mu1998],
-        imageAlt: "Napoli 2024 - 2025 Match Issue",
-        category: "New",
-        subCategory: "Clubs",
-        sizes: ["L"],
-        condition: "Brand new",
-        latest: true,
+      details: {
+          year: 2001,
+          condition: "Mint",
+          size: "M",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: true,
+          isLatest: false
       },
-      {
-        id: "6",
-        name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77 (New) L',
-        description: 'lorem ipsum',
-        price: 2800000,
-        image: [mu1998],
-        imageAlt: "Napoli 2024 - 2025 Match Issue",
-        category: "New",
-        subCategory: "Clubs",
-        sizes: ["L"],
-        condition: "Brand new",
-        latest: true,
+      metadata: {
+          team: "Finland",
+          league: "International",
+          season: "2000-2001",
+          playerNumber: "14",
+          ageGroup: "U-18"
+      }
+  },
+  {
+      id: "3",
+      name: 'Chelsea 1997 - 1998 Player Issue Home Shirt',
+      description: 'lorem ipsum',
+      price: 3000000,
+      images: [mu1998],
+      imageAlt: "Chelsea 1997 - 1998 Player Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "English"
       },
-      {
-        id: "7",
-        name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77 (New) L',
-        description: 'lorem ipsum',
-        price: 2800000,
-        image: [mu1998],
-        imageAlt: "Napoli 2024 - 2025 Match Issue",
-        category: "New",
-        subCategory: "Clubs",
-        sizes: ["L"],
-        condition: "Brand new",
-        latest: true,
+      details: {
+          year: 1997,
+          condition: "Very Good",
+          size: "XL",
+          type: "Player Issue",
+          isAuthentic: true,
+          isVintage: true,
+          isLatest: false
       },
-      {
-        id: "8",
-        name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77 (New) L',
-        description: 'lorem ipsum',
-        price: 2800000,
-        image: [mu1998],
-        imageAlt: "Napoli 2024 - 2025 Match Issue",
-        category: "New",
-        subCategory: "Clubs",
-        sizes: ["L"],
-        condition: "Brand new",
-        latest: true,
+      metadata: {
+          team: "Chelsea FC",
+          league: "Premier League",
+          season: "1997-1998"
+      }
+  },
+  {
+      id: "4",
+      name: 'Napoli 2020 - 2021 Match Issue Home Shirt',
+      description: 'lorem ipsum',
+      price: 2800000,
+      images: [mu1998],
+      imageAlt: "Napoli 2020 - 2021 Match Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "Italian"
       },
-]
+      details: {
+          year: 2020,
+          condition: "Brand New",
+          size: ["S", "M", "L"],
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: true,
+          isLatest: false
+      },
+      metadata: {
+          team: "SSC Napoli",
+          league: "Serie A",
+          season: "2020-2021"
+      }
+  },
+  {
+      id: "5",
+      name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77',
+      description: 'lorem ipsum',
+      price: 2800000,
+      images: [mu1998],
+      imageAlt: "Napoli 2024 - 2025 Match Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "Italian"
+      },
+      details: {
+          year: 2024,
+          condition: "Brand New",
+          size: "L",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: false,
+          isLatest: true
+      },
+      metadata: {
+          team: "SSC Napoli",
+          league: "Serie A",
+          season: "2024-2025",
+          playerNumber: "77"
+      }
+  },
+  {
+      id: "6",
+      name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77',
+      description: 'lorem ipsum',
+      price: 2800000,
+      images: [mu1998],
+      imageAlt: "Napoli 2024 - 2025 Match Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "Italian"
+      },
+      details: {
+          year: 2024,
+          condition: "Brand New",
+          size: "L",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: false,
+          isLatest: true
+      },
+      metadata: {
+          team: "SSC Napoli",
+          league: "Serie A",
+          season: "2024-2025",
+          playerNumber: "77"
+      }
+  },
+  {
+      id: "7",
+      name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77',
+      description: 'lorem ipsum',
+      price: 2800000,
+      images: [mu1998],
+      imageAlt: "Napoli 2024 - 2025 Match Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "Italian"
+      },
+      details: {
+          year: 2024,
+          condition: "Brand New",
+          size: "L",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: false,
+          isLatest: true
+      },
+      metadata: {
+          team: "SSC Napoli",
+          league: "Serie A",
+          season: "2024-2025",
+          playerNumber: "77"
+      }
+  },
+  {
+      id: "8",
+      name: 'Napoli 2024 - 2025 Match Issue Home Shirt #77',
+      description: 'lorem ipsum',
+      price: 2800000,
+      images: [mu1998],
+      imageAlt: "Napoli 2024 - 2025 Match Issue",
+      category: "Clubs",
+      subCategory: {
+          clubs: "Italian"
+      },
+      details: {
+          year: 2024,
+          condition: "Brand New",
+          size: "L",
+          type: "Match Issue",
+          isAuthentic: true,
+          isVintage: false,
+          isLatest: true
+      },
+      metadata: {
+          team: "SSC Napoli",
+          league: "Serie A",
+          season: "2024-2025",
+          playerNumber: "77"
+      }
+  }
+];
 
 export const DomesticShippingOptions = [
   {

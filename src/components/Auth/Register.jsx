@@ -95,7 +95,7 @@ const Register = () => {
                 </div>
                 <div className="text-sm/6 text-gray-600">
                   By selecting this, you agree to our{' '}
-                  <NavLink href="/policy" className="font-semibold text-primary">
+                  <NavLink to="/policy" className="font-semibold text-primary hover:underline">
                     privacy&nbsp;policy
                   </NavLink>
                 </div>

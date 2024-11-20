@@ -33,6 +33,7 @@ import Banner from '../Common/Banner';
 const navigations = [
     {
         name: 'Clubs',
+        link: '/clubs', 
         product: [
             { name: 'English', description: 'Jerseys from top English clubs', href: '/clubs', icon: faShirt },
             { name: 'Spanish', description: 'Authentic jerseys from renowned Spanish clubs', href: '#', icon:  faShirt},
@@ -44,6 +45,7 @@ const navigations = [
     },
     {
         name: 'Nation',
+        link: '/nation', 
         product: [
             { name: 'Europe', description: 'Jerseys from European national teams like France, Germany, and Italy', href: '/nations', icon: faEarthEurope },
             { name: 'Asia', description: 'National team jerseys from Asia, including Japan, South Korea, and more', href: '#', icon: faEarthAsia },
@@ -54,6 +56,7 @@ const navigations = [
     },
     {
         name: 'Other Sports',
+        link: '/other', 
         product: [
             { name: 'Basketball', description: 'Shop jerseys from popular basketball leagues and teams', href: '#', icon: faBasketball },
             { name: 'Baseball', description: 'Discover baseball jerseys from top teams and leagues', href: '#', icon: faBaseball },
@@ -62,6 +65,7 @@ const navigations = [
     },
     {
         name: 'New Arrival',
+        link: '/latest', 
         product: [
             { name: 'Latest', description: 'Discover the latest arrivals in jerseys and sportswear', href: '/latest', icon: faFireFlameCurved },
         ]
@@ -167,6 +171,7 @@ export default function Navbar() {
                             id={`menu-group-${index}`}
                         >
                             <button 
+                                onClick={() => navigate(`${navigation.link}`)}
                                 className="flex items-center text-sm font-medium uppercase"
                                 onMouseEnter={() => handleMouseEnter(index)}
                                 onMouseLeave={() => handleMouseLeave(index)}

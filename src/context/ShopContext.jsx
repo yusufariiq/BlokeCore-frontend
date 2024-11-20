@@ -16,15 +16,26 @@ const ShopContextProvider = ({ children }) => {
     const { selectedCountry, setSelectedCountry, selectedShipping, setSelectedShipping } = useShipping();
 
     const clubProducts = useMemo(() => 
-        products.filter((product) => product.subCategory === "Clubs"), 
+        products.filter((product) => {
+            return product.category === "Clubs" || 
+                   (product.subCategory?.clubs) || 
+                   product.subCategory === "Clubs";
+        }), 
     []);
 
     const nationProducts = useMemo(() => 
-        products.filter((product) => product.subCategory === "Nation"), 
+        products.filter((product) => {
+            return product.category === "Nation" || 
+                   (product.subCategory?.nations) || 
+                   product.subCategory === "Nation";
+        }), 
     []);
 
     const latestProducts = useMemo(() => 
-        products.filter((product) => product.latest === true), 
+        products.filter((product) => {
+            return product.latest === true || 
+                   product.details?.isLatest === true;
+        }), 
     []);
 
     const deliveryFee = useMemo(() => 
@@ -35,6 +46,14 @@ const ShopContextProvider = ({ children }) => {
             InternationalShippingOptions
         ), 
     [selectedCountry, selectedShipping]);
+
+    const productUtils = {
+        getProductName: (product) => product.name,
+        getProductPrice: (product) => product.price,
+        getProductImage: (product) => Array.isArray(product.image) ? product.image : product.images,
+        getProductSize: (product) => product.sizes || product.details?.size || [],
+        getProductCondition: (product) => product.condition || product.details?.condition
+    };
 
     const value = {
         currency: CURRENCY,
@@ -60,6 +79,7 @@ const ShopContextProvider = ({ children }) => {
         ),
 
         products,
+        productUtils,
         clubProducts,
         nationProducts,
         latestProducts,

@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { ShopContext } from '../../context/ShopContext'
 import { Link } from 'react-router-dom';
 
-const ProductItem = ({id, image, name, price}) => {
+const ProductItem = ({id, images, name, price}) => {
   
-    const {currency} = useContext(ShopContext);
+    const {currency, formatIDR} = useContext(ShopContext);
     
     return (
         <Link className='text-black cursor-pointer' to={`/product/${id}`}>
@@ -12,7 +12,8 @@ const ProductItem = ({id, image, name, price}) => {
                 <div className="h-72 w-full overflow-hidden rounded-md bg-gray-800 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img 
                         className='h-full w-full object-cover object-center'
-                        src={image[0]}
+                        src={Array.isArray(images) ? images[0] : images}
+                        alt={name}
                     />
                 </div>
             </div>
@@ -23,7 +24,7 @@ const ProductItem = ({id, image, name, price}) => {
                   </h3>
                 </div>
                 <p className="mt-2 text-lg font-bold text-primary"> 
-                    {currency}{price}
+                    {currency}{formatIDR(price)}
                 </p>
               </div>
         </Link>

@@ -9,7 +9,8 @@ import logoumbro from './image/logo-umbro.webp'
 import logobca from './image/logo-bca.webp' 
 import logostripe from './image/logo-stripe.webp'
 import logocastore from './image/logo-castore.webp' 
-import logohummel from './image/logo-hummel.webp' 
+import logohummel from './image/logo-hummel.webp'
+import engchelsea from './image/clubs/eng/eng-chelsea-2011-2012-home.webp'
 
 export const Assets = {
     googleLogo,
@@ -112,7 +113,7 @@ export const products = [
       name: 'Chelsea 1997 - 1998 Player Issue Home Shirt',
       description: 'lorem ipsum',
       price: 3000000,
-      images: [mu1998],
+      images: [engchelsea],
       imageAlt: "Chelsea 1997 - 1998 Player Issue",
       category: "Clubs",
       subCategory: {

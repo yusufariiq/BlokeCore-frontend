@@ -23,6 +23,24 @@ import Shipping from './pages/Shipping';
 import Terms from './pages/Terms'
 import { Toaster } from 'react-hot-toast';
 
+import EnglishClubPage from './components/Collections/Clubs/EnglishClubPage';
+import FranceClubPage from './components/Collections/Clubs/FranceClubPage';
+import GermanClubPage from './components/Collections/Clubs/GermanClubPage';
+import ItalyClubPage from './components/Collections/Clubs/ItalyClubPage';
+import OtherClubPage from './components/Collections/Clubs/OtherClubPage';
+import SpanishClubPage from './components/Collections/Clubs/SpanishClubPage';
+
+import AfricaPage from './components/Collections/Nations/AfricaPage'
+import AmericanPage from './components/Collections/Nations/AmericanPage';
+import AsiaPage from './components/Collections/Nations/AsiaPage'
+import EuropePage from './components/Collections/Nations/EuropePage'
+import OceaniaPage from './components/Collections/Nations/OceaniaPage'
+
+import OtherSport from './components/Collections/OtherSport';
+import Baseball from './components/Collections/Other/Baseball';
+import Basketball from './components/Collections/Other/Basketball';
+import Boots from './components/Collections/Other/Boots';
+
 function App() {
   return (
     <div>
@@ -38,11 +56,32 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
+        
+        <Route path="/clubs/english" element={<EnglishClubPage />} />
+        <Route path="/clubs/french" element={<FranceClubPage />} />
+        <Route path="/clubs/german" element={<GermanClubPage />} />
+        <Route path="/clubs/italian" element={<ItalyClubPage />} />
+        <Route path="/clubs/others" element={<OtherClubPage />} />
+        <Route path="/clubs/spanish" element={<SpanishClubPage />} />
+        
         <Route path="/faq" element={<Faq />} />
         <Route path="/login" element={<Login />} />
         <Route path="/latest" element={<LatestCollection />} />
+        
         <Route path="/nations" element={<NationsPage />} />
+        <Route path="/nations/africa" element={<AfricaPage />} />
+        <Route path="/nations/america" element={<AmericanPage />} />
+        <Route path="/nations/asia" element={<AsiaPage />} />
+        <Route path="/nations/europe" element={<EuropePage />} />
+        <Route path="/nations/oceania" element={<OceaniaPage />} />
+
         <Route path="/order" element={<Order />} />
+        
+        <Route path="/others" element={<OtherSport />} />
+        <Route path="/others/baseball" element={<Baseball />} />
+        <Route path="/others/basketball" element={<Basketball />} />
+        <Route path="/others/boots" element={<Boots />} />
+
         <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />

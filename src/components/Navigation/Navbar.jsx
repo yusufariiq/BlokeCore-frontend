@@ -35,32 +35,32 @@ const navigations = [
         name: 'Clubs',
         link: '/clubs', 
         product: [
-            { name: 'English', description: 'Jerseys from top English clubs', href: '/clubs', icon: faShirt },
-            { name: 'Spanish', description: 'Authentic jerseys from renowned Spanish clubs', href: '#', icon:  faShirt},
-            { name: 'French', description: 'Support French clubs with jerseys from teams', href: '#', icon: faShirt },
-            { name: 'German', description: 'Get jerseys from popular German clubs', href: '#', icon: faShirt },
-            { name: 'Italian', description: 'Find jerseys from iconic Italian clubs', href: '#', icon: faShirt },
-            { name: 'Others', description: 'Explore jerseys from other World leagues and clubs', href: '#', icon: faEllipsisH },
+            { name: 'English', description: 'Jerseys from top English clubs', href: '/clubs/english', icon: faShirt },
+            { name: 'Spain', description: 'Authentic jerseys from renowned Spanish clubs', href: '/clubs/spanish', icon:  faShirt},
+            { name: 'France', description: 'Support French clubs with jerseys from teams', href: '/clubs/french', icon: faShirt },
+            { name: 'German', description: 'Get jerseys from popular German clubs', href: '/clubs/german', icon: faShirt },
+            { name: 'Italy', description: 'Find jerseys from iconic Italian clubs', href: '/clubs/italian', icon: faShirt },
+            { name: 'Others', description: 'Explore jerseys from other World leagues and clubs', href: '/clubs/others', icon: faEllipsisH },
         ]
     },
     {
         name: 'Nation',
-        link: '/nation', 
+        link: '/nations', 
         product: [
-            { name: 'Europe', description: 'Jerseys from European national teams like France, Germany, and Italy', href: '/nations', icon: faEarthEurope },
-            { name: 'Asia', description: 'National team jerseys from Asia, including Japan, South Korea, and more', href: '#', icon: faEarthAsia },
-            { name: 'America', description: 'Represent North and South America with jerseys from Brazil, Argentina, and the USA', href: '#', icon: faEarthAmericas },
-            { name: 'Africa', description: 'Authentic jerseys from African national teams like Nigeria, Egypt, and Ghana', href: '#', icon: faEarthAfrica },
-            { name: 'Oceania', description: 'Support teams from Oceania with jerseys from Australia and New Zealand', href: '#', icon: faEarthOceania },
+            { name: 'Europe', description: 'Jerseys from European national teams like France, Germany, and Italy', href: '/nations/europe', icon: faEarthEurope },
+            { name: 'Asia', description: 'National team jerseys from Asia, including Japan, South Korea, and more', href: '/nations/asia', icon: faEarthAsia },
+            { name: 'America', description: 'Represent North and South America with jerseys from Brazil, Argentina, and the USA', href: '/nations/america', icon: faEarthAmericas },
+            { name: 'Africa', description: 'Authentic jerseys from African national teams like Nigeria, Egypt, and Ghana', href: '/nations/africa', icon: faEarthAfrica },
+            { name: 'Oceania', description: 'Support teams from Oceania with jerseys from Australia and New Zealand', href: '/nations/oceania', icon: faEarthOceania },
         ]
     },
     {
         name: 'Other Sports',
-        link: '/other', 
+        link: '/others', 
         product: [
-            { name: 'Basketball', description: 'Shop jerseys from popular basketball leagues and teams', href: '#', icon: faBasketball },
-            { name: 'Baseball', description: 'Discover baseball jerseys from top teams and leagues', href: '#', icon: faBaseball },
-            { name: 'Boots', description: 'High-quality sports boots for football, rugby, and more', href: '#', icon: faShoePrints },
+            { name: 'Basketball', description: 'Shop jerseys from popular basketball leagues and teams', href: '/others/basketball', icon: faBasketball },
+            { name: 'Baseball', description: 'Discover baseball jerseys from top teams and leagues', href: '/others/baseball', icon: faBaseball },
+            { name: 'Boots', description: 'High-quality sports boots for football, rugby, and more', href: '/others/boots', icon: faShoePrints },
         ]
     },
     {
@@ -189,18 +189,17 @@ export default function Navbar() {
                                 <div className="p-4">
                                 {navigation.product.map((item) => (
                                     <NavLink
-                                    to='/'
+                                    to={item.href}
                                     key={item.name}
                                     className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                                     >
                                         <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                             <FontAwesomeIcon icon={item.icon} aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-primary" />
                                         </div>
-                                        <div className="flex-auto">
-                                            <NavLink to={item.href} className="block text-base font-semibold text-black tracking-wider">
+                                        <div className="flex-auto hover:text-hover-primary text-black">
+                                            <p className="block text-base font-semibold tracking-wider">
                                             {item.name}
-                                            <span className="absolute inset-0" />
-                                            </NavLink>
+                                            </p>
                                             <p className="mt-1 text-gray-600">{item.description}</p>
                                         </div>
                                     </NavLink>

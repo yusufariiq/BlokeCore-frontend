@@ -9,7 +9,6 @@ import { useCart } from '../hooks/useCart';
 import { useShipping } from '../hooks/useShipping';
 
 export const ShopContext = createContext();
-
 const ShopContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
@@ -22,12 +21,119 @@ const ShopContextProvider = ({ children }) => {
                    product.subCategory === "Clubs";
         }), 
     []);
+    
+    const englishClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" &&
+                product.subCategory.clubs === "English";
+        }), 
+    []);
+
+    const spanishClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" && 
+                   product.subCategory?.clubs === "Spanish";
+        }), 
+    []);
+
+    const frenchClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" && 
+                   product.subCategory?.clubs === "French";
+        }), 
+    []);
+
+    const germanClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" && 
+                   product.subCategory?.clubs === "German";
+        }), 
+    []);
+
+    const italianClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" && 
+                   product.subCategory?.clubs === "Italian";
+        }), 
+    []);
+
+    const otherClubProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Clubs" && 
+                   (!product.subCategory?.clubs || 
+                   !["English", "Spanish", "French", "German", "Italian"].includes(product.subCategory.clubs));
+        }), 
+    []);
 
     const nationProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Nation" || 
                    (product.subCategory?.nations) || 
                    product.subCategory === "Nation";
+        }), 
+    []);
+    
+    const americaNationProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Nation" && 
+                   product.subCategory === "America";
+        }), 
+    []);
+
+    const asiaNationProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Nation" && 
+                   product.subCategory === "Asia";
+        }), 
+    []);
+
+    const africaNationProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Nation" && 
+                   product.subCategory === "Africa";
+        }), 
+    []);
+
+    const europeNationProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Nation" && 
+                   product.subCategory === "Europe";
+        }), 
+    []);
+
+    const oceaniaNationProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Nation" && 
+                   product.subCategory === "Oceania";
+        }), 
+    []);
+    
+    const otherSports = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Other" || 
+            (product.subCategory?.other) || 
+            product.subCategory === "Other";
+        }), 
+    []);
+    
+    const basketballProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Other" && 
+                   product.subCategory === "Basketball";
+        }), 
+    []);
+
+    const baseballProducts = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Other" && 
+                   product.subCategory === "Baseball";
+        }), 
+    []);
+
+    const bootsProduct = useMemo(() => 
+        products.filter((product) => {
+            return product.category === "Other" && 
+                   product.subCategory === "Boots";
         }), 
     []);
 
@@ -80,8 +186,27 @@ const ShopContextProvider = ({ children }) => {
 
         products,
         productUtils,
+        
         clubProducts,
+        englishClubProducts,
+        spanishClubProducts,
+        frenchClubProducts,
+        germanClubProducts,
+        italianClubProducts,
+        otherClubProducts,
+        
         nationProducts,
+        africaNationProducts,
+        americaNationProducts,
+        asiaNationProducts,
+        europeNationProducts,
+        oceaniaNationProducts,
+
+        otherSports,
+        baseballProducts,
+        basketballProducts,
+        bootsProduct,
+        
         latestProducts,
 
         formatIDR,

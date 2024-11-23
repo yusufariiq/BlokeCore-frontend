@@ -56,7 +56,7 @@ const CartSlider = ({ open, setOpen }) => {
                                   <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
                                       alt=""
-                                      src={productData.image[0]}
+                                      src={productData.images[0]}
                                       className="h-full w-full object-cover object-center"
                                     />
                                   </div>

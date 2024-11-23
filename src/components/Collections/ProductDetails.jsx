@@ -8,7 +8,7 @@ import Breadcrumbs from '../Common/Breadcrumbs';
 
 const ProductDetails = () => {
     const { productId } = useParams();
-    const { products, currency, addToCart } = useContext(ShopContext);
+    const { products, currency, addToCart, formatIDR } = useContext(ShopContext);
     const [ productData, setProductData ] = useState(null);
     const [ currentImage, setCurrentImage ] = useState('');
     const [ selectedSize, setSelectedSize ] = useState('');
@@ -70,7 +70,7 @@ const ProductDetails = () => {
                         {productData.name}
                     </h1>
                     <p className="mt-5 text-3xl font-medium text-primary">
-                        {currency}{productData.price}
+                        {currency}{' '}{formatIDR(productData.price)}
                     </p>
                     <p className="mt-5 text-gray-600 md:w-4/5">
                         {productData.description}
@@ -112,6 +112,9 @@ const ProductDetails = () => {
                             </button>
                             <div className={`px-6 pt-4 pb-8 ${activeIndex === 0 ? 'block' : 'hidden'}`}>
                                 <div className="grid grid-cols-2 gap-y-4 text-base">
+                                    <div className="text-gray-600">Brand:</div>
+                                    <div>{productData.details?.brand || '-'}</div>
+
                                     <div className="text-gray-600">Team:</div>
                                     <p className="text-primary">{productData.metadata?.team || '-'}</p>
                                     
@@ -124,11 +127,6 @@ const ProductDetails = () => {
                                     <div className="text-gray-600">Type:</div>
                                     <div>{productData.details?.type || '-'}</div>
 
-                                    <div className="text-gray-600">Player Number:</div>
-                                    <div>{productData.metadata?.playerNumber || '-'}</div>
-                                    
-                                    <div className="text-gray-600">Age Group:</div>
-                                    <div>{productData.metadata?.ageGroup || '-'}</div>
                                 </div>
                             </div>
                         </div>

@@ -25,42 +25,42 @@ const ShopContextProvider = ({ children }) => {
     const englishClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" &&
-                product.subCategory.clubs === "English";
+                product.subCategory === "English";
         }), 
     []);
 
     const spanishClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" && 
-                   product.subCategory?.clubs === "Spanish";
+                   product.subCategory === "Spanish";
         }), 
     []);
 
     const frenchClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" && 
-                   product.subCategory?.clubs === "French";
+                   product.subCategory === "French";
         }), 
     []);
 
     const germanClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" && 
-                   product.subCategory?.clubs === "German";
+                   product.subCategory === "German";
         }), 
     []);
 
     const italianClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" && 
-                   product.subCategory?.clubs === "Italian";
+                   product.subCategory === "Italian";
         }), 
     []);
 
     const otherClubProducts = useMemo(() => 
         products.filter((product) => {
             return product.category === "Clubs" && 
-                   (!product.subCategory?.clubs || 
+                   (!product.subCategory || 
                    !["English", "Spanish", "French", "German", "Italian"].includes(product.subCategory.clubs));
         }), 
     []);
@@ -118,22 +118,15 @@ const ShopContextProvider = ({ children }) => {
     
     const basketballProducts = useMemo(() => 
         products.filter((product) => {
-            return product.category === "Other" && 
+            return product.category === "Others" && 
                    product.subCategory === "Basketball";
         }), 
     []);
 
     const baseballProducts = useMemo(() => 
         products.filter((product) => {
-            return product.category === "Other" && 
+            return product.category === "Others" && 
                    product.subCategory === "Baseball";
-        }), 
-    []);
-
-    const bootsProduct = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Other" && 
-                   product.subCategory === "Boots";
         }), 
     []);
 
@@ -205,7 +198,6 @@ const ShopContextProvider = ({ children }) => {
         otherSports,
         baseballProducts,
         basketballProducts,
-        bootsProduct,
         
         latestProducts,
 

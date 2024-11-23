@@ -15,7 +15,6 @@ import {
     faFireFlameCurved,
     faMagnifyingGlass,
     faShirt,
-    faShoePrints,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -60,7 +59,6 @@ const navigations = [
         product: [
             { name: 'Basketball', description: 'Shop jerseys from popular basketball leagues and teams', href: '/others/basketball', icon: faBasketball },
             { name: 'Baseball', description: 'Discover baseball jerseys from top teams and leagues', href: '/others/baseball', icon: faBaseball },
-            { name: 'Boots', description: 'High-quality sports boots for football, rugby, and more', href: '/others/boots', icon: faShoePrints },
         ]
     },
     {

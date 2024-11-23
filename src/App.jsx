@@ -39,7 +39,6 @@ import OceaniaPage from './components/Collections/Nations/OceaniaPage'
 import OtherSport from './components/Collections/OtherSport';
 import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
-import Boots from './components/Collections/Other/Boots';
 
 function App() {
   return (
@@ -80,7 +79,6 @@ function App() {
         <Route path="/others" element={<OtherSport />} />
         <Route path="/others/baseball" element={<Baseball />} />
         <Route path="/others/basketball" element={<Basketball />} />
-        <Route path="/others/boots" element={<Boots />} />
 
         <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />

@@ -24,7 +24,7 @@ const ProductItem = ({id, images, name, price}) => {
                   </h3>
                 </div>
                 <p className="mt-2 text-lg font-bold text-primary"> 
-                    {currency}{formatIDR(price)}
+                    {currency}{' '}{formatIDR(price)}
                 </p>
               </div>
         </Link>

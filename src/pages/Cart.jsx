@@ -45,7 +45,7 @@ const Cart = () => {
                   <div className='mb-2'>
                     <div key={index} className='py-4text-black grid grid-cols-[4fr_0.5fr_1fr_0.5fr] sm:grid-cols-[4.5fr_1fr_1fr_0.5fr] items-center gap-4'>
                       <div className="flex items-start gap-6">
-                        <img src={productData.image[0]} alt="" className='w-[150px] sm:w-[165px]'/>
+                        <img src={productData.images[0]} alt="" className='w-[150px] sm:w-[165px]'/>
                         <div>
                           <p className='text-sm sm:text-lg font-medium'>{productData.name}</p>
                           <div className="flex items-center gap-5 mt-2">

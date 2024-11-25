@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Field, Switch } from '@headlessui/react'
 import googleIcon from '../../assets/icons/Google.svg'
+import toast from 'react-hot-toast'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from '../../context/AuthContext'
+
 
 const Register = () => {
   const API = import.meta.env.VITE_API_URL;
-
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -25,15 +31,27 @@ const Register = () => {
       ...prevState,
       [name]: value
     }));
+    
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setErrors({});
     setLoading(true);
 
     if (!agreed) {
-      setError('Please agree to the privacy policy');
+      setErrors({ policy: 'Please agree to the privacy policy' });
       setLoading(false);
       return;
     }
@@ -53,15 +71,34 @@ const Register = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
+        if (data.errors) {
+          setErrors(data.errors);
+        } else if (data.error) {
+          setErrors({ general: data.error });
+        }
+        throw new Error('Registration failed');
       }
 
+      toast.success("Your account successfully registered");
       navigate('/login');
     } catch (err) {
-      setError(err.message);
+      console.error('Registration error:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const renderError = (fieldName) => {
+    const error = errors[fieldName];
+    if (!error) return null;
+    
+    return (
+      <label className="label">
+        <span className="label-text-alt text-error">
+          {Array.isArray(error) ? error.join(', ') : error}
+        </span>
+      </label>
+    );
   };
 
   return (
@@ -72,9 +109,20 @@ const Register = () => {
             Create a new account
           </h2>
 
-          {error && (
-            <div className="alert alert-error mb-4">
-              <span>{error}</span>
+          {errors.general && (
+            <div role="alert" className="alert alert-error border-primary border-2 text-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{errors.general}</span>
             </div>
           )}
 
@@ -91,8 +139,9 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="John"
                   required
-                  className="input input-bordered w-full"
+                  className={`input input-bordered w-full ${errors.firstName ? 'input-error' : ''}`}
                 />
+                {renderError('firstName')}
               </div>
               <div>
                 <label className="label">
@@ -105,8 +154,9 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="Doe"
                   required
-                  className="input input-bordered w-full"
+                  className={`input input-bordered w-full ${errors.lastName ? 'input-error' : ''}`}
                 />
+                {renderError('lastName')}
               </div>
             </div>
 
@@ -121,23 +171,38 @@ const Register = () => {
                 onChange={handleChange}
                 placeholder="example@email.com"
                 required
-                className="input input-bordered w-full"
+                className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
               />
+              {renderError('email')}
             </div>
 
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text text-sm/6 font-semibold text-black">Password</span>
               </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="**********"
-                required
-                className="input input-bordered w-full"
-              />
+               <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder='**********'
+                  required
+                  className={`input input-bordered w-full pr-10 ${errors.password ? 'input-error' : ''}`}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <FontAwesomeIcon icon={faEyeSlash} className='h-5 w-5'/>
+                    ) : (
+                    <FontAwesomeIcon icon={faEye} className='h-5 w-5'/>
+                  )}
+                </button>
+              </div>
+              {renderError('password')}
             </div>
 
             <div className="form-control w-full">
@@ -151,8 +216,9 @@ const Register = () => {
                 onChange={handleChange}
                 placeholder="08xxxxxxxxxx"
                 required
-                className="input input-bordered w-full"
+                className={`input input-bordered w-full ${errors.phoneNumber ? 'input-error' : ''}`}
               />
+              {renderError('phoneNumber')}
             </div>
             
             <div className="form-control w-full">
@@ -180,6 +246,7 @@ const Register = () => {
                   </NavLink>
                 </div>
               </Field>
+              {renderError('policy')}
             </div>
 
             <button
@@ -187,7 +254,7 @@ const Register = () => {
               disabled={loading}
               className="w-full min-h-[3rem] border rounded-md bg-primary text-white font-semibold hover:bg-hover-primary ease-in-out duration-200 disabled:opacity-50"
             >
-              {loading ? 'Signing up...' : 'Sign up'}
+              {loading ? ( <span className="loading loading-dots loading-lg"></span> ) : 'Sign up'}
             </button>
           </form>
 

@@ -28,6 +28,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
 import CartSlider from '../Common/CartSlider';
 import Banner from '../Common/Banner';
+import AvatarDropdown from './AvatarDropdown';
 
 const navigations = [
     {
@@ -232,12 +233,18 @@ export default function Navbar() {
                                 {getCartCount()}
                             </span>
                         </button>
-                        
-                        <button className='border-primary py-2 px-4 rounded-full bg-primary text-white hover:bg-hover-primary ease-in duration-200'>
-                            <Link to="/login" className="text-sm font-semibold leading-6">
-                                Log in <span aria-hidden="true">&rarr;</span>
-                            </Link>
-                        </button>
+
+                        <div className="hidden lg:flex lg:items-center lg:gap-x-6">
+                            {localStorage.getItem('token') ? (
+                                <AvatarDropdown/>
+                            ) : (
+                                <button className='border-primary py-2 px-4 rounded-full bg-primary text-white hover:bg-hover-primary ease-in duration-200'>
+                                    <Link to="/login" className="text-sm font-semibold leading-6">
+                                        Log in <span aria-hidden="true">&rarr;</span>
+                                    </Link>
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </nav>
 
@@ -293,15 +300,54 @@ export default function Navbar() {
                                     </Disclosure>
                                 ))}
                                 </div>
-                                <button className="bg-primary rounded-full w-full border mt-5 hover:bg-hover-primary ease-in duration-150">
-                                    <Link
+                                {localStorage.getItem('token') ? (
+                                    <div className="py-6">
+                                        <div className="space-y-3">
+                                        <Link
+                                            to="/profile"
+                                            className="block px-3 py-2 text-base font-semibold text-white hover:text-primary"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Profile
+                                        </Link>
+                                        <Link
+                                            to="/orders"
+                                            className="block px-3 py-2 text-base font-semibold text-white hover:text-primary"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Orders
+                                        </Link>
+                                        <Link
+                                            to="/settings"
+                                            className="block px-3 py-2 text-base font-semibold text-white hover:text-primary"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Settings
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                            localStorage.removeItem('token');
+                                            localStorage.removeItem('user');
+                                            navigate('/login');
+                                            setMobileMenuOpen(false);
+                                            }}
+                                            className="block w-full px-3 py-2 text-base font-semibold text-white hover:text-primary text-left"
+                                        >
+                                            Logout
+                                        </button>
+                                        </div>
+                                    </div>
+                                    ) : (
+                                    <button className="bg-primary rounded-full w-full border mt-5 hover:bg-hover-primary ease-in duration-150">
+                                        <Link
                                         to="/login"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white"
                                         onClick={() => setMobileMenuOpen(false)}
-                                    >
+                                        >
                                         Log in
-                                    </Link>
-                                </button>
+                                        </Link>
+                                    </button>
+                                    )}
                             </div>
                         </div>
                     </DialogPanel>

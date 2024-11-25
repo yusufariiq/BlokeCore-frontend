@@ -1,4 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { ProtectedRoute } from './components/Auth/ProtectedRoute';
+
 import About from './pages/About';
 import Cart from './pages/Cart';
 import CartSlider from './components/Common/CartSlider';
@@ -21,7 +24,6 @@ import Register from './components/Auth/Register';
 import SearchResults from './pages/SearchResults';
 import Shipping from './pages/Shipping';
 import Terms from './pages/Terms'
-import { Toaster } from 'react-hot-toast';
 
 import EnglishClubPage from './components/Collections/Clubs/EnglishClubPage';
 import FranceClubPage from './components/Collections/Clubs/FranceClubPage';
@@ -39,6 +41,8 @@ import OceaniaPage from './components/Collections/Nations/OceaniaPage'
 import OtherSport from './components/Collections/OtherSport';
 import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
+import Profile from './pages/Profile';
+
 
 function App() {
   return (
@@ -74,8 +78,6 @@ function App() {
         <Route path="/nations/europe" element={<EuropePage />} />
         <Route path="/nations/oceania" element={<OceaniaPage />} />
 
-        <Route path="/order" element={<Order />} />
-        
         <Route path="/others" element={<OtherSport />} />
         <Route path="/others/baseball" element={<Baseball />} />
         <Route path="/others/basketball" element={<Basketball />} />
@@ -83,6 +85,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
+        
         <Route path="/returns" element={<Return />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/signup" element={<Register />} />
@@ -90,6 +93,17 @@ function App() {
         <Route path="/slider-cart" element={<CartSlider />} />
         <Route path="/terms-conditions" element={<Terms />} />
         <Route path="*" element={<Error />} />
+
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/order" element={
+          <ProtectedRoute>
+            <Order />
+          </ProtectedRoute>
+        } />
       </Routes>
       <Footer />
     </div>

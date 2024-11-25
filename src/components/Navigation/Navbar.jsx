@@ -124,7 +124,7 @@ export default function Navbar() {
                             <img
                                 alt=""
                                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=red&shade=600"
-                                className="h-8 w-auto"
+                                className="h-6 sm:h-8 w-auto"
                             />
                         </Link>
                     </div>
@@ -137,9 +137,9 @@ export default function Navbar() {
                                 placeholder="Search products..." 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full pl-10 sm:pr-4 py-1 sm:py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                             />
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3 sm:h-5 w-auto text-gray-400" />
                         </form>
                     
                         <button className="my-auto" onClick={toggleCart}>
@@ -311,18 +311,11 @@ export default function Navbar() {
                                             Profile
                                         </Link>
                                         <Link
-                                            to="/orders"
+                                            to="/order"
                                             className="block px-3 py-2 text-base font-semibold text-white hover:text-primary"
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
                                             Orders
-                                        </Link>
-                                        <Link
-                                            to="/settings"
-                                            className="block px-3 py-2 text-base font-semibold text-white hover:text-primary"
-                                            onClick={() => setMobileMenuOpen(false)}
-                                        >
-                                            Settings
                                         </Link>
                                         <button
                                             onClick={() => {

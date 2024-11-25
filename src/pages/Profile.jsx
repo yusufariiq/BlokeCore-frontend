@@ -32,7 +32,7 @@ const Profile = () => {
 
   return (
     <div className='min-h-[80vh] py-12 sm:py-24'>
-      <div className="flex flex-col sm:flex-row space-x-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="flex flex-row sm:space-x-10 mx-auto max-w-7xl px-6 lg:px-8">
         <AccountSidebar/>
         <div className="w-full flex flex-col">
           <div className="py-2">

@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className="h-[100vh] bg-hero bg-cover bg-center">
+    <div className="h-dvh bg-hero bg-cover bg-center">
 
       {/* Content */}
-      <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 z-10">
+      <div className="mx-auto max-w-2xl py-48 lg:py-56 z-10">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
         </div>
         <div className="text-center">

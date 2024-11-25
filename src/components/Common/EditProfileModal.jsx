@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-hot-toast';
 
 const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
   const API = import.meta.env.VITE_API_URL
@@ -48,6 +49,7 @@ const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
   
       updateUser({ [fieldToEdit]: value });
       onClose();
+      toast.success(`Successfully updated`)
     } catch (err) {
       setError(err.message);
     } finally {

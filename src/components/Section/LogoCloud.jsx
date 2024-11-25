@@ -18,27 +18,27 @@ const LogoCloud = () => {
       <div className="mx-auto">
         <Title text={"Popular Brands"} />
         <div className="mt-24 overflow-hidden">
-          <div className="flex animate-scroll">
-            
-            <div className="flex space-x-20 min-w-full">
+          <div className="flex space-x-10 animate-scroll">
+
+            <div className="flex space-x-20">
               {logos.map((logo, index) => (
-                <div key={`logo1-${index}`} className="flex-none w-40">
+                <div key={`logo1-${index}`} className="flex-none w-24 sm:w-40">
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className="max-h-20 w-full object-contain hover:scale-110 duration-200"
+                    className="max-h-10 sm:max-h-20 w-full object-contain hover:scale-110 duration-200"
                   />
                 </div>
               ))}
             </div>
 
-            <div className="flex space-x-20 min-w-full">
+            <div className="flex space-x-20">
               {logos.map((logo, index) => (
-                <div key={`logo2-${index}`} className="flex-none w-40">
+                <div key={`logo2-${index}`} className="flex-none w-24 sm:w-40">
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className="max-h-20 w-full object-contain hover:scale-110 duration-200"
+                    className="max-h-10 sm:max-h-20 w-full object-contain hover:scale-110 duration-200"
                   />
                 </div>
               ))}

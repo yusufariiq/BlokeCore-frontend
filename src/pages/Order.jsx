@@ -9,7 +9,7 @@ const Order = () => {
 
   return (
     <div className="min-h-[80vh] py-12 sm:py-24">
-      <div className="flex  space-x-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="flex sm:space-x-10 mx-auto max-w-7xl px-6 lg:px-8">
         <AccountSidebar/>
         <div className="w-full">
             <div className="py-2">

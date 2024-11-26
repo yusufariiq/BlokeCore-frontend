@@ -11,7 +11,6 @@ import { useAuth } from '../../context/AuthContext'
 const Register = () => {
   const API = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});

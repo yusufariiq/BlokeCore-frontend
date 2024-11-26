@@ -39,7 +39,7 @@ const categories = [
 
 const Categories = () => {
   return (
-    <div className="bg-white py-12 sm:py-24">
+    <div className="py-12 sm:py-24">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <Title text={"Categories"} />
         <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">

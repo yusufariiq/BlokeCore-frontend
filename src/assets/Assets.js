@@ -269,7 +269,7 @@ export const products = [
     {
         id: "BBNY19SUNDER",
         name: 'New York Yankees MLB Baseball Shirt #19 Sunderland',
-        description: 'lorem ipsum',
+        description: 'Vintage Sports Fashion store presents Chicago Cubs MLB Baseball Shirt #17 Bryant in White color for Rp780.000. We sell only original Majestic products of Good quality.',
         price: 780000,
         images: [BBNY19SUNDERB,BBNY19SUNDERF],
         imageAlt: "New York Yankees MLB Baseball Shirt #19 Sunderland",

@@ -43,7 +43,6 @@ import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
 import Profile from './pages/Profile';
 
-
 function App() {
   return (
     <div>

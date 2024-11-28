@@ -3,9 +3,9 @@ import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
+import { API_URL } from '../../config/apiConfig';
 
 const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
-  const API = import.meta.env.VITE_API_URL
   const [value, setValue] = useState(currentValue);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`${API}/user/profile`, {
+      const response = await fetch(`${API_URL}/user/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

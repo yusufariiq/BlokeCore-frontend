@@ -4,10 +4,9 @@ import { useAuth } from '../../context/AuthContext';
 import googleIcon from '../../assets/icons/Google.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { API_URL } from '../../config/apiConfig';
 
 const Login = () => {
-  const API = import.meta.env.VITE_API_URL;
   const { login } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -59,7 +58,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API}/user/login`, {
+      const response = await fetch(`${API_URL}/api/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

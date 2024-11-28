@@ -5,11 +5,9 @@ import googleIcon from '../../assets/icons/Google.svg'
 import toast from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../context/AuthContext'
-
+import { API_URL } from '../../config/apiConfig'
 
 const Register = () => {
-  const API = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,7 +54,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${API}/user/signup`, {
+      const response = await fetch(`${API_URL}/api/user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

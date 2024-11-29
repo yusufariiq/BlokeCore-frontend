@@ -8,7 +8,7 @@ import CartSlider from './components/Common/CartSlider';
 import Checkout from './pages/Checkout';
 import ClubsPage from './components/Collections/ClubsPage';
 import Contact from './pages/Contact';
-import Faq  from './pages/Faq';
+import Faq from './pages/Faq';
 import Footer from './components/Section/Footer';
 import Home from './pages/Home';
 import LatestCollection from './components/Collections/LatestCollection';
@@ -47,7 +47,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Toaster 
+      <Toaster
         position='top-right'
         gutter={8}
       />
@@ -58,18 +58,18 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
-        
+
         <Route path="/clubs/english" element={<EnglishClubPage />} />
         <Route path="/clubs/french" element={<FranceClubPage />} />
         <Route path="/clubs/german" element={<GermanClubPage />} />
         <Route path="/clubs/italian" element={<ItalyClubPage />} />
         <Route path="/clubs/others" element={<OtherClubPage />} />
         <Route path="/clubs/spanish" element={<SpanishClubPage />} />
-        
+
         <Route path="/faq" element={<Faq />} />
         <Route path="/login" element={<Login />} />
         <Route path="/latest" element={<LatestCollection />} />
-        
+
         <Route path="/nations" element={<NationsPage />} />
         <Route path="/nations/africa" element={<AfricaPage />} />
         <Route path="/nations/america" element={<AmericanPage />} />
@@ -84,7 +84,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
-        
+
         <Route path="/returns" element={<Return />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/signup" element={<Register />} />

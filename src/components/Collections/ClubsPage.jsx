@@ -6,7 +6,7 @@ import Loading from '../Common/Loading';
 const ClubsPage = () => {
     const { getProductsByCategory, products, isLoading, error } = useContext(ShopContext);
     useEffect(() => {
-        getProductsByCategory('clubs');
+        getProductsByCategory('club');
     }, []);
 
     if (isLoading) return <Loading/>;

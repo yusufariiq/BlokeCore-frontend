@@ -1,6 +1,5 @@
 import googleLogo from './icons/Google.svg'
 import heroImage from './image/bg-hero2.webp' 
-import mu1998 from './image/eng-mu-1998-1999-home.jpg' 
 
 import logonike from './image/logo-nike.webp' 
 import logoadidas from './image/logo-adidas.webp' 
@@ -11,8 +10,6 @@ import logobca from './image/logo-bca.webp'
 import logostripe from './image/logo-stripe.webp'
 import logocastore from './image/logo-castore.webp' 
 import logohummel from './image/logo-hummel.webp'
-
-import engchelsea from './image/clubs/eng/eng-chelsea-2011-2012-home.webp'
 
 // baseball
 import BBCC17BRYANTB from './image/baseball/Chicago_Cubs_MLB_Baseball_Shirt__17_Bryant__Good__XL_Back.webp'

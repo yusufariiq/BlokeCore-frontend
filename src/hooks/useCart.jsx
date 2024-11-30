@@ -60,7 +60,13 @@ export const useCart = () => {
         });
     }, []);
 
+    const resetCart = useCallback(() => {
+        setCartItems({});
+        toast.success("Cart has been cleared");
+    }, []);
+
     return {
+        resetCart,
         cartItems,
         addToCart,
         removeFromCart,

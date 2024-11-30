@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import { DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
@@ -13,7 +13,7 @@ import { API_URL } from '../config/apiConfig';
 export const ShopContext = createContext();
 const ShopContextProvider = ({ children }) => {
     const navigate = useNavigate();
-    const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
+    const { cartItems, addToCart, removeFromCart, updateQuantity, resetCart } = useCart();
     const { selectedCountry, setSelectedCountry, selectedShipping, setSelectedShipping } = useShipping();
 
     const [products, setProducts] = useState([]);
@@ -73,6 +73,7 @@ const ShopContextProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQuantity,
+        resetCart,
         getCartCount: () => CartService.calculateCartCount(cartItems),
         getCartAmount: () => formatIDR(CartService.calculateCartTotal(cartItems, products)),
         getCartAmountRaw: () => CartService.calculateCartTotal(cartItems, products),

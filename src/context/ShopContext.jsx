@@ -1,141 +1,52 @@
-import React, { createContext, useMemo } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
+import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
-import { products, DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
+import { DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
 import { CURRENCY, DEFAULT_DELIVERY_FEE } from '../types/constant';
 import { CartService } from '../services/CartService';
 import { ShippingService } from '../services/ShippingService';
 import { formatIDR } from '../utils/utils';
 import { useCart } from '../hooks/useCart';
 import { useShipping } from '../hooks/useShipping';
+import { API_URL } from '../config/apiConfig';
 
 export const ShopContext = createContext();
 const ShopContextProvider = ({ children }) => {
     const navigate = useNavigate();
-    const { cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
+    const { cartItems, addToCart, removeFromCart, updateQuantity, resetCart } = useCart();
     const { selectedCountry, setSelectedCountry, selectedShipping, setSelectedShipping } = useShipping();
 
-    const clubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" || 
-                   (product.subCategory?.clubs) || 
-                   product.subCategory === "Clubs";
-        }), 
-    []);
-    
-    const englishClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" &&
-                product.subCategory === "English";
-        }), 
-    []);
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const spanishClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" && 
-                   product.subCategory === "Spanish";
-        }), 
-    []);
+    const getProductsByCategory = async (category, subCategory) => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(`${API_URL}/api/product/category`, {
+                params: { category, subCategory }
+            });
+            setProducts(response.data.products);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch products:', error.response ? error.response.data : error.message);
+            setError(error);
+            setIsLoading(false);
+        }
+    };
 
-    const frenchClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" && 
-                   product.subCategory === "French";
-        }), 
-    []);
-
-    const germanClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" && 
-                   product.subCategory === "German";
-        }), 
-    []);
-
-    const italianClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" && 
-                   product.subCategory === "Italian";
-        }), 
-    []);
-
-    const otherClubProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Clubs" && 
-                   (!product.subCategory || 
-                   !["English", "Spanish", "French", "German", "Italian"].includes(product.subCategory.clubs));
-        }), 
-    []);
-
-    const nationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" || 
-                   (product.subCategory?.nations) || 
-                   product.subCategory === "Nation";
-        }), 
-    []);
-    
-    const americaNationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" && 
-                   product.subCategory === "America";
-        }), 
-    []);
-
-    const asiaNationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" && 
-                   product.subCategory === "Asia";
-        }), 
-    []);
-
-    const africaNationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" && 
-                   product.subCategory === "Africa";
-        }), 
-    []);
-
-    const europeNationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" && 
-                   product.subCategory === "Europe";
-        }), 
-    []);
-
-    const oceaniaNationProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Nation" && 
-                   product.subCategory === "Oceania";
-        }), 
-    []);
-    
-    const otherSports = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Other" || 
-            (product.subCategory?.other) || 
-            product.subCategory === "Other";
-        }), 
-    []);
-    
-    const basketballProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Others" && 
-                   product.subCategory === "Basketball";
-        }), 
-    []);
-
-    const baseballProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.category === "Others" && 
-                   product.subCategory === "Baseball";
-        }), 
-    []);
-
-    const latestProducts = useMemo(() => 
-        products.filter((product) => {
-            return product.latest === true || 
-                   product.details?.isLatest === true;
-        }), 
-    []);
+    const getLatestProducts = async () => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(`${API_URL}/api/product/latest`);
+            setProducts(response.data.products);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch latest products:', error.response ? error.response.data : error.message);
+            setError(error);
+            setIsLoading(false);
+        }
+    };
 
     const deliveryFee = useMemo(() => 
         ShippingService.getShippingFee(
@@ -162,6 +73,7 @@ const ShopContextProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQuantity,
+        resetCart,
         getCartCount: () => CartService.calculateCartCount(cartItems),
         getCartAmount: () => formatIDR(CartService.calculateCartTotal(cartItems, products)),
         getCartAmountRaw: () => CartService.calculateCartTotal(cartItems, products),
@@ -179,30 +91,14 @@ const ShopContextProvider = ({ children }) => {
 
         products,
         productUtils,
-        
-        clubProducts,
-        englishClubProducts,
-        spanishClubProducts,
-        frenchClubProducts,
-        germanClubProducts,
-        italianClubProducts,
-        otherClubProducts,
-        
-        nationProducts,
-        africaNationProducts,
-        americaNationProducts,
-        asiaNationProducts,
-        europeNationProducts,
-        oceaniaNationProducts,
-
-        otherSports,
-        baseballProducts,
-        basketballProducts,
-        
-        latestProducts,
 
         formatIDR,
         navigate,
+        
+        getLatestProducts,
+        getProductsByCategory,
+        isLoading,
+        error
     };
 
     return (

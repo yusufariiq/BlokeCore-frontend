@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ShopContext } from '../../../context/ShopContext';
 import Catalogue from '../../../pages/Catalogue';
 
 const AmericanPage = () => {
-    const { americaNationProducts } = useContext(ShopContext);
-    return <Catalogue title="America" products={americaNationProducts} />;
+    const { getProductsByCategory, products, error } = useContext(ShopContext);
+    
+    useEffect(() => {
+        getProductsByCategory('nations', 'america');
+    }, [getProductsByCategory]);
+
+    if (error) return <div className='min-h-screen'>Error: {error.message}</div>;
+
+    return <Catalogue title="American Continent" products={products} />;
 }
 
-export default AmericanPage
+export default AmericanPage;

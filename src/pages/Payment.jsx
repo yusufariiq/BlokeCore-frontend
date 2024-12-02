@@ -88,7 +88,7 @@ const Payment = () => {
                             <>
                                 {virtualAccount}
                                 <button 
-                                    onClick={handleCopy()}
+                                    onClick={() => handleCopy()}
                                     className="p-1 hover:bg-gray-100 rounded-full transition-colors"
                                 >
                                     {copied ? (

@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ShopContext } from '../../../context/ShopContext';
 import Catalogue from '../../../pages/Catalogue';
 
 const FranceClubPage = () => {
-    const { frenchClubProducts } = useContext(ShopContext);
-    return <Catalogue title=" France Clubs" products={frenchClubProducts} />;
-};
+    const { getProductsByCategory, products, error } = useContext(ShopContext);
+    
+    useEffect(() => {
+        getProductsByCategory('clubs', 'france');
+    }, [getProductsByCategory]);
 
-export default FranceClubPage
+    if (error) return <div className='min-h-screen'>Error: {error.message}</div>;
+
+    return <Catalogue title="France Club" products={products} />;
+}
+
+export default FranceClubPage;

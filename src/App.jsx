@@ -48,7 +48,7 @@ function App() {
     <div>
       <Navbar />
       <Toaster
-        position='top-right'
+        position='top-center'
         gutter={8}
       />
       <Routes>

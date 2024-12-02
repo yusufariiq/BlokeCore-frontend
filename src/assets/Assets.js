@@ -12,10 +12,7 @@ import logocastore from './image/logo-castore.webp'
 import logohummel from './image/logo-hummel.webp'
 
 // baseball
-import BBCC17BRYANTB from './image/baseball/Chicago_Cubs_MLB_Baseball_Shirt__17_Bryant__Good__XL_Back.webp'
-import BBCC17BRYANTF from './image/baseball/Chicago_Cubs_MLB_Baseball_Shirt__17_Bryant__Good__XL_Front.webp'
-import BBNY19SUNDERB from './image/baseball/New_York_Yankees_MLB_Baseball_Shirt__19_Sunderland_Back.webp'
-import BBNY19SUNDERF from './image/baseball/New_York_Yankees_MLB_Baseball_Shirt__19_Sunderland_Front.webp'
+import logoblokecore from './image/logo-blokecore.png'
 
 export const Assets = {
     googleLogo,
@@ -29,10 +26,7 @@ export const Assets = {
     logostripe,
     logocastore,
     logohummel,
-    BBCC17BRYANTB,
-    BBCC17BRYANTF,
-    BBNY19SUNDERB,
-    BBNY19SUNDERF,
+    logoblokecore,
 }
 
 export const Countries = [

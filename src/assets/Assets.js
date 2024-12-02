@@ -6,7 +6,6 @@ import logoadidas from './image/logo-adidas.webp'
 import logopuma from './image/logo-puma.webp' 
 import logokappa from './image/logo-kappa.webp' 
 import logoumbro from './image/logo-umbro.webp' 
-import logobca from './image/logo-bca.webp' 
 import logostripe from './image/logo-stripe.webp'
 import logocastore from './image/logo-castore.webp' 
 import logohummel from './image/logo-hummel.webp'
@@ -22,7 +21,6 @@ export const Assets = {
     logonike,
     logopuma,
     logoumbro,
-    logobca,
     logostripe,
     logocastore,
     logohummel,

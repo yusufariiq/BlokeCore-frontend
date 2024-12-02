@@ -5,7 +5,6 @@ import googleIcon from '../../assets/icons/Google.svg'
 import toast from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { API_URL } from '../../config/apiConfig'
 
 const Register = () => {
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/user/signup`, {
+      const response = await fetch(`${API}/user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

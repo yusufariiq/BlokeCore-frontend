@@ -100,7 +100,7 @@ const Checkout = () => {
                 paymentMethod: paymentMethod
             }
 
-            if (paymentMethod === 'cod' || paymentMethod === 'bca') {
+            if (paymentMethod === 'cod') {
                 const response = await axios.post(`${API_URL}/api/order/place`, orderData, {
                     headers: { 
                         'Authorization': `Bearer ${token}`,
@@ -115,7 +115,8 @@ const Checkout = () => {
                     navigate('/payment', {
                         state: {
                             paymentMethod: paymentMethod,
-                            grandTotal: calculateGrandTotal()
+                            grandTotal: calculateGrandTotal(),
+                            userEmail: formData.email,
                         }
                     })
                 } else  {
@@ -363,20 +364,15 @@ const Checkout = () => {
                 </div>
             </div>
 
-            <div className="my-12 space-y-4">
+            <div className="w-full my-12 space-y-4">
                 <p className='text-xl font-medium'>Payment Method</p>
-                <div className="w-full flex flex-col md:flex-row gap-3 justify-between">
-                    <div onClick={() => setPaymentMethod('stripe')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                <div className="flex flex-col md:flex-row gap-3">
+                    <div onClick={() => setPaymentMethod('stripe')} className="flex w-1/2 items-center gap-3 border p-4 px-3 cursor-pointer">
                         <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'stripe' ? 'bg-primary' : ''}`}></p>
                         <img src={Assets.logostripe} alt="" className='h-7 mx-4' />
                     </div>
-                    
-                    <div onClick={() => setPaymentMethod('bca')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
-                        <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'bca' ? 'bg-primary' : ''}`}></p>
-                        <img src={Assets.logobca} alt="" className='h-7 mx-4' />
-                    </div>
 
-                    <div onClick={() => setPaymentMethod('cod')} className="flex items-center gap-3 border p-4 px-3 cursor-pointer">
+                    <div onClick={() => setPaymentMethod('cod')} className="flex w-1/2 items-center gap-3 border p-4 px-3 cursor-pointer">
                         <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'cod' ? 'bg-primary' : ''}`}></p>
                         <FontAwesomeIcon icon={faMoneyBill}/>
                         <p className='text-base font-medium'>Cash on Delivery</p>

@@ -62,7 +62,7 @@ export const useCart = () => {
 
     const resetCart = useCallback(() => {
         setCartItems({});
-        toast.success("Cart has been cleared");
+        toast.success("Your orders has been placed");
     }, []);
 
     return {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faBars,
@@ -29,6 +29,7 @@ import { ShopContext } from '../../context/ShopContext';
 import CartSlider from '../Common/CartSlider';
 import Banner from '../Common/Banner';
 import AvatarDropdown from './AvatarDropdown';
+import { Assets } from '../../assets/Assets';
 
 const navigations = [
     {
@@ -116,15 +117,15 @@ export default function Navbar() {
     return (
         <>
             <header 
-                className="bg-black text-white z-40 sticky top-0 left-0 right-0 shadow-md"
+                className="bg-black text-white z-20 sticky top-0 left-0 right-0 shadow-md"
             >
                 <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
                     <div className="flex">
                         <Link to="/" className="-m-1.5 p-1.5">
                             <img
                                 alt=""
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=red&shade=600"
-                                className="h-6 sm:h-8 w-auto"
+                                src={Assets.logoblokecore}
+                                className="h-6 sm:h-12 w-auto"
                             />
                         </Link>
                     </div>
@@ -181,7 +182,7 @@ export default function Navbar() {
 
                             {activeMenu === index && (
                             <div 
-                                className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5"
+                                className="absolute -left-8 top-full z-20 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5"
                                 onMouseEnter={handleProductMenuEnter}
                                 onMouseLeave={handleProductMenuLeave}
                             >
@@ -250,14 +251,14 @@ export default function Navbar() {
 
                 {/* Mobile menu dialog */}
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                    <div className="fixed inset-0 z-10" />
-                    <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 ">
+                    <div className="fixed inset-0 z-40" />
+                    <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 ">
                         <div className="flex items-center justify-between">
                             <NavLink href="#" className="-m-1.5 p-1.5">
                                 <img
                                     alt=""
-                                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                                    className="h-8 w-auto"
+                                    src={Assets.logoblokecore}
+                                    className="h-5 w-auto"
                                 />
                             </NavLink>
                             <button

@@ -28,9 +28,10 @@ const GoogleButton = ({ type = '' }) => {
       
       if (type === 'login') {
         navigate('/');
+        toast.success("Login successfully");
       } else {
         toast.success("Account created successfully");
-        navigate('/login');
+        navigate('/');
       }
     } catch (error) {
       console.error('Google Auth Error:', error);

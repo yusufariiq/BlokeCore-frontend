@@ -1,28 +1,21 @@
-import googleLogo from './icons/Google.svg'
 import heroImage from './image/bg-hero2.webp' 
-
 import logonike from './image/logo-nike.webp' 
 import logoadidas from './image/logo-adidas.webp' 
 import logopuma from './image/logo-puma.webp' 
 import logokappa from './image/logo-kappa.webp' 
 import logoumbro from './image/logo-umbro.webp' 
-import logobca from './image/logo-bca.webp' 
 import logostripe from './image/logo-stripe.webp'
 import logocastore from './image/logo-castore.webp' 
 import logohummel from './image/logo-hummel.webp'
-
-// baseball
 import logoblokecore from './image/logo-blokecore.png'
 
 export const Assets = {
-    googleLogo,
     heroImage,
     logoadidas,
     logokappa,
     logonike,
     logopuma,
     logoumbro,
-    logobca,
     logostripe,
     logocastore,
     logohummel,

@@ -55,7 +55,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
 
@@ -81,7 +80,6 @@ function App() {
         <Route path="/others/baseball" element={<Baseball />} />
         <Route path="/others/basketball" element={<Basketball />} />
 
-        <Route path="/payment" element={<Payment />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
 
@@ -101,6 +99,16 @@ function App() {
         <Route path="/order" element={
           <ProtectedRoute>
             <Order />
+          </ProtectedRoute>
+        } />
+        <Route path="/checkout" element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        } />
+        <Route path="/payment" element={
+          <ProtectedRoute>
+            <Payment />
           </ProtectedRoute>
         } />
       </Routes>

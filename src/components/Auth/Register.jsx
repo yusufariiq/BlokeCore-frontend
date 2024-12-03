@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Field, Switch } from '@headlessui/react'
-import googleIcon from '../../assets/icons/Google.svg'
 import toast from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { API_URL } from '../../config/apiConfig'
+import GoogleButton from './GoogleButton'
 
 const Register = () => {
   const navigate = useNavigate();
@@ -65,7 +65,23 @@ const Register = () => {
         }),
       });
 
-      const data = await response.json();
+      const contentType = response.headers.get('content-type');
+      let data;
+
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          console.error('Failed to parse JSON:', parseError);
+          const text = await response.text();
+          console.error('Response text:', text);
+          throw new Error('Invalid server response');
+        }
+      } else {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error('Invalid server response');
+      }
 
       if (!response.ok) {
         if (data.errors) {
@@ -257,10 +273,7 @@ const Register = () => {
 
           <div className="divider">Or continue with</div>
 
-          <button className="btn hover:bg-hover-white w-full">
-            <img src={googleIcon} alt="Google" className="h-5 w-5" />
-            <span className="ml-2">Sign in with Google</span>
-          </button>
+          <GoogleButton type="signup" />
 
           <p className="text-center text-sm text-base-content/70 mt-6">
             Already have an account?{' '}

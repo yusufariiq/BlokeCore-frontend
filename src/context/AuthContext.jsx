@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
                 email: userData.email || '',
                 phoneNumber: userData.phoneNumber || '',
             };
-
+            
             setUser(sanitizedUserData);
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(sanitizedUserData));

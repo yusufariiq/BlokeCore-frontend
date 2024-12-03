@@ -31,7 +31,7 @@ const AvatarDropdown = () => {
     <Menu as="div" className="relative">
       <Menu.Button className="flex items-center space-x-2">
         <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
-          <span className="text-lg font-semibold">
+          <span className="text-lg font-semibold uppercase">
             {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
           </span>
         </div>

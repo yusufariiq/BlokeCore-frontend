@@ -30,7 +30,7 @@ const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch(`${API_URL}/user/profile`, {
+      const response = await fetch(`${API_URL}/api/user/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

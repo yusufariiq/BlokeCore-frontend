@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import googleIcon from '../../assets/icons/Google.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { API_URL } from '../../config/apiConfig';
+import GoogleButton from './GoogleButton';
 
 const Login = () => {
   const { login } = useAuth();
@@ -176,10 +176,7 @@ const Login = () => {
 
           <div className="divider">Or continue with</div>
 
-          <button className="btn hover:bg-hover-white w-full">
-              <img src={googleIcon} alt="Google" className="h-5 w-5" />
-              <span className="ml-2">Sign in with Google</span>
-          </button>
+          <GoogleButton type="login" />
 
           <p className="text-center text-sm text-base-content/70 mt-6">
             Not a having an account?{' '}

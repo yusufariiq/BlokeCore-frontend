@@ -19,7 +19,7 @@ const Cart = () => {
     DEFAULT_DELIVERY_FEE,
   } = useContext(ShopContext);
   const cartData = useCartData(cartItems);
-  const [selectedShipping, setSelectedShipping] = useState('reguler')
+  const [selectedShipping, setSelectedShipping] = useState('jne-reguler')
   
   return (
     <div className="min-h-[80vh] py-12 sm:py-20 mx-10 sm:mx-20">
@@ -80,7 +80,7 @@ const Cart = () => {
                 <CartTotal 
                   selectedShippingOption={{
                     id: selectedShipping,
-                    price: String(DEFAULT_DELIVERY_FEE)
+                    price: DEFAULT_DELIVERY_FEE
                   }}
                 />
                 <div className="w-full my-5">

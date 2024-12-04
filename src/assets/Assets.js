@@ -4,10 +4,10 @@ import logoadidas from './image/logo-adidas.webp'
 import logopuma from './image/logo-puma.webp' 
 import logokappa from './image/logo-kappa.webp' 
 import logoumbro from './image/logo-umbro.webp' 
-import logostripe from './image/logo-stripe.webp'
 import logocastore from './image/logo-castore.webp' 
 import logohummel from './image/logo-hummel.webp'
 import logoblokecore from './image/logo-blokecore.png'
+import logomidtrans from './image/logo-midtrans.png'
 
 export const Assets = {
     heroImage,
@@ -16,10 +16,10 @@ export const Assets = {
     logonike,
     logopuma,
     logoumbro,
-    logostripe,
     logocastore,
     logohummel,
     logoblokecore,
+    logomidtrans,
 }
 
 export const Countries = [
@@ -48,18 +48,18 @@ export const Countries = [
 
 export const DomesticShippingOptions = [
   {
-    id: 'reguler',
+    id: 'jne-reguler',
     label: 'JNE Reguler',
-    price: 'Rp 10.000',
+    price: 10000, // Changed from 'Rp 10.000' to 10000
     estimatedDelivery: {
       from: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     }
   },
   {
-    id: 'yes',
+    id: 'jne-yes',
     label: 'JNE YES (Yakin Esok Sampai)',
-    price: 'Rp 20.000',
+    price: 20000, // Changed from 'Rp 20.000' to 20000
     estimatedDelivery: {
       from: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       to: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
@@ -69,18 +69,18 @@ export const DomesticShippingOptions = [
 
 export const InternationalShippingOptions = [
   {
-    id: 'international',
+    id: 'dhl-express',
     label: 'DHL Express',
-    price: 'Rp 400.000',
+    price: 400000, // Changed from 'Rp 400.000' to 400000
     estimatedDelivery: {
       from: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
       to: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
     }
   },
   {
-    id: 'international2',
+    id: 'dhl-reguler',
     label: 'DHL Reguler',
-    price: 'Rp 100.000',
+    price: 100000, // Changed from 'Rp 100.000' to 100000
     estimatedDelivery: {
       from: new Date(Date.now() + 10  * 24 * 60 * 60 * 1000),
       to: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000)

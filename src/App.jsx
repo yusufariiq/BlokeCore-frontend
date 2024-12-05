@@ -54,7 +54,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/cart" element={<Cart />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
 
@@ -99,6 +98,11 @@ function App() {
         <Route path="/order" element={
           <ProtectedRoute>
             <Order />
+          </ProtectedRoute>
+        } />
+        <Route path="/cart" element={
+          <ProtectedRoute>
+            <Cart />
           </ProtectedRoute>
         } />
         <Route path="/checkout" element={

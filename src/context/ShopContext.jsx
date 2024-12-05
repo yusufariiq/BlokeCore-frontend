@@ -23,14 +23,16 @@ const ShopContextProvider = ({ children }) => {
     const getProductsByCategory = async (category, subCategory) => {
         try {
             setIsLoading(true);
+            setError(null);
             const response = await axios.get(`${API_URL}/api/product/category`, {
                 params: { category, subCategory }
             });
-            setProducts(response.data.products);
+            setProducts(response.data.products || []);
             setIsLoading(false);
         } catch (error) {
-            console.error('Failed to fetch products:', error.response ? error.response.data : error.message);
-            setError(error);
+            const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+            console.error('Failed to fetch products:', errorMessage);
+            setError({ message: errorMessage });
             setIsLoading(false);
         }
     };
@@ -38,12 +40,14 @@ const ShopContextProvider = ({ children }) => {
     const getLatestProducts = async () => {
         try {
             setIsLoading(true);
+            setError(null);
             const response = await axios.get(`${API_URL}/api/product/latest`);
-            setProducts(response.data.products);
+            setProducts(response.data.products || []);
             setIsLoading(false);
         } catch (error) {
-            console.error('Failed to fetch latest products:', error.response ? error.response.data : error.message);
-            setError(error);
+            const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+            console.error('Failed to fetch latest products:', errorMessage);
+            setError({ message: errorMessage });
             setIsLoading(false);
         }
     };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,7 @@ import {
   faRightFromBracket,
   faClipboardList,
 } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-hot-toast';
 
 const AvatarDropdown = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const AvatarDropdown = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    toast.success('You have been logged out')
     navigate('/');
   };
 

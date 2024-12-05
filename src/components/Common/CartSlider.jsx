@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -14,7 +14,24 @@ const CartSlider = ({ open, setOpen }) => {
   const { products, currency, cartItems, updateQuantity, navigate, getCartAmount, formatIDR } = useContext(ShopContext);
   const cartData = useCartData(cartItems);
 
-    return (
+  const processedCartData = useMemo(() => {
+    return cartData.map((item) => {
+      const productData = products.find((product) => product.id === item.id) || {
+        id: item.id,
+        name: 'Unknown Product',
+        price: 0,
+        images: ['/placeholder-image.png'],
+        sizes: item.sizes
+      };
+
+      return {
+        ...item,
+        productData
+      };
+    });
+  }, [cartData, products]);
+
+  return (
       <Dialog open={open} onClose={setOpen} className="relative z-50">
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
@@ -39,92 +56,93 @@ const CartSlider = ({ open, setOpen }) => {
                     </div>
                   </div>
 
-                  {cartData.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center">
-                      <EmptyCart />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                        <div className="flow-root">
-                          <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {cartData.map((item, index) => { 
-                              const productData = products.find((product) => product.id === item.id);
-                              
-                              return (
-                                <li key={index} className="flex py-6">
-                                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <img
-                                      alt=""
-                                      src={productData.images[0]}
-                                      className="h-full w-full object-cover object-center"
-                                    />
-                                  </div>
-      
-                                  <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                      <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>{productData.name}</h3>
-                                        <p className="ml-4">{currency}{formatIDR(productData.price)}</p>
-                                      </div>
-                                      <p className="mt-1 text-sm text-gray-500">{productData.sizes}</p>
-                                    </div>
-                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                      <input 
-                                        onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item.id, item.sizes, Number(e.target.value))} 
-                                        type="number" 
-                                        min={1} 
-                                        defaultValue={item.quantity} 
-                                        className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' 
-                                      />
-                                      <div className="flex">
-                                        <button type="button" onClick={() => updateQuantity(item.id, item.sizes, 0)}>
-                                          <FontAwesomeIcon icon={faTrashCan} className='text-lg text-primary hover:text-hover-primary' />
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              )})}
-                          </ul>
-                        </div>
-                      </div>
+                  {processedCartData.length === 0 ? (
+                  <div className="flex-1 flex items-center justify-center">
+                    <EmptyCart />
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <div className="flow-root">
+                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          {processedCartData.map((item, index) => { 
+                            const { productData } = item;
+                            
+                            return (
+                              <li key={index} className="flex py-6">
+                                <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                  <img
+                                    alt={productData.name}
+                                    src={productData.images[0]}
+                                    className="h-full w-full object-cover object-center"
+                                  />
+                                </div>
 
-                      <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                        <div className="flex justify-between text-base font-medium text-black">
-                          <p>Subtotal</p>
-                          <p className='text-xl font-bold'>{currency}{getCartAmount()}</p>
-                        </div>
-                        <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                        <button onClick={() => {
-                          navigate('/checkout');
-                          setOpen(false);
-                          }} className="w-full mt-6">
-                            <NavLink
-                              to="#"
-                              className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
-                            >
-                              CHECKOUT
-                            </NavLink>
-                        </button>
-                        <div className="mt-6">
-                          <NavLink
-                            to='/cart'
-                            onClick={() => setOpen(false)}
-                            className="flex justify-center text-primary hover:text-hover-primary font-medium">
-                            View & edit
-                          </NavLink>
-                        </div>
+                                <div className="ml-4 flex flex-1 flex-col">
+                                  <div>
+                                    <div className="flex justify-between text-base font-medium text-gray-900">
+                                      <h3>{productData.name}</h3>
+                                      <p className="ml-4">{currency}{formatIDR(productData.price)}</p>
+                                    </div>
+                                    <p className="mt-1 text-sm text-gray-500">{item.sizes}</p>
+                                  </div>
+                                  <div className="flex flex-1 items-end justify-between text-sm">
+                                    <input 
+                                      onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item.id, item.sizes, Number(e.target.value))} 
+                                      type="number" 
+                                      min={1} 
+                                      defaultValue={item.quantity} 
+                                      className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' 
+                                    />
+                                    <div className="flex">
+                                      <button type="button" onClick={() => updateQuantity(item.id, item.sizes, 0)}>
+                                        <FontAwesomeIcon icon={faTrashCan} className='text-lg text-primary hover:text-hover-primary' />
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            )
+                          })}
+                        </ul>
                       </div>
-                    </>
-                  )}
-                </div>
-              </DialogPanel>
-            </div>
+                    </div>
+
+                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                      <div className="flex justify-between text-base font-medium text-black">
+                        <p>Subtotal</p>
+                        <p className='text-xl font-bold'>{currency}{getCartAmount()}</p>
+                      </div>
+                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                      <button onClick={() => {
+                        navigate('/checkout');
+                        setOpen(false);
+                        }} className="w-full mt-6">
+                          <NavLink
+                            to="#"
+                            className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hover-primary"
+                          >
+                            CHECKOUT
+                          </NavLink>
+                      </button>
+                      <div className="mt-6">
+                        <NavLink
+                          to='/cart'
+                          onClick={() => setOpen(false)}
+                          className="flex justify-center text-primary hover:text-hover-primary font-medium">
+                          View & edit
+                        </NavLink>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </DialogPanel>
           </div>
         </div>
-      </Dialog>
-    )
+      </div>
+    </Dialog>
+  )
 }
 
 export default CartSlider

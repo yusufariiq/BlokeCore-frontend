@@ -1,8 +1,26 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 export const useCart = () => {
-    const [cartItems, setCartItems] = useState({});
+    const [cartItems, setCartItems] = useState(() => {
+        // Initialize cart from localStorage or empty object
+        try {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : {};
+        } catch (error) {
+            console.error('Error reading cart from localStorage:', error);
+            return {};
+        }
+    });
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        try {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        } catch (error) {
+            console.error('Error saving cart to localStorage:', error);
+        }
+    }, [cartItems]);
 
     const addToCart = useCallback((itemId, size) => {
         if (!size) {
@@ -62,7 +80,8 @@ export const useCart = () => {
 
     const resetCart = useCallback(() => {
         setCartItems({});
-        toast.success("Your orders has been placed");
+        localStorage.removeItem('cart');
+        toast.success("Your orders have been placed");
     }, []);
 
     return {

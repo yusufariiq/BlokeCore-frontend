@@ -132,7 +132,7 @@ const Checkout = () => {
 
                 if (response.data) {
                     resetCart();
-                    navigate('/payment', {
+                    navigate('/payment-result', {
                         state: {
                             paymentMethod: paymentMethod,
                             grandTotal: totalAmount,
@@ -158,24 +158,24 @@ const Checkout = () => {
                         onSuccess: (result) => {
                             console.log('Payment successful:', result);
                             toast.success('Payment successful!');
-                            navigate('/order')
+                            navigate('/payment-result')
                             setSnapShow(false)
                         },
                         onPending: (result) => {
                             console.log('Payment pending:', result);
                             toast.loading('Payment is pending. Please complete the transaction.');
-                            navigate('/')
+                            navigate('/payment-result')
                             setSnapShow(false)
                         },
                         onError: (result) => {
                             console.error('Payment error:', result);
                             toast.error('Payment failed. Please try again.');
                             setSnapShow(false)
-                            navigate('/')
+                            navigate('/payment-result')
                         },
                         onClose: () => {
                             console.log('Payment popup closed.');
-                            navigate('/order')
+                            navigate('/checkout')
                             setSnapShow(false)
                         },
                     })
@@ -188,7 +188,7 @@ const Checkout = () => {
     }
 
   return (
-    <div className='py-12 sm:py-20'>
+    <div className='min-h-screen py-12 sm:py-20'>
 
         {!snapShow && (
             <>

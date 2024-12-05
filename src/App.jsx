@@ -15,7 +15,7 @@ import LatestCollection from './components/Collections/LatestCollection';
 import Login from './components/Auth/Login';
 import NationsPage from './components/Collections/NationsPage';
 import Order from './pages/Order';
-import Payment from './pages/Payment';
+import PaymentResult from './pages/PaymentResult';
 import Policy from './pages/Policy';
 import ProductDetails from './components/Collections/ProductDetails';
 import Return from './pages/Returns';
@@ -106,9 +106,9 @@ function App() {
             <Checkout />
           </ProtectedRoute>
         } />
-        <Route path="/payment" element={
+        <Route path="/payment-result" element={
           <ProtectedRoute>
-            <Payment />
+            <PaymentResult />
           </ProtectedRoute>
         } />
       </Routes>

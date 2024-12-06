@@ -1,15 +1,27 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../../context/ShopContext';
 import Catalogue from '../../pages/Catalogue';
 import Loading from '../Common/Loading';
 
 const ClubsPage = () => {
-    const { getProductsByCategory, products, isLoading, error } = useContext(ShopContext);
+    const { getProductsByCategory, products, error } = useContext(ShopContext);
+    const [localLoading, setLocalLoading] = useState(true);
+
     useEffect(() => {
-        getProductsByCategory('clubs');
+        const fetchProducts = async () => {
+            try {
+                await getProductsByCategory('clubs');
+                setLocalLoading(false);
+            } catch (fetchError) {
+                console.error('Error fetching clubs:', fetchError);
+                setLocalLoading(false);
+            }
+        };
+
+        fetchProducts();
     }, []);
 
-    if (isLoading) return <Loading/>;
+    if (localLoading) return <Loading />;
     if (error) return <div>Error: {error.message}</div>;
 
     return <Catalogue title="Clubs" products={products} />;

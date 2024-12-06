@@ -1,33 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
-const useProductFilter = (products, searchQuery = '') => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const useProductFilter = (products, initialSearchQuery = '') => {
   const [selectedFilters, setSelectedFilters] = useState({
     condition: [],
     sizes: [],
   });
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [sortOption, setSortOption] = useState('');
 
-  useEffect(() => {
-    handleFilterChange(selectedFilters, sortOption, searchQuery);
-  }, [products, selectedFilters, sortOption, searchQuery]);
+  const filteredProducts = useMemo(() => {
+    if (!products) return [];
 
-  const handleFilterChange = (newFilters, newSortOption = sortOption, newSearchQuery = '') => {
-    setSelectedFilters(newFilters);
-    let filtered = products.filter((product) => {
-      const conditionMatch = newFilters.condition.length === 0 || newFilters.condition.includes(product.condition);
-      const sizeMatch = newFilters.sizes.length === 0 || newFilters.sizes.includes(product.sizes);
-      const searchMatch = newSearchQuery.length === 0 || product.name.toLowerCase().includes(newSearchQuery.toLowerCase());
+    let result = products.filter((product) => {
+      const conditionMatch = selectedFilters.condition.length === 0 || 
+        selectedFilters.condition.includes(product.details?.condition);
+
+        const sizeMatch = 
+        selectedFilters.sizes.length === 0 || 
+        selectedFilters.sizes.some(selectedSize => 
+          product.details?.size?.some(
+            productSize => productSize.trim().toUpperCase() === selectedSize.trim().toUpperCase()
+          )
+        );
+    
+      const searchMatch = 
+        searchQuery.length === 0 || 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    
       return conditionMatch && sizeMatch && searchMatch;
     });
 
-    if (newSortOption) {
-      filtered = [...filtered].sort((a, b) => {
-        switch (newSortOption) {
+    if (sortOption) {
+      result = [...result].sort((a, b) => {
+        switch (sortOption) {
           case 'Year: Newest':
-            return (b.year || 0) - (a.year || 0);
+            return (b.details?.year || 0) - (a.details?.year || 0);
           case 'Year: Oldest':
-            return (a.year || 0) - (b.year || 0);
+            return (a.details?.year || 0) - (b.details?.year || 0);
           case 'Price: Low to High':
             return a.price - b.price;
           case 'Price: High to Low':
@@ -38,18 +47,34 @@ const useProductFilter = (products, searchQuery = '') => {
       });
     }
 
-    setFilteredProducts(filtered);
+    return result;
+  }, [products, selectedFilters, searchQuery, sortOption]);
+
+  const handleFilterChange = (newFilters) => {
+    setSelectedFilters(prevFilters => ({
+      ...prevFilters,
+      ...newFilters
+    }));
   };
 
+  // Handler for sort changes
   const handleSortChange = (newSortOption) => {
     setSortOption(newSortOption);
+  };
+
+  // Handler for search query
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
   };
 
   return {
     filteredProducts,
     handleFilterChange,
     handleSortChange,
+    handleSearchChange,
+    selectedFilters,
     sortOption,
+    searchQuery
   };
 };
 

@@ -42,6 +42,7 @@ import OtherSport from './components/Collections/OtherSport';
 import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
 import Profile from './pages/Profile';
+import TrackOrder from './pages/TrackOrder';
 
 function App() {
   return (
@@ -98,6 +99,11 @@ function App() {
         <Route path="/order" element={
           <ProtectedRoute>
             <Order />
+          </ProtectedRoute>
+        } />
+        <Route path="/track-order" element={
+          <ProtectedRoute>
+            <TrackOrder />
           </ProtectedRoute>
         } />
         <Route path="/cart" element={

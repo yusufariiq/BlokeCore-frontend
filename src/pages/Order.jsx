@@ -4,9 +4,11 @@ import { AccountSidebar } from '../components/Common/AccountSidebar';
 import { token, userData } from '../config/tokenConfig';
 import { API_URL } from '../config/apiConfig';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Order = () => {
   const { currency, formatIDR } = useContext(ShopContext);
+  const  navigate = useNavigate()
   
   const [orderData, setOrderData] = useState([])
 
@@ -28,38 +30,32 @@ const Order = () => {
       )
 
       if(Array.isArray(response.data)) {
-        let allOrderItems = []
-        response.data.forEach((order) => {
-          order.items.forEach((item) => {
-            const enhancedItem = {
-              ...item,
-              amount: order.amount,
-              status: order.status,
-              payment: order.payment,
-              paymentMethod: order.paymentMethod,
-              date: order.date
-            }
-            allOrderItems.push(enhancedItem)
-          })
-        })
-        console.log('Processed Order Items:', allOrderItems);
-        setOrderData(allOrderItems);
+        let processedOrders = response.data.flatMap((order) => 
+          order.items.map((item) => ({
+            ...item,
+            orderId: order._id, // Important: pass the order ID
+            amount: order.amount,
+            status: order.status,
+            payment: order.payment,
+            paymentMethod: order.paymentMethod,
+            date: order.date
+          }))
+        )
+        console.log('Processed Order Items:', processedOrders);
+        setOrderData(processedOrders);
       } else if (response.data.success && response.data.orders) {
-        let allOrderItems = []
-        response.data.orders.forEach((order) => {
-          order.items.forEach((item) => {
-            const enhancedItem = {
-              ...item,
-              status: order.status,
-              payment: order.payment,
-              paymentMethod: order.paymentMethod,
-              date: order.date
-            }
-            allOrderItems.push(enhancedItem)
-          })
-        })
-        console.log('Processed Order Items:', allOrderItems);
-        setOrderData(allOrderItems);
+        let processedOrders = response.data.orders.flatMap((order) => 
+          order.items.map((item) => ({
+            ...item,
+            orderId: order._id, // Important: pass the order ID
+            status: order.status,
+            payment: order.payment,
+            paymentMethod: order.paymentMethod,
+            date: order.date
+          }))
+        )
+        console.log('Processed Order Items:', processedOrders);
+        setOrderData(processedOrders);
       } else {
         console.log('Unexpected response structure');
         setOrderData([]);
@@ -131,7 +127,12 @@ const Order = () => {
                       <p className='min-w-2 h-2 rounded-full bg-green-500'></p>
                       <p className='text-sm md:text-base'>{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</p>
                     </div>
-                    <button className='border px-4 py-2 text-sm font-medium rounded-sm'>
+                    <button 
+                      onClick={() => navigate('/track-order', {
+                        state: { orderId: item.orderId } 
+                      })}
+                      className='border px-4 py-2 text-sm font-medium rounded-sm'
+                    >
                       Track Order
                     </button>
                   </div>

@@ -12,7 +12,7 @@ const CartTotal = ({ selectedShippingOption }) => {
 
     const getShippingFee = () => {
         if (!selectedShippingOption) return DEFAULT_DELIVERY_FEE;
-        return parseInt(selectedShippingOption.price.replace(/[^\d]/g, ''));
+        return selectedShippingOption.price;
     };
 
     const deliveryFee = getShippingFee();

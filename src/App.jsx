@@ -15,7 +15,7 @@ import LatestCollection from './components/Collections/LatestCollection';
 import Login from './components/Auth/Login';
 import NationsPage from './components/Collections/NationsPage';
 import Order from './pages/Order';
-import Payment from './pages/Payment';
+import PaymentResult from './pages/PaymentResult';
 import Policy from './pages/Policy';
 import ProductDetails from './components/Collections/ProductDetails';
 import Return from './pages/Returns';
@@ -42,6 +42,7 @@ import OtherSport from './components/Collections/OtherSport';
 import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
 import Profile from './pages/Profile';
+import TrackOrder from './pages/TrackOrder';
 
 function App() {
   return (
@@ -54,7 +55,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/cart" element={<Cart />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
 
@@ -101,14 +101,24 @@ function App() {
             <Order />
           </ProtectedRoute>
         } />
+        <Route path="/track-order" element={
+          <ProtectedRoute>
+            <TrackOrder />
+          </ProtectedRoute>
+        } />
+        <Route path="/cart" element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        } />
         <Route path="/checkout" element={
           <ProtectedRoute>
             <Checkout />
           </ProtectedRoute>
         } />
-        <Route path="/payment" element={
+        <Route path="/payment-result" element={
           <ProtectedRoute>
-            <Payment />
+            <PaymentResult />
           </ProtectedRoute>
         } />
       </Routes>

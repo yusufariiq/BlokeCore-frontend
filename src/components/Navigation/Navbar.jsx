@@ -251,8 +251,9 @@ export default function Navbar() {
 
                 {/* Mobile menu dialog */}
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                    <div className="fixed inset-0 z-40" />
+                    <div className="fixed inset-0 " />
                     <DialogPanel className="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 ">
+
                         <div className="flex items-center justify-between">
                             <NavLink href="#" className="-m-1.5 p-1.5">
                                 <img
@@ -274,8 +275,12 @@ export default function Navbar() {
                         <div className="mt-2 flow-root">
                             <div className="divide-y divide-gray-500/10">
                                 <div className="space-y-5 py-6">
-                                {navigations.map((navigation) => (
-                                    <Disclosure as="div" className="-mx-3">
+                                {navigations.map((navigation, navigationIndex) => (
+                                    <Disclosure 
+                                        key={`${navigation.name}-${navigationIndex}`} 
+                                        as="div" 
+                                        className="-mx-3"
+                                    >
                                         {({ open }) => (
                                             <>
                                                 <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 font-semibold text-white hover:text-primary">
@@ -283,9 +288,9 @@ export default function Navbar() {
                                                     <FontAwesomeIcon icon={faChevronDown} aria-hidden="true" className={`h-5 w-5 flex-none transform transition duration-200 ${open ? 'rotate-180' : ''}`} />
                                                 </DisclosureButton>
                                                 <DisclosurePanel className="mt-2 space-y-2">
-                                                {navigation.product.map((item) => (
+                                                {navigation.product.map((item, itemIndex) => (
                                                     <DisclosureButton
-                                                    key={item.name}
+                                                    key={`${item.name}-${itemIndex}`}
                                                     as="a"
                                                     className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-medium text-white group-hover:text-primary hover:bg-primary"
                                                     >
@@ -297,7 +302,6 @@ export default function Navbar() {
                                                 </DisclosurePanel>
                                             </>
                                         )}
-                                        
                                     </Disclosure>
                                 ))}
                                 </div>

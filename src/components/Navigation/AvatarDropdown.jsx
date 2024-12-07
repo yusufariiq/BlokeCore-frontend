@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,9 +7,12 @@ import {
   faRightFromBracket,
   faClipboardList,
 } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 const AvatarDropdown = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -20,9 +23,14 @@ const AvatarDropdown = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/');
+    try {
+      logout();
+      toast.success('You have been logged out.');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error during logout:', error);
+      toast.error('Failed to logout. Please try again.');
+    }
   };
 
   if (!user) return null;

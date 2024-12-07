@@ -10,10 +10,10 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
     });
   
     const sortOptions = [
-        { name: 'Year: Newest', href: '#', current: false },
-        { name: 'Year: Oldest', href: '#', current: false },
-        { name: 'Price: Low to High', href: '#', current: false },
-        { name: 'Price: High to Low', href: '#', current: false },
+        { name: 'Year: Newest', value: 'Year: Newest' },
+        { name: 'Year: Oldest', value: 'Year: Oldest' },
+        { name: 'Price: Low to High', value: 'Price: Low to High' },
+        { name: 'Price: High to Low', value: 'Price: High to Low' },
     ];
 
     const filters = [
@@ -21,26 +21,25 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
             id: 'condition',
             name: 'Condition',
             options: [
-                { value: 'Brand new', label: 'Brand new', checked: false },
-                { value: 'Excellent', label: 'Excellent', checked: false },
-                { value: 'Very Good', label: 'Very Good', checked: false },
-                { value: 'Good', label: 'Good', checked: false },
-                { value: 'Mint', label: 'Mint', checked: false },
+                { value: 'Brand new', label: 'Brand new' },
+                { value: 'Excellent', label: 'Excellent' },
+                { value: 'Very Good', label: 'Very Good' },
+                { value: 'Good', label: 'Good' },
+                { value: 'Mint', label: 'Mint' },
             ],
         },
         {
             id: 'sizes',
             name: 'Sizes',
             options: [
-                { value: 'S', label: 'S', checked: false },
-                { value: 'M', label: 'M', checked: false },
-                { value: 'L', label: 'L', checked: false },
-                { value: 'XL', label: 'XL', checked: false },
-                { value: '2XL', label: '2XL', checked: false },
-                { value: 'Kids', label: 'Kids', checked: false },
+                { value: 'S', label: 'S' },
+                { value: 'M', label: 'M' },
+                { value: 'L', label: 'L' },
+                { value: 'XL', label: 'XL' },
+                { value: '2XL', label: '2XL' },
+                { value: 'Kids', label: 'Kids' },
             ],
         },
-        
     ];
 
     const handleFilterClick = (filterType) => {
@@ -49,19 +48,23 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
 
     const handleFilterChange = (filterType, value) => {
         const newFilters = { ...selectedFilters };
-        const filterArray = newFilters[filterType];
+        const filterArray = newFilters[filterType] || [];
         
-        if (filterArray.includes(value)) {
-            newFilters[filterType] = filterArray.filter(item => item !== value);
-        } else {
-            newFilters[filterType] = [...filterArray, value];
-        }
+        const updatedFilterArray = filterArray.includes(value)
+            ? filterArray.filter(item => item !== value)
+            : [...filterArray, value];
         
+        newFilters[filterType] = updatedFilterArray;
+        
+        // Update local state
         setSelectedFilters(newFilters);
+        
+        // Propagate changes to parent component
         onFilterChange(newFilters);
     };
 
     const handleSortOptionClick = (optionName) => {
+        // Update sort option in parent component
         onSortChange(optionName);
         setOpenFilter(null);
     };
@@ -85,14 +88,14 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
                         <div className="p-2">
                             {sortOptions.map((option) => (
                                 <div 
-                                key={option.name} 
-                                className={`px-3 py-2 hover:bg-gray-50 cursor-pointer ${
-                                    currentSort === option.name ? 'bg-gray-100' : ''
-                                }`}
-                                onClick={() => handleSortOptionClick(option.name)}
-                            >
-                                {option.name}
-                            </div>
+                                    key={option.value} 
+                                    className={`px-3 py-2 hover:bg-gray-50 cursor-pointer ${
+                                        currentSort === option.value ? 'bg-gray-100' : ''
+                                    }`}
+                                    onClick={() => handleSortOptionClick(option.value)}
+                                >
+                                    {option.name}
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -131,7 +134,7 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
                                             <input
                                                 type="checkbox"
                                                 className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-                                                checked={selectedFilters[filter.id].includes(option.value)}
+                                                checked={selectedFilters[filter.id]?.includes(option.value)}
                                                 onChange={() => handleFilterChange(filter.id, option.value)}
                                             />
                                             <span className="ml-3 text-gray-700">{option.label}</span>

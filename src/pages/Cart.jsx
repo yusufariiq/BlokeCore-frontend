@@ -6,6 +6,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import CartTotal from '../components/Common/CartTotal';
 import { useCartData } from '../hooks/useCartData';
 import EmptyCart from '../components/Common/EmptyCart';
+import { useAuth } from '../context/AuthContext';
 
 const Cart = () => {
   const { 
@@ -18,8 +19,10 @@ const Cart = () => {
     formatIDR,
     DEFAULT_DELIVERY_FEE,
   } = useContext(ShopContext);
+  const { isAuthenticated } = useAuth();
   const cartData = useCartData(cartItems);
-  const [selectedShipping, setSelectedShipping] = useState('reguler')
+
+  const [selectedShipping, setSelectedShipping] = useState('jne-reguler')
   
   return (
     <div className="min-h-[80vh] py-12 sm:py-20 mx-10 sm:mx-20">
@@ -54,7 +57,7 @@ const Cart = () => {
                         </div>
                       </div>
                       <div>
-                        <p>{currency}{formatIDR(productData.price)}</p>
+                        <p>{currency} {formatIDR(productData.price)}</p>
                       </div>
                       <div>
                         <input onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item.id, item.sizes, Number(e.target.value))}  className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type='number' min={1} defaultValue={item.quantity} />
@@ -80,7 +83,7 @@ const Cart = () => {
                 <CartTotal 
                   selectedShippingOption={{
                     id: selectedShipping,
-                    price: String(DEFAULT_DELIVERY_FEE)
+                    price: DEFAULT_DELIVERY_FEE
                   }}
                 />
                 <div className="w-full my-5">

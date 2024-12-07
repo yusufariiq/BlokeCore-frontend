@@ -8,7 +8,7 @@ export class ShippingService {
         
         const selectedOption = shippingOptions.find(option => option.id === selectedShipping);
         return selectedOption 
-            ? parseInt(selectedOption.price.replace(/[^\d]/g, '')) 
+            ? selectedOption.price 
             : DEFAULT_DELIVERY_FEE;
     }
 

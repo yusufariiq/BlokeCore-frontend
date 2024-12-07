@@ -1,16 +1,75 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config/apiConfig';
 
 export const useCart = () => {
+    const { user, isAuthenticated, getAuthToken } = useAuth();
     const [cartItems, setCartItems] = useState({});
+    const [isCartLoading, setIsCartLoading] = useState(true);
 
-    const addToCart = useCallback((itemId, size) => {
+    // Fetch cart from server for authenticated users
+    useEffect(() => {
+        const fetchCart = async () => {
+            if (isAuthenticated) {
+                try {
+                    setIsCartLoading(true);
+                    const token = getAuthToken();
+                    const response = await axios.get(`${API_URL}/api/cart`, {
+                        headers: { 
+                            'Authorization': `Bearer ${token}` 
+                        }
+                    });
+                    
+                    // Merge guest cart with server cart if exists
+                    const guestCart = JSON.parse(sessionStorage.getItem('guest_cart') || '{}');
+                    const mergedCart = mergeCartData(guestCart, response.data.cart || {});
+                    
+                    setCartItems(mergedCart);
+                    
+                    // Update server with merged cart
+                    await syncCartToServer(mergedCart);
+                    
+                    // Clear guest cart after migration
+                    sessionStorage.removeItem('guest_cart');
+                } catch (error) {
+                    console.error('Error fetching cart:', error);
+                    toast.error('Failed to load cart');
+                } finally {
+                    setIsCartLoading(false);
+                }
+            } else {
+                // For guest, load from sessionStorage
+                const guestCart = JSON.parse(sessionStorage.getItem('guest_cart') || '{}');
+                setCartItems(guestCart);
+                setIsCartLoading(false);
+            }
+        };
+
+        fetchCart();
+    }, [isAuthenticated]);
+
+    // Sync cart to server or sessionStorage
+    const syncCart = useCallback(async (newCartItems) => {
+        if (isAuthenticated) {
+            try {
+                await syncCartToServer(newCartItems);
+            } catch (error) {
+                console.error('Cart sync error:', error);
+            }
+        } else {
+            sessionStorage.setItem('guest_cart', JSON.stringify(newCartItems));
+        }
+    }, [isAuthenticated]);
+
+    const addToCart = useCallback(async (itemId, size) => {
         if (!size) {
             toast.error('Select product size!');
             return;
         }
 
-        setCartItems(prevItems => {
+        const newCartItems = (prevItems) => {
             const cartData = structuredClone(prevItems);
             
             if (cartData[itemId]) {
@@ -22,13 +81,16 @@ export const useCart = () => {
             } else {
                 cartData[itemId] = { [size]: 1 };
             }
-            toast.success("Successfully added product to cart");
             return cartData;
-        });
-    }, []);
+        };
 
-    const removeFromCart = useCallback((itemId, size) => {
-        setCartItems(prevItems => {
+        setCartItems(newCartItems);
+        await syncCart(newCartItems(cartItems));
+        toast.success("Successfully added product to cart");
+    }, [cartItems, isAuthenticated]);
+
+    const removeFromCart = useCallback(async (itemId, size) => {
+        const newCartItems = (prevItems) => {
             const cartData = structuredClone(prevItems);
             if (cartData[itemId]?.[size]) {
                 if (cartData[itemId][size] > 1) {
@@ -39,14 +101,17 @@ export const useCart = () => {
                         delete cartData[itemId];
                     }
                 }
-                toast.success("Product removed from cart");
             }
             return cartData;
-        });
-    }, []);
+        };
 
-    const updateQuantity = useCallback((itemId, size, quantity) => {
-        setCartItems(prevItems => {
+        setCartItems(newCartItems);
+        await syncCart(newCartItems(cartItems));
+        toast.success("Product removed from cart");
+    }, [cartItems, isAuthenticated]);
+
+    const updateQuantity = useCallback(async (itemId, size, quantity) => {
+        const newCartItems = (prevItems) => {
             const cartData = structuredClone(prevItems);
             if (quantity === 0) {
                 delete cartData[itemId][size];
@@ -57,19 +122,78 @@ export const useCart = () => {
                 cartData[itemId][size] = quantity;
             }
             return cartData;
-        });
-    }, []);
+        };
 
-    const resetCart = useCallback(() => {
+        setCartItems(newCartItems);
+        await syncCart(newCartItems(cartItems));
+    }, [cartItems, isAuthenticated]);
+
+    const resetCart = useCallback(async () => {
         setCartItems({});
-        toast.success("Your orders has been placed");
-    }, []);
+        
+        if (isAuthenticated) {
+            try {
+                const token = getAuthToken();
+                await axios.delete(`${API_URL}/api/cart`, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+            } catch (error) {
+                console.error('Reset cart error:', error);
+            }
+        } else {
+            sessionStorage.removeItem('guest_cart');
+        }
+        
+        toast.success("Your cart has been cleared");
+    }, [isAuthenticated]);
+
+    // Merge cart data, prioritizing authenticated user's existing cart
+    const mergeCartData = (guestCart, serverCart) => {
+        const mergedCart = { ...serverCart };
+        
+        // Merge guest cart items into server cart
+        for (const itemId in guestCart) {
+            if (!mergedCart[itemId]) {
+                mergedCart[itemId] = guestCart[itemId];
+            } else {
+                for (const size in guestCart[itemId]) {
+                    if (!mergedCart[itemId][size]) {
+                        mergedCart[itemId][size] = guestCart[itemId][size];
+                    } else {
+                        // If item and size exist in both, add quantities
+                        mergedCart[itemId][size] += guestCart[itemId][size];
+                    }
+                }
+            }
+        }
+
+        return mergedCart;
+    };
+
+    // Sync cart to server
+    const syncCartToServer = async (cart) => {
+        if (isAuthenticated) {
+            try {
+                const token = getAuthToken();
+                await axios.post(`${API_URL}/api/cart`, { cart }, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+            } catch (error) {
+                console.error('Cart sync to server failed:', error);
+            }
+        }
+    };
 
     return {
-        resetCart,
         cartItems,
         addToCart,
         removeFromCart,
-        updateQuantity
+        updateQuantity,
+        resetCart,
+        isCartLoading
     };
 };

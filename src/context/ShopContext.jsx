@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import { DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
@@ -20,33 +20,38 @@ const ShopContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const getProductsByCategory = async (category, subCategory) => {
+    const getProductsByCategory = useCallback(async (category, subCategory) => {
         try {
             setIsLoading(true);
+            setError(null);
             const response = await axios.get(`${API_URL}/api/product/category`, {
                 params: { category, subCategory }
             });
-            setProducts(response.data.products);
-            setIsLoading(false);
+            setProducts(response.data.products || []);
         } catch (error) {
-            console.error('Failed to fetch products:', error.response ? error.response.data : error.message);
-            setError(error);
+            const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+            console.error('Failed to fetch products:', errorMessage);
+            setError({ message: errorMessage });
+            setProducts([]); // Ensure products is reset on error
+        } finally {
             setIsLoading(false);
         }
-    };
+    }, []); 
 
-    const getLatestProducts = async () => {
+    const getLatestProducts = useCallback(async () => {
         try {
             setIsLoading(true);
+            setError(null);
             const response = await axios.get(`${API_URL}/api/product/latest`);
-            setProducts(response.data.products);
-            setIsLoading(false);
+            setProducts(response.data.products || []);
         } catch (error) {
-            console.error('Failed to fetch latest products:', error.response ? error.response.data : error.message);
-            setError(error);
+            const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+            console.error('Failed to fetch latest products:', errorMessage);
+            setError({ message: errorMessage });
+        } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     const deliveryFee = useMemo(() => 
         ShippingService.getShippingFee(
@@ -65,7 +70,7 @@ const ShopContextProvider = ({ children }) => {
         getProductCondition: (product) => product.condition || product.details?.condition
     };
 
-    const value = {
+    const value = useMemo(() =>  ({
         currency: CURRENCY,
         DEFAULT_DELIVERY_FEE,
 
@@ -88,18 +93,22 @@ const ShopContextProvider = ({ children }) => {
             DomesticShippingOptions, 
             InternationalShippingOptions
         ),
-
+        getLatestProducts,
+        getProductsByCategory,
+        isLoading,
+        error,
         products,
         productUtils,
 
         formatIDR,
-        navigate,
-        
+        navigate, 
+    }), [
         getLatestProducts,
         getProductsByCategory,
         isLoading,
-        error
-    };
+        error,
+        products,
+    ]);
 
     return (
         <ShopContext.Provider value={value}>

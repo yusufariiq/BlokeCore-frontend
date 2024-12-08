@@ -93,7 +93,7 @@ export default function Navbar() {
             if (!menuHovered) {
             setActiveMenu(null)
             }
-        }, 50)
+        }, 100)
     }
 
     const handleProductMenuEnter = () => {
@@ -216,10 +216,11 @@ export default function Navbar() {
                         {/* Search Bar */}
                         <form onSubmit={handleSearch} className="relative">
                             <input 
-                                type="text" 
+                                type="text"
                                 placeholder="Search products..." 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                required 
                                 className="pl-10 pr-4 py-2 w-80 border rounded-full text-sm text-black focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />

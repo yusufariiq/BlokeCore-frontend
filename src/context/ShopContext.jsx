@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState, useEffect } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import { DomesticShippingOptions, InternationalShippingOptions } from '../assets/Assets';
@@ -11,48 +11,86 @@ import { useShipping } from '../hooks/useShipping';
 import { API_URL } from '../config/apiConfig';
 
 export const ShopContext = createContext();
+
 const ShopContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const { cartItems, addToCart, removeFromCart, updateQuantity, resetCart } = useCart();
     const { selectedCountry, setSelectedCountry, selectedShipping, setSelectedShipping } = useShipping();
-
+    
+    const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const getProductsByCategory = useCallback(async (category, subCategory) => {
+    // Fetch all products on initial load
+    useEffect(() => {
+        const fetchAllProducts = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get(`${API_URL}/api/product/list`);
+                const fetchedProducts = response.data.product || [];
+                setAllProducts(fetchedProducts);
+                setProducts(fetchedProducts);
+            } catch (error) {
+                const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+                console.error('Failed to fetch products:', errorMessage);
+                setError({ message: errorMessage });
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAllProducts();
+    }, []);
+
+    // Filter products by category
+    const getProductsByCategory = useCallback((category, subCategory) => {
+        if (!category) {
+            setProducts(allProducts);
+            return;
+        }
+
+        const filtered = allProducts.filter(product => {
+            const categoryMatch = product.category.toLowerCase() === category.toLowerCase();
+            const subCategoryMatch = !subCategory || 
+                (product.subCategory && product.subCategory.toLowerCase() === subCategory.toLowerCase());
+            
+            return categoryMatch && subCategoryMatch;
+        });
+
+        setProducts(filtered);
+    }, [allProducts]);
+
+    // Get latest products
+    const getLatestProducts = useCallback(() => {
+        const latestProducts = allProducts.filter(product => 
+            product.details?.isLatest === true
+        );
+        setProducts(latestProducts);
+    }, [allProducts]);
+
+    // Search products
+    const searchProducts = useCallback(async (query) => {
         try {
             setIsLoading(true);
             setError(null);
-            const response = await axios.get(`${API_URL}/api/product/category`, {
-                params: { category, subCategory }
+            const response = await axios.get(`${API_URL}/api/product/search`, {
+                params: { q: query }
             });
             setProducts(response.data.products || []);
+            return response.data.products || [];
         } catch (error) {
             const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
-            console.error('Failed to fetch products:', errorMessage);
+            console.error('Failed to search products:', errorMessage);
             setError({ message: errorMessage });
-            setProducts([]); // Ensure products is reset on error
-        } finally {
-            setIsLoading(false);
-        }
-    }, []); 
-
-    const getLatestProducts = useCallback(async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            const response = await axios.get(`${API_URL}/api/product/latest`);
-            setProducts(response.data.products || []);
-        } catch (error) {
-            const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
-            console.error('Failed to fetch latest products:', errorMessage);
-            setError({ message: errorMessage });
+            setProducts([]);
+            return [];
         } finally {
             setIsLoading(false);
         }
     }, []);
 
+    // Calculating delivery fee
     const deliveryFee = useMemo(() => 
         ShippingService.getShippingFee(
             selectedCountry, 
@@ -62,28 +100,31 @@ const ShopContextProvider = ({ children }) => {
         ), 
     [selectedCountry, selectedShipping]);
 
-    const productUtils = {
-        getProductName: (product) => product.name,
-        getProductPrice: (product) => product.price,
-        getProductImage: (product) => Array.isArray(product.image) ? product.image : product.images,
-        getProductSize: (product) => product.sizes || product.details?.size || [],
-        getProductCondition: (product) => product.condition || product.details?.condition
-    };
-
+    // Memoized context value
     const value = useMemo(() =>  ({
+        // Product-related methods
+        products,
+        allProducts,
+        getProductsByCategory,
+        getLatestProducts,
+        searchProducts,
+        
+        // Currency and delivery
         currency: CURRENCY,
         DEFAULT_DELIVERY_FEE,
+        deliveryFee,
 
+        // Cart-related methods
         cartItems,
         addToCart,
         removeFromCart,
         updateQuantity,
         resetCart,
         getCartCount: () => CartService.calculateCartCount(cartItems),
-        getCartAmount: () => formatIDR(CartService.calculateCartTotal(cartItems, products)),
-        getCartAmountRaw: () => CartService.calculateCartTotal(cartItems, products),
+        getCartAmount: () => formatIDR(CartService.calculateCartTotal(cartItems, allProducts)),
+        getCartAmountRaw: () => CartService.calculateCartTotal(cartItems, allProducts),
 
-        deliveryFee,
+        // Shipping-related methods
         selectedCountry,
         setSelectedCountry,
         selectedShipping,
@@ -93,21 +134,27 @@ const ShopContextProvider = ({ children }) => {
             DomesticShippingOptions, 
             InternationalShippingOptions
         ),
-        getLatestProducts,
-        getProductsByCategory,
+
+        // Loading and error states
         isLoading,
         error,
-        products,
-        productUtils,
 
+        // Utility methods
         formatIDR,
         navigate, 
     }), [
+        products,
+        allProducts,
+        cartItems,
+        error,
+        isLoading,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        resetCart,
         getLatestProducts,
         getProductsByCategory,
-        isLoading,
-        error,
-        products,
+        searchProducts,
     ]);
 
     return (

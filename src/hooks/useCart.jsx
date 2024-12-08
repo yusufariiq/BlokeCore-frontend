@@ -91,12 +91,18 @@ export const useCart = () => {
 
     const removeFromCart = useCallback(async (itemId, size) => {
         const newCartItems = (prevItems) => {
-            const cartData = structuredClone(prevItems);
-            if (cartData[itemId]?.[size]) {
+            // Ensure prevItems is an object, default to empty object if undefined
+            const cartData = structuredClone(prevItems || {});
+            
+            // Check if item and size exist before removing
+            if (cartData[itemId] && cartData[itemId][size]) {
                 if (cartData[itemId][size] > 1) {
                     cartData[itemId][size] -= 1;
                 } else {
+                    // Remove size from item
                     delete cartData[itemId][size];
+                    
+                    // If no sizes left for the item, remove the item
                     if (Object.keys(cartData[itemId]).length === 0) {
                         delete cartData[itemId];
                     }
@@ -105,27 +111,39 @@ export const useCart = () => {
             return cartData;
         };
 
-        setCartItems(newCartItems);
-        await syncCart(newCartItems(cartItems));
+        // Safely get the updated cart
+        const updatedCart = newCartItems(cartItems);
+        
+        setCartItems(updatedCart);
+        await syncCart(updatedCart);
         toast.success("Product removed from cart");
     }, [cartItems, isAuthenticated]);
 
     const updateQuantity = useCallback(async (itemId, size, quantity) => {
         const newCartItems = (prevItems) => {
-            const cartData = structuredClone(prevItems);
-            if (quantity === 0) {
-                delete cartData[itemId][size];
-                if (Object.keys(cartData[itemId]).length === 0) {
-                    delete cartData[itemId];
+            // Ensure prevItems is an object, default to empty object if undefined
+            const cartData = structuredClone(prevItems || {});
+            
+            // Ensure itemId and size exist before updating
+            if (cartData[itemId] && cartData[itemId][size]) {
+                if (quantity === 0) {
+                    delete cartData[itemId][size];
+                    
+                    // If no sizes left for the item, remove the item
+                    if (Object.keys(cartData[itemId]).length === 0) {
+                        delete cartData[itemId];
+                    }
+                } else {
+                    cartData[itemId][size] = quantity;
                 }
-            } else {
-                cartData[itemId][size] = quantity;
             }
             return cartData;
         };
 
-        setCartItems(newCartItems);
-        await syncCart(newCartItems(cartItems));
+        const updatedCart = newCartItems(cartItems);
+        
+        setCartItems(updatedCart);
+        await syncCart(updatedCart);
     }, [cartItems, isAuthenticated]);
 
     const resetCart = useCallback(async () => {

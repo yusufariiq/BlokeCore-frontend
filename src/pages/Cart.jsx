@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Cart = () => {
   const { 
-    products, 
+    allProducts, 
     currency, 
     cartItems, 
     updateQuantity, 
@@ -25,13 +25,13 @@ const Cart = () => {
   const [selectedShipping, setSelectedShipping] = useState('jne-reguler')
   
   return (
-    <div className="min-h-[80vh] py-12 sm:py-20 mx-10 sm:mx-20">
+    <div className="min-h-screen py-12 sm:py-20 mx-10 sm:mx-20">
       <Title text={"Shopping Cart"}/>
       
       {cartData.length === 0 ? (
         <EmptyCart />
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 my-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 my-8 py-12">
           <div className="col-span-1 md:col-span-2">
             <div className="grid grid-cols-[4fr_0.5fr_1fr_0.5fr] sm:grid-cols-[4.5fr_1fr_1fr_0.5fr]">
               <p className='text-2xl font-medium'>Item</p>
@@ -42,7 +42,7 @@ const Cart = () => {
             <hr className='my-3'/>            
             {
               cartData.map((item, index) => {
-                const productData = products.find((product) => product.id === item.id );
+                const productData = allProducts.find((product) => product.id === item.id );
 
                 return(
                   <div className='mb-2'>

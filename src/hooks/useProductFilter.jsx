@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 const useProductFilter = (products, initialSearchQuery = '') => {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -25,7 +25,10 @@ const useProductFilter = (products, initialSearchQuery = '') => {
     
       const searchMatch = 
         searchQuery.length === 0 || 
-        product.name.toLowerCase().includes(searchQuery.toLowerCase());
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (product.details?.club && product.details.club.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.details?.team && product.details.team.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.details?.league && product.details.league.toLowerCase().includes(searchQuery.toLowerCase()));
     
       return conditionMatch && sizeMatch && searchMatch;
     });
@@ -57,12 +60,10 @@ const useProductFilter = (products, initialSearchQuery = '') => {
     }));
   };
 
-  // Handler for sort changes
   const handleSortChange = (newSortOption) => {
     setSortOption(newSortOption);
   };
 
-  // Handler for search query
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };

@@ -4,32 +4,46 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faXmark,
     faTrashCan,
+    faImagePortrait
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';
 import { useCartData } from '../../hooks/useCartData';
 import EmptyCart from '../Common/EmptyCart';
+import { toast } from 'react-hot-toast';
 
 const CartSlider = ({ open, setOpen }) => {
-  const { products, currency, cartItems, updateQuantity, navigate, getCartAmount, formatIDR } = useContext(ShopContext);
+  const { allProducts, currency, cartItems, updateQuantity, navigate, getCartAmount, formatIDR } = useContext(ShopContext);
   const cartData = useCartData(cartItems);
 
   const processedCartData = useMemo(() => {
     return cartData.map((item) => {
-      const productData = products.find((product) => product.id === item.id) || {
-        id: item.id,
-        name: 'Unknown Product',
-        price: 0,
-        images: ['/placeholder-image.png'],
-        sizes: item.sizes
-      };
+      const productData = allProducts.find((product) => product.id === item.id);
+
+      if (!productData) {
+        return {
+          ...item,
+          productData: {
+            id: item.id,
+            name: 'Unknown Product',
+            price: 0,
+            images: ['/placeholder-image.png'],
+            sizes: item.sizes
+          }
+        };
+      }
 
       return {
         ...item,
         productData
       };
     });
-  }, [cartData, products]);
+  }, [cartData, allProducts]);
+
+  const removeProductFromCart = (productId, sizes, quantity) => {
+    updateQuantity(productId, sizes, quantity);
+    toast.success('Successfully removed')
+  }
 
   return (
       <Dialog open={open} onClose={setOpen} className="relative z-50">
@@ -73,8 +87,8 @@ const CartSlider = ({ open, setOpen }) => {
                                 <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
                                     alt={productData.name}
-                                    src={productData.images[0]}
-                                    className="h-full w-full object-cover object-center"
+                                    src={productData.images[0] || '/placeholder-image.png'}
+                                    className="bg-secondary h-full w-full object-cover object-center"
                                   />
                                 </div>
 
@@ -95,7 +109,7 @@ const CartSlider = ({ open, setOpen }) => {
                                       className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' 
                                     />
                                     <div className="flex">
-                                      <button type="button" onClick={() => updateQuantity(item.id, item.sizes, 0)}>
+                                      <button type="button" onClick={() => removeProductFromCart(item.id, item.sizes, 0)}>
                                         <FontAwesomeIcon icon={faTrashCan} className='text-lg text-primary hover:text-hover-primary' />
                                       </button>
                                     </div>
@@ -111,7 +125,7 @@ const CartSlider = ({ open, setOpen }) => {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-black">
                         <p>Subtotal</p>
-                        <p className='text-xl font-bold'>{currency}{getCartAmount()}</p>
+                        <p className='text-xl font-bold'>{currency} {getCartAmount()}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <button onClick={() => {
@@ -136,12 +150,12 @@ const CartSlider = ({ open, setOpen }) => {
                     </div>
                   </>
                 )}
-              </div>
-            </DialogPanel>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
         </div>
-      </div>
-    </Dialog>
+      </Dialog>
   )
 }
 

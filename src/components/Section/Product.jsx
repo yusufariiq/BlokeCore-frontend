@@ -9,17 +9,11 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 const Product = () => {
     const { getLatestProducts, products, error } = useContext(ShopContext)
     const [latestCollections, setLatestCollections] = useState([])
-
+    
     useEffect(() => {
-        const fetchLatestProducts = async () => {
-        await getLatestProducts()
-        }
-        fetchLatestProducts()
-    }, [getLatestProducts])
-
-    useEffect(() => {
+        getLatestProducts()
         if (Array.isArray(products)) {
-        setLatestCollections(products.slice(0, 4))
+            setLatestCollections(products.slice(0, 4))
         }
     }, [products])
 

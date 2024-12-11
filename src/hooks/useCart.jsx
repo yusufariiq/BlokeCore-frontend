@@ -163,8 +163,6 @@ export const useCart = () => {
         } else {
             sessionStorage.removeItem('guest_cart');
         }
-        
-        toast.success("Your cart has been cleared");
     }, [isAuthenticated]);
 
     // Merge cart data, prioritizing authenticated user's existing cart

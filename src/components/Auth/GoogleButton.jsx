@@ -52,7 +52,6 @@ const GoogleButton = ({ type = '' }) => {
           theme: "outline", 
           size: "large", 
           text: type === 'login' ? "signin_with" : "signup_with",
-          width: "100%",
           shape: "pill",
         }
       );
@@ -78,7 +77,6 @@ const GoogleButton = ({ type = '' }) => {
     <div 
       id={`googleSignIn-${type}`}
       key={`googleSignIn-${type}`}
-      className="w-full flex justify-center"
     />
   );
 };

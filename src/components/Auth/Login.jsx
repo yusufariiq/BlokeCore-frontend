@@ -176,7 +176,7 @@ const Login = () => {
 
           <div className="divider">Or continue with</div>
 
-          <GoogleButton type="login" />
+          <GoogleButton type="login"/>
 
           <p className="text-center text-sm text-base-content/70 mt-6">
             Not a having an account?{' '}

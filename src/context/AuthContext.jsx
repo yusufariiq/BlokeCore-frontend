@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate()
 
     useEffect(() => {
         try {
@@ -40,6 +42,22 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Error during login:', error);
             throw new Error('Failed to process login data');
+        }
+    };
+    
+    const isTokenExpired = () => {
+        const token = localStorage.getItem('token');
+        if (!token) return true;
+
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const payload = JSON.parse(window.atob(base64));
+
+            return payload.exp * 1000 < Date.now();
+        } catch (error) {
+            console.error('Error checking token:', error);
+            return true;
         }
     };
 
@@ -86,7 +104,8 @@ export const AuthProvider = ({ children }) => {
             loading,
             updateUser,
             getAuthToken,
-            isAuthenticated: !!user
+            isAuthenticated: !!user,
+            isTokenExpired,
         }}>
             {children}
         </AuthContext.Provider>

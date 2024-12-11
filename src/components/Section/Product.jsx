@@ -12,6 +12,9 @@ const Product = () => {
     
     useEffect(() => {
         getLatestProducts()
+    }, [])
+
+    useEffect(() => {
         if (Array.isArray(products)) {
             setLatestCollections(products.slice(0, 4))
         }

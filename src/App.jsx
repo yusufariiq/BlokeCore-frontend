@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from './components/Auth/ProtectedRoute';
 
@@ -43,18 +43,10 @@ import Baseball from './components/Collections/Other/Baseball';
 import Basketball from './components/Collections/Other/Basketball';
 import Profile from './pages/Profile';
 import TrackOrder from './pages/TrackOrder';
-
-import { useAuth } from './context/AuthContext';
-import { useEffect } from 'react';
-import { setupAuthInterceptors } from './components/Auth/Interceptors';
+import { setupAxiosInterceptors } from './utils/axiosInterceptor';
 
 function App() {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
-
-  useEffect(() => {
-    setupAuthInterceptors(navigate, logout);
-  }, [navigate, logout]);
+  setupAxiosInterceptors();
 
   return (
     <div>

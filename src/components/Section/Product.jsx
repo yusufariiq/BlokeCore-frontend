@@ -55,7 +55,7 @@ const Product = () => {
                 {latestCollections.length > 0 ? (
                     latestCollections.map((item) => (
                         <ProductItem 
-                        key={item.id} 
+                        key={item.name} 
                         id={item.id} 
                         images={item.images} 
                         name={item.name} 

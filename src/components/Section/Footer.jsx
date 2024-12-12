@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Disclosure } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -34,6 +34,7 @@ const footerLinks = {
 const Footer = () => {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
+  const [email, setEmail] = useState('')
 
   // Reusable component for NavLinks
   const NavLinks = ({ links }) => (
@@ -65,6 +66,33 @@ const Footer = () => {
       navigate('/login')
       toast.error('You have to login to your account first')
     }
+  }
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault()
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address')
+      return
+    }
+
+    try {
+      subscribeToNewsletter(email)
+      toast.success('Thank you for subscribing to our newsletter!');
+      setEmail('')
+    } catch (error) {
+      toast.error('Failed to subscirbe. Please try again.')
+    }
+  }
+
+  const subscribeToNewsletter = async (emailAddress) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log(`Subscribed email: ${emailAddress}`);
+        resolve()
+      }, 1000)
+    })
   }
 
   const MobileDisclosure = ({ section }) => (
@@ -113,19 +141,29 @@ const Footer = () => {
               <MobileDisclosure section={footerLinks.supports} />
           </div>
 
-          <form className='md:mx-auto items-center border-none w-full md:w-auto'>
+          <form
+            onSubmit={handleNewsletterSubmit}
+            className='md:mx-auto items-center border-none w-full md:w-auto'
+          >
               <h6 className="footer-title text-lg">Newsletter</h6>
               <fieldset className="form-control w-full md:w-80">
               <label className="label">
                   <span className="label-text">Enter your email address</span>
               </label>
-              <div className="join w-full">
+              <div className="join w-full ">
                   <input
                   type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="username@site.com"
-                  className="input join-item w-full bg-white border focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="input join-item w-full bg-white text-black border focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  <button className="btn btn-primary join-item bg-primary whitespace-nowrap">Subscribe</button>
+                  <button 
+                    type="submit"
+                    className="btn join-item bg-primary whitespace-nowrap hover:bg-hover-primary"
+                  >
+                    Subscribe
+                  </button>
               </div>
               </fieldset>
           </form>

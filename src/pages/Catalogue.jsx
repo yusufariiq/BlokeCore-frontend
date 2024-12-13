@@ -20,7 +20,7 @@ const Catalogue = ({ title, products }) => {
         currentPage, 
         totalPages, 
         paginate 
-    } = usePagination(filteredProducts, 8);
+    } = usePagination(filteredProducts, 16);
 
     return (
         <div className="min-h-[100vh] mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

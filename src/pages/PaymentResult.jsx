@@ -60,7 +60,7 @@ const PaymentResult = () => {
                         : "Payment unsuccessful"
                 }
             />
-            <p className="text-center text-lg">
+            <p className="max-w-4xl mx-auto text-center text-lg">
                 {isSuccess
                     ? `Thank you for shopping at BlokeCore. The order confirmation email has been sent to ${
                           isCOD ? userEmail : 'your registered email address'
@@ -89,7 +89,7 @@ const PaymentResult = () => {
                     {!isCOD && <p>:</p>}
                 </div>
                 <div className="font-semibold">
-                    <p>{isSuccess ? "Completed" : "Failed"}</p>
+                    <p>{isSuccess ? "Order Placed" : "Pending"}</p>
                     <p>{isCOD ? "Cash on Delivery" : "Midtrans"}</p>
                     {isCOD ? (
                         <p>{currency} {formatIDR(grandTotal)}</p>

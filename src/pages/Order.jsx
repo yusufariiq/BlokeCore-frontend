@@ -33,7 +33,7 @@ const Order = () => {
         let processedOrders = response.data.flatMap((order) => 
           order.items.map((item) => ({
             ...item,
-            orderId: order._id, // Important: pass the order ID
+            orderId: order._id,
             amount: order.amount,
             status: order.status,
             payment: order.payment,
@@ -47,7 +47,7 @@ const Order = () => {
         let processedOrders = response.data.orders.flatMap((order) => 
           order.items.map((item) => ({
             ...item,
-            orderId: order._id, // Important: pass the order ID
+            orderId: order._id,
             status: order.status,
             payment: order.payment,
             paymentMethod: order.paymentMethod,
@@ -70,7 +70,7 @@ const Order = () => {
 
   useEffect(() => {
     loadOrderData()
-  }, [token])
+  }, [orderData,token])
 
   return (
     <div className="min-h-[80vh] py-12 sm:py-24">

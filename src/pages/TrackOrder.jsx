@@ -5,7 +5,6 @@ import axios from 'axios'
 import { 
   faBox, 
   faClipboard, 
-  faDownload, 
   faTruck, 
   faCheck,
   faBoxOpen,

@@ -13,9 +13,8 @@ export const ProtectedRoute = ({ children }) => {
         )
     }
 
-    // Check if token is expired
     if (isTokenExpired()) {
-      logout(); // Clear user data
+      logout();
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

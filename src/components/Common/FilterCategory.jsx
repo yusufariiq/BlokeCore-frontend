@@ -36,8 +36,7 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
                 { value: 'M', label: 'M' },
                 { value: 'L', label: 'L' },
                 { value: 'XL', label: 'XL' },
-                { value: '2XL', label: '2XL' },
-                { value: 'Kids', label: 'Kids' },
+                { value: 'XXL', label: 'XXL' },
             ],
         },
     ];
@@ -56,15 +55,12 @@ const FilterCategory = ({ onFilterChange, onSortChange, currentSort }) => {
         
         newFilters[filterType] = updatedFilterArray;
         
-        // Update local state
         setSelectedFilters(newFilters);
         
-        // Propagate changes to parent component
         onFilterChange(newFilters);
     };
 
     const handleSortOptionClick = (optionName) => {
-        // Update sort option in parent component
         onSortChange(optionName);
         setOpenFilter(null);
     };

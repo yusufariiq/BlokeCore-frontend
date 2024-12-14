@@ -22,7 +22,6 @@ const ShopContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch all products on initial load
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
@@ -43,7 +42,6 @@ const ShopContextProvider = ({ children }) => {
         fetchAllProducts();
     }, []);
 
-    // Filter products by category
     const getProductsByCategory = useCallback((category, subCategory) => {
         if (!category) {
             setProducts(allProducts);
@@ -61,7 +59,6 @@ const ShopContextProvider = ({ children }) => {
         setProducts(filtered);
     }, [allProducts]);
 
-    // Get latest products
     const getLatestProducts = useCallback(() => {
         const latestProducts = allProducts.filter(product => 
             product.details?.isLatest === true
@@ -69,7 +66,6 @@ const ShopContextProvider = ({ children }) => {
         setProducts(latestProducts);
     }, [allProducts]);
 
-    // Search products
     const searchProducts = useCallback(async (query) => {
         try {
             setIsLoading(true);
@@ -90,7 +86,6 @@ const ShopContextProvider = ({ children }) => {
         }
     }, []);
 
-    // Calculating delivery fee
     const deliveryFee = useMemo(() => 
         ShippingService.getShippingFee(
             selectedCountry, 
@@ -100,7 +95,6 @@ const ShopContextProvider = ({ children }) => {
         ), 
     [selectedCountry, selectedShipping]);
 
-    // Memoized context value
     const value = useMemo(() =>  ({
         // Product-related methods
         products,

@@ -9,7 +9,6 @@ export const useCart = () => {
     const [cartItems, setCartItems] = useState({});
     const [isCartLoading, setIsCartLoading] = useState(true);
 
-    // Fetch cart from server for authenticated users
     useEffect(() => {
         const fetchCart = async () => {
             if (isAuthenticated) {
@@ -22,16 +21,13 @@ export const useCart = () => {
                         }
                     });
                     
-                    // Merge guest cart with server cart if exists
                     const guestCart = JSON.parse(sessionStorage.getItem('guest_cart') || '{}');
                     const mergedCart = mergeCartData(guestCart, response.data.cart || {});
                     
                     setCartItems(mergedCart);
                     
-                    // Update server with merged cart
                     await syncCartToServer(mergedCart);
                     
-                    // Clear guest cart after migration
                     sessionStorage.removeItem('guest_cart');
                 } catch (error) {
                     console.error('Error fetching cart:', error);
@@ -40,7 +36,6 @@ export const useCart = () => {
                     setIsCartLoading(false);
                 }
             } else {
-                // For guest, load from sessionStorage
                 const guestCart = JSON.parse(sessionStorage.getItem('guest_cart') || '{}');
                 setCartItems(guestCart);
                 setIsCartLoading(false);
@@ -50,7 +45,6 @@ export const useCart = () => {
         fetchCart();
     }, [isAuthenticated]);
 
-    // Sync cart to server or sessionStorage
     const syncCart = useCallback(async (newCartItems) => {
         if (isAuthenticated) {
             try {
@@ -91,18 +85,14 @@ export const useCart = () => {
 
     const removeFromCart = useCallback(async (itemId, size) => {
         const newCartItems = (prevItems) => {
-            // Ensure prevItems is an object, default to empty object if undefined
             const cartData = structuredClone(prevItems || {});
             
-            // Check if item and size exist before removing
             if (cartData[itemId] && cartData[itemId][size]) {
                 if (cartData[itemId][size] > 1) {
                     cartData[itemId][size] -= 1;
                 } else {
-                    // Remove size from item
                     delete cartData[itemId][size];
                     
-                    // If no sizes left for the item, remove the item
                     if (Object.keys(cartData[itemId]).length === 0) {
                         delete cartData[itemId];
                     }
@@ -111,7 +101,6 @@ export const useCart = () => {
             return cartData;
         };
 
-        // Safely get the updated cart
         const updatedCart = newCartItems(cartItems);
         
         setCartItems(updatedCart);
@@ -121,15 +110,12 @@ export const useCart = () => {
 
     const updateQuantity = useCallback(async (itemId, size, quantity) => {
         const newCartItems = (prevItems) => {
-            // Ensure prevItems is an object, default to empty object if undefined
             const cartData = structuredClone(prevItems || {});
             
-            // Ensure itemId and size exist before updating
             if (cartData[itemId] && cartData[itemId][size]) {
                 if (quantity === 0) {
                     delete cartData[itemId][size];
                     
-                    // If no sizes left for the item, remove the item
                     if (Object.keys(cartData[itemId]).length === 0) {
                         delete cartData[itemId];
                     }
@@ -165,11 +151,9 @@ export const useCart = () => {
         }
     }, [isAuthenticated]);
 
-    // Merge cart data, prioritizing authenticated user's existing cart
     const mergeCartData = (guestCart, serverCart) => {
         const mergedCart = { ...serverCart };
         
-        // Merge guest cart items into server cart
         for (const itemId in guestCart) {
             if (!mergedCart[itemId]) {
                 mergedCart[itemId] = guestCart[itemId];
@@ -178,7 +162,6 @@ export const useCart = () => {
                     if (!mergedCart[itemId][size]) {
                         mergedCart[itemId][size] = guestCart[itemId][size];
                     } else {
-                        // If item and size exist in both, add quantities
                         mergedCart[itemId][size] += guestCart[itemId][size];
                     }
                 }
@@ -188,7 +171,6 @@ export const useCart = () => {
         return mergedCart;
     };
 
-    // Sync cart to server
     const syncCartToServer = async (cart) => {
         if (isAuthenticated) {
             try {

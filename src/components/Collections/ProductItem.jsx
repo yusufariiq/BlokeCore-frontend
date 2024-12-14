@@ -7,9 +7,9 @@ const ProductItem = ({id, images, name, price}) => {
     const {currency, formatIDR} = useContext(ShopContext);
     
     return (
-        <Link className='text-black cursor-pointer' to={`/product/${id}`}>
+        <Link  className='text-black cursor-pointer' to={`/product/${id}`}>
             <div className="group relative">
-                <div className="h-72 w-full overflow-hidden rounded-md bg-secondary lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <div className="h-72 w-full overflow-hidden rounded-md bg-hover-white lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img 
                         className='h-full w-full object-cover object-center'
                         src={Array.isArray(images) ? images[0] : images}

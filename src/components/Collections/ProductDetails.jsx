@@ -39,7 +39,7 @@ const ProductDetails = () => {
 
     return (
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-            <Breadcrumbs/>
+            {/* <Breadcrumbs/> */}
             
             <div className="flex items-center justify-center py-12 gap-12 flex-col sm:flex-row">
                 {/* Product images */}
@@ -51,7 +51,7 @@ const ProductDetails = () => {
                                 src={img} 
                                 key={index} 
                                 alt={`Product view ${index + 1}`}
-                                className='w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer border-2'
+                                className='w-[24%] bg-hover-white sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer border-2'
                             />
                         ))}
                     </div>
@@ -59,7 +59,7 @@ const ProductDetails = () => {
                         <img 
                             src={currentImage} 
                             alt={productData.name}
-                            className='w-full h-auto border-2' 
+                            className='w-full bg-hover-white h-auto border-2' 
                         />
                     </div>
                 </div>

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     faXmark,
     faTrashCan,
-    faImagePortrait
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { ShopContext } from '../../context/ShopContext';

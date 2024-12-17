@@ -1,48 +1,48 @@
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { ProtectedRoute } from './components/Auth/ProtectedRoute';
+import { ProtectedRoute } from './components/Common/ProtectedRoute';
 
-import About from './pages/About';
-import Cart from './pages/Cart';
-import CartSlider from './components/Common/CartSlider';
-import Checkout from './pages/Checkout';
-import ClubsPage from './components/Collections/ClubsPage';
-import Contact from './pages/Contact';
-import Faq from './pages/Faq';
-import Footer from './components/Section/Footer';
+import About from './pages/Static/About';
+import Cart from './pages/Catalogue/Cart';
+import CartSlider from './components/Layout/CartSlider';
+import Checkout from './pages/Checkout/Checkout';
+import ClubsPage from './pages/Collections/ClubsPage';
+import Contact from './pages/Static/Contact';
+import Faq from './pages/Static/Faq';
+import Footer from './components/Common/Footer';
 import Home from './pages/Home';
-import LatestCollection from './components/Collections/LatestCollection';
-import Login from './components/Auth/Login';
-import NationsPage from './components/Collections/NationsPage';
-import Order from './pages/Order';
-import PaymentResult from './pages/PaymentResult';
-import Policy from './pages/Policy';
-import ProductDetails from './components/Collections/ProductDetails';
-import Return from './pages/Returns';
-import Navbar from './components/Navigation/Navbar';
-import Register from './components/Auth/Register';
-import SearchResults from './pages/SearchResults';
-import Shipping from './pages/Shipping';
-import Terms from './pages/Terms'
+import LatestCollection from './pages/Collections/LatestCollection';
+import Login from './pages/Auth/Login';
+import NationsPage from './pages/Collections/NationsPage';
+import Order from './pages/Account/Order';
+import PaymentResult from './pages/Checkout/PaymentResult';
+import Policy from './pages/Static/Policy';
+import ProductDetails from './components/Product/ProductDetails';
+import Return from './pages/Static/Returns';
+import Navbar from './components/Common/Navbar';
+import Register from './pages/Auth/Register';
+import SearchResults from './pages/Catalogue/SearchResults';
+import Shipping from './pages/Static/Shipping';
+import Terms from './pages/Static/Terms';
 
-import EnglishClubPage from './components/Collections/Clubs/EnglishClubPage';
-import FranceClubPage from './components/Collections/Clubs/FranceClubPage';
-import GermanClubPage from './components/Collections/Clubs/GermanClubPage';
-import ItalyClubPage from './components/Collections/Clubs/ItalyClubPage';
-import OtherClubPage from './components/Collections/Clubs/OtherClubPage';
-import SpanishClubPage from './components/Collections/Clubs/SpanishClubPage';
+import EnglishClubPage from './pages/Collections/Clubs/EnglishClubPage';
+import FranceClubPage from './pages/Collections/Clubs/FranceClubPage';
+import GermanClubPage from './pages/Collections/Clubs/GermanClubPage';
+import ItalyClubPage from './pages/Collections/Clubs/ItalyClubPage';
+import OtherClubPage from './pages/Collections/Clubs/OtherClubPage';
+import SpanishClubPage from './pages/Collections/Clubs/SpanishClubPage';
 
-import AfricaPage from './components/Collections/Nations/AfricaPage'
-import AmericanPage from './components/Collections/Nations/AmericanPage';
-import AsiaPage from './components/Collections/Nations/AsiaPage'
-import EuropePage from './components/Collections/Nations/EuropePage'
-import OceaniaPage from './components/Collections/Nations/OceaniaPage'
+import AfricaPage from './pages/Collections/Nations/AfricaPage'
+import AmericanPage from './pages/Collections/Nations/AmericanPage';
+import AsiaPage from './pages/Collections/Nations/AsiaPage'
+import EuropePage from './pages/Collections/Nations/EuropePage'
+import OceaniaPage from './pages/Collections/Nations/OceaniaPage'
 
-import OtherSport from './components/Collections/OtherSport';
-import Baseball from './components/Collections/Other/Baseball';
-import Basketball from './components/Collections/Other/Basketball';
-import Profile from './pages/Profile';
-import TrackOrder from './pages/TrackOrder';
+import OtherSport from './pages/Collections/OtherSport';
+import Baseball from './pages/Collections/Other/Baseball';
+import Basketball from './pages/Collections/Other/Basketball';
+import Profile from './pages/Account/Profile';
+import TrackOrder from './pages/Account/TrackOrder';
 import { setupAxiosInterceptors } from './utils/axiosInterceptor';
 
 function App() {

@@ -90,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-[80vh] flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-md bg-base-100">
         <div className="card-body">
           

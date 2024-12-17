@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from './components/Common/ProtectedRoute';
+import { setupAxiosInterceptors } from './utils/axiosInterceptor';
 
 import About from './pages/Static/About';
 import Cart from './pages/Catalogue/Cart';
@@ -41,9 +42,11 @@ import OceaniaPage from './pages/Collections/Nations/OceaniaPage'
 import OtherSport from './pages/Collections/OtherSport';
 import Baseball from './pages/Collections/Other/Baseball';
 import Basketball from './pages/Collections/Other/Basketball';
+
 import Profile from './pages/Account/Profile';
 import TrackOrder from './pages/Account/TrackOrder';
-import { setupAxiosInterceptors } from './utils/axiosInterceptor';
+import ForgotPassword from './pages/Auth/ForgotPassword';
+import ResetPassword from './pages/Auth/ResetPassword';
 
 function App() {
   setupAxiosInterceptors();
@@ -69,8 +72,10 @@ function App() {
         <Route path="/clubs/spanish" element={<SpanishClubPage />} />
 
         <Route path="/faq" element={<Faq />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/latest" element={<LatestCollection />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/nations" element={<NationsPage />} />
         <Route path="/nations/africa" element={<AfricaPage />} />

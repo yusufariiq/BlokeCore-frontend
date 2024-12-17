@@ -115,7 +115,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center py-12 sm:py-20 justify-center bg-base-200">
+    <div className="min-h-[80vh] flex items-center py-12 sm:py-20 justify-center bg-base-200">
       <div className="card w-full max-w-md bg-base-100">
         <div className="card-body">
           <h2 className="text-center text-3xl font-semibold mb-8">

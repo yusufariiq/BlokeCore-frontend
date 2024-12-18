@@ -87,7 +87,7 @@ const CartSlider = ({ open, setOpen }) => {
                                   <img
                                     alt={productData.name}
                                     src={productData.images[0] || '/placeholder-image.png'}
-                                    className="bg-secondary h-full w-full object-cover object-center"
+                                    className="bg-hover-white h-full w-full object-cover object-center"
                                   />
                                 </div>
 

@@ -33,16 +33,17 @@ const Catalogue = ({ title, products }) => {
             <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {currentItems.map((item, index) => (
                     <div
-                        key={index}
-                        className="group relative"
-                        onMouseEnter={() => {}}
-                        onMouseLeave={() => {}}
+                    key={index}
+                    className="group relative"
+                    onMouseEnter={() => {}}
+                    onMouseLeave={() => {}}
                     >
                         <ProductItem 
                             id={item.id} 
                             images={item.images} 
                             name={item.name} 
                             price={item.price} 
+                            stock={item.stock}
                         />
                     </div>
                 ))}

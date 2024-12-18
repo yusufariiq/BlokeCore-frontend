@@ -4,7 +4,6 @@ import { ShopContext } from '../../context/ShopContext';
 import RelatedProduct from './RelatedProduct';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import Breadcrumbs from '../Layout/Breadcrumbs';
 
 const ProductDetails = () => {
     const { productId } = useParams();

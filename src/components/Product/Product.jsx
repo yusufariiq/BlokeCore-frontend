@@ -41,11 +41,12 @@ const Product = () => {
                 {products.length > 0 ? (
                     products.slice(0, 4).map((item) => (
                         <ProductItem 
-                        key={item.name} 
-                        id={item.id} 
-                        images={item.images} 
-                        name={item.name} 
-                        price={item.price} 
+                            key={item.name} 
+                            id={item.id} 
+                            images={item.images} 
+                            name={item.name} 
+                            price={item.price} 
+                            stock={item.stock} 
                         />
                     ))
                 ) : (

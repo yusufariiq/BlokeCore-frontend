@@ -28,8 +28,12 @@ const ShopContextProvider = ({ children }) => {
                 setIsLoading(true);
                 const response = await axios.get(`${API_URL}/api/product/list`);
                 const fetchedProducts = response.data.product || [];
-                setAllProducts(fetchedProducts);
-                setProducts(fetchedProducts);
+                const processedProducts = fetchedProducts.map(product => ({
+                    ...product,
+                    stock: product.stock !== undefined ? product.stock : 0
+                }));
+                setAllProducts(processedProducts);
+                setProducts(processedProducts);
             } catch (error) {
                 const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
                 console.error('Failed to fetch products:', errorMessage);

@@ -22,15 +22,18 @@ const ShopContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch all products on initial load
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
                 setIsLoading(true);
                 const response = await axios.get(`${API_URL}/api/product/list`);
                 const fetchedProducts = response.data.product || [];
-                setAllProducts(fetchedProducts);
-                setProducts(fetchedProducts);
+                const processedProducts = fetchedProducts.map(product => ({
+                    ...product,
+                    stock: product.stock !== undefined ? product.stock : 0
+                }));
+                setAllProducts(processedProducts);
+                setProducts(processedProducts);
             } catch (error) {
                 const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
                 console.error('Failed to fetch products:', errorMessage);
@@ -43,7 +46,6 @@ const ShopContextProvider = ({ children }) => {
         fetchAllProducts();
     }, []);
 
-    // Filter products by category
     const getProductsByCategory = useCallback((category, subCategory) => {
         if (!category) {
             setProducts(allProducts);
@@ -61,7 +63,6 @@ const ShopContextProvider = ({ children }) => {
         setProducts(filtered);
     }, [allProducts]);
 
-    // Get latest products
     const getLatestProducts = useCallback(() => {
         const latestProducts = allProducts.filter(product => 
             product.details?.isLatest === true
@@ -69,7 +70,6 @@ const ShopContextProvider = ({ children }) => {
         setProducts(latestProducts);
     }, [allProducts]);
 
-    // Search products
     const searchProducts = useCallback(async (query) => {
         try {
             setIsLoading(true);
@@ -90,7 +90,6 @@ const ShopContextProvider = ({ children }) => {
         }
     }, []);
 
-    // Calculating delivery fee
     const deliveryFee = useMemo(() => 
         ShippingService.getShippingFee(
             selectedCountry, 
@@ -100,7 +99,6 @@ const ShopContextProvider = ({ children }) => {
         ), 
     [selectedCountry, selectedShipping]);
 
-    // Memoized context value
     const value = useMemo(() =>  ({
         // Product-related methods
         products,

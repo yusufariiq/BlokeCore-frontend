@@ -1,9 +1,9 @@
 import React from 'react'
-import Categories from '../components/Section/Categories'
-import Hero from '../components/Section/Hero'
-import Promo from '../components/Section/Promo'
-import Product from '../components/Section/Product'
-import LogoCloud from '../components/Section/LogoCloud'
+import Categories from '../components/Category/Categories'
+import Hero from '../components/Layout/Hero'
+import Promo from '../components/Layout/Promo'
+import Product from '../components/Product/Product'
+import LogoCloud from '../components/Layout/LogoCloud'
 
 function Home() {
   return (

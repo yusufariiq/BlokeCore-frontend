@@ -81,6 +81,9 @@ const CartSlider = ({ open, setOpen }) => {
                           {processedCartData.map((item, index) => { 
                             const { productData } = item;
                             
+                            const hasDiscount = productData.discount > 0;
+                            const discountedPrice = hasDiscount ? productData.price * (1 - productData.discount / 100) : productData.price;
+                            
                             return (
                               <li key={index} className="flex py-6">
                                 <div className="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -95,7 +98,11 @@ const CartSlider = ({ open, setOpen }) => {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>{productData.name}</h3>
-                                      <p className="ml-4">{currency}{formatIDR(productData.price)}</p>
+                                      { hasDiscount ? (
+                                        <p className="ml-4">{currency}{formatIDR(discountedPrice)}</p>
+                                      ) : (
+                                        <p className="ml-4">{currency}{formatIDR(productData.price)}</p>
+                                      )}
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">{item.sizes}</p>
                                   </div>

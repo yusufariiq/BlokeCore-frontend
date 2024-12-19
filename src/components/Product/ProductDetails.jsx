@@ -1,9 +1,10 @@
 import { React, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ShopContext } from '../../context/ShopContext';
-import RelatedProduct from './RelatedProduct';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import RelatedProduct from './RelatedProduct';
+import Loading from '../Common/Loading'
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -28,8 +29,11 @@ const ProductDetails = () => {
     }, [productId, products]);
 
     if (!productData) {
-        return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+        return <Loading />
     }
+
+    const hasDiscount = productData.discount > 0;
+    const discountedPrice = hasDiscount ? productData.price * (1 - productData.discount / 100) : productData.price;
 
     const productImages = productData.images || [];
     const productSizes = Array.isArray(productData.details?.size) 
@@ -39,7 +43,7 @@ const ProductDetails = () => {
     return (
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             {/* <Breadcrumbs/> */}
-            
+
             <div className="flex items-center justify-center py-12 gap-12 flex-col sm:flex-row">
                 {/* Product images */}
                 <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
@@ -68,9 +72,21 @@ const ProductDetails = () => {
                     <h1 className="font-bold text-3xl">
                         {productData.name}
                     </h1>
-                    <p className="mt-5 text-3xl font-medium text-primary">
-                        {currency}{' '}{formatIDR(productData.price)}
-                    </p>
+                    <div className="flex items-baseline gap-3">
+                        <p className="mt-5 text-3xl font-medium text-primary">
+                            {currency}{' '}{formatIDR(discountedPrice)}
+                        </p>
+                        {hasDiscount && (
+                            <div className='inline-flex items-center gap-3'>
+                                <p className="text-2xl text-gray-500 line-through">
+                                {currency}{' '}{formatIDR(productData.price)}
+                                </p>
+                                <p className="bg-primary text-white font-medium p-1 rounded">
+                                    {productData.discount}% OFF
+                                </p>
+                            </div>
+                        )}
+                    </div>
                     <p className="mt-5 text-gray-600 md:w-4/5">
                         {productData.description}
                     </p>

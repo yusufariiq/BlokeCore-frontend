@@ -115,7 +115,7 @@ const TrackOrder = () => {
         <div className="max-w-4xl mx-auto px-4">
             <div className="mb-6">
             <button 
-                onClick={() => navigate('/orders')}
+                onClick={() => navigate('/order')}
                 className="text-sm font-medium flex items-center gap-2"
             >
                 <FontAwesomeIcon icon={faArrowLeft}/>

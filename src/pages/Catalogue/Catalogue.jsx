@@ -44,6 +44,7 @@ const Catalogue = ({ title, products }) => {
                             name={item.name} 
                             price={item.price} 
                             stock={item.stock}
+                            discount={item.discount}
                         />
                     </div>
                 ))}

@@ -47,6 +47,7 @@ const Product = () => {
                             name={item.name} 
                             price={item.price} 
                             stock={item.stock} 
+                            discount={item.discount} 
                         />
                     ))
                 ) : (

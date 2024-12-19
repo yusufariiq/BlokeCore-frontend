@@ -30,7 +30,8 @@ const ShopContextProvider = ({ children }) => {
                 const fetchedProducts = response.data.product || [];
                 const processedProducts = fetchedProducts.map(product => ({
                     ...product,
-                    stock: product.stock !== undefined ? product.stock : 0
+                    stock: product.stock !== undefined ? product.stock : 0,
+                    discount: product.discount !== undefined ? product.discount : 0,
                 }));
                 setAllProducts(processedProducts);
                 setProducts(processedProducts);

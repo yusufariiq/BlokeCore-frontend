@@ -41,7 +41,6 @@ const Order = () => {
             date: order.date
           }))
         )
-        console.log('Processed Order Items:', processedOrders);
         setOrderData(processedOrders);
       } else if (response.data.success && response.data.orders) {
         let processedOrders = response.data.orders.flatMap((order) => 

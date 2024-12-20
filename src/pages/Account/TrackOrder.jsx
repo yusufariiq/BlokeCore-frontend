@@ -13,6 +13,7 @@ import {
 import { token, userData } from '../../config/tokenConfig'
 import { API_URL } from '../../config/apiConfig'
 import { ShopContext } from '../../context/ShopContext'
+import { DomesticShippingOptions, InternationalShippingOptions } from '../../assets/Assets'
 
 const orderStatuses = [
   { key: 'pending', label: 'Pending', icon: faClipboard },
@@ -47,7 +48,29 @@ const TrackOrder = () => {
           }
         })
 
-        const orderData = response.data
+        const orderData = response.data;
+
+        const itemsWithDiscount = orderData.items.map((item) => {
+          const hasDiscount = item.discount > 0;
+          const discountedPrice = hasDiscount ? Math.round(item.price * (1 - item.discount / 100)) : Math.round(item.price);
+
+          return {
+            ...item,
+            image: Array.isArray(item.images) && item.images.length > 0 ? item.images[0] : '/placeholder-image.png',
+            discountedPrice,
+          };
+        });
+
+        const totalPriceWithoutDiscount = orderData.items.reduce((total, item) => {
+          return total + item.price;
+        }, 0);
+
+        const totalDiscount = orderData.items.reduce((total, item) => {
+          const discountAmount = item.discount > 0 ? item.price * (item.discount / 100) : 0;
+          return total + discountAmount;
+        }, 0);
+
+
         const transformedOrderDetails = {
           orderId: orderData.orderId || 'N/A',
           status: (orderData.status || '').toLowerCase().replace(' ', '_'),
@@ -63,17 +86,12 @@ const TrackOrder = () => {
           payment: {
             method: orderData.paymentMethod || 'N/A',
           },
-          items: (orderData.items || []).map(item => ({
-            name: item.name || 'N/A',
-            size: item.size || 'N/A',
-            price: item.price || 0,
-            image: (item.images && item.images[0]) || '/placeholder-image.png'
-          })),
+          items: itemsWithDiscount,
           totals: {
-            items: orderData.amount || 0,
+            items: Math.round(totalPriceWithoutDiscount),
             delivery: orderData.shippingPrice || 0,
-            discount: orderData.discount || 0,
-            total: (orderData.amount || 0) + (orderData.shippingPrice || 0)
+            discount: Math.round(totalDiscount),
+            total: orderData.amount || 0,
           }
         }
 
@@ -86,13 +104,30 @@ const TrackOrder = () => {
       }
     }
 
-    // Only fetch if user is authenticated
     if (token && userData) {
       fetchOrderDetails()
     } else {
       navigate('/login')
     }
   }, [location.state, navigate])
+
+  const getDeliveryDates = (selectedShippingId) => {
+    const isDomestic = DomesticShippingOptions.some(option => option.id === selectedShippingId);
+    const shippingOptions = isDomestic ? DomesticShippingOptions : InternationalShippingOptions;
+  
+    const selectedShipping = shippingOptions.find(option => option.id === selectedShippingId);
+  
+    if (!selectedShipping) {
+      return null;
+    }
+  
+    const { to } = selectedShipping.estimatedDelivery;
+    
+    return {
+      delivery: to.toLocaleDateString()
+    };
+  };
+
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>
@@ -128,8 +163,15 @@ const TrackOrder = () => {
                     <div>
                         <p className="text-sm text-gray-600">Expected delivery:</p>
                         <p className="font-semibold flex items-center gap-2">
-                            {orderDetails.status === "delivered" ? "DELIVERED" : "TOMORROW" }
-                            <span className="text-green-600">✓</span>
+                          {getDeliveryDates(orderDetails.delivery.carrier) ? (
+                            <>
+                              <p>
+                              {getDeliveryDates(orderDetails.delivery.carrier).delivery}
+                              </p>
+                            </>
+                          ) : (
+                            'Delivery dates not available'
+                          )}
                         </p>
                     </div>
                     <div className="mt-4 md:mt-0">

@@ -26,7 +26,7 @@ const VerifyAccount = () => {
                 if (response.ok) {
                     setStatus('success')
                     toast.success('Email verified successfully! You can now login.')
-                    // setTimeout(() => navigate('/login'), 3000)
+                    setTimeout(() => navigate('/login'), 3000)
                 } else {
                     setStatus('error')
                     toast.error(data.message || 'Verification failed')

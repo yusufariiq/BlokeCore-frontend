@@ -92,7 +92,7 @@ const Register = () => {
         throw new Error('Registration failed');
       }
 
-      toast.success("Your account successfully registered");
+      toast.success("Registration successful! Please check your email to verify your account.");
       navigate('/login');
     } catch (err) {
       console.error('Registration error:', err);

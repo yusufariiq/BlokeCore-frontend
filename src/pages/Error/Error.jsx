@@ -5,7 +5,7 @@ const ErrorPage = () => {
   return (
     <div className="grid min-h-screen place-items-center bg-white px-6 py-12 sm:py-20 lg:px-8">
         <div className="text-center">
-          <p className="text-base font-semibold text-primary">404</p>
+          <p className="text-5xl font-semibold text-primary">404</p>
           <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
             Page not found
           </h1>

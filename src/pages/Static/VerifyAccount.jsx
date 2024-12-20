@@ -4,6 +4,7 @@ import { API_URL } from '../../config/apiConfig'
 import { toast } from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import ErrorPage from '../Error/Error'
 
 const VerifyAccount = () => {
     const [searchParams] = useSearchParams()
@@ -30,6 +31,7 @@ const VerifyAccount = () => {
                 } else {
                     setStatus('error')
                     toast.error(data.message || 'Verification failed')
+                    setTimeout(() => navigate('/login'), 5000)
                 }
             } catch (error) {
                 console.error('Verification error:', error)
@@ -74,7 +76,7 @@ const VerifyAccount = () => {
                 )
             case 'error':
                 return (
-                    <Error />
+                    <ErrorPage />
                 )
             default:
                 return null

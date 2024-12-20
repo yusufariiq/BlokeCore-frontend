@@ -47,6 +47,8 @@ import Profile from './pages/Account/Profile';
 import TrackOrder from './pages/Account/TrackOrder';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
+import VerifyAccount from './pages/Static/VerifyAccount';
+import ErrorPage from './pages/Error/Error';
 
 function App() {
   setupAxiosInterceptors();
@@ -97,7 +99,8 @@ function App() {
         <Route path="/shipping-info" element={<Shipping />} />
         <Route path="/slider-cart" element={<CartSlider />} />
         <Route path="/terms-conditions" element={<Terms />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/verify-email" element={<VerifyAccount />} />
 
         <Route path="/profile" element={
           <ProtectedRoute>

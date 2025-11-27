@@ -1,5 +1,7 @@
 export class ShippingService {
     static getShippingFee(selectedCountry, selectedShipping, domesticOptions, internationalOptions) {
+        const DEFAULT_DELIVERY_FEE = 0;
+
         if (!selectedShipping) return DEFAULT_DELIVERY_FEE;
         
         const shippingOptions = selectedCountry === 'Indonesia' 

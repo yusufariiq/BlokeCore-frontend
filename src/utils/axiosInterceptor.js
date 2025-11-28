@@ -1,22 +1,27 @@
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+import { store } from '../store/store';
+import { logoutSuccess } from '../store/slice/authSlice';
 
 export const setupAxiosInterceptors = () => {
-    const { isTokenExpired, logout } = useAuth();
-
     axios.interceptors.request.use(
         (config) => {
-            const token = localStorage.getItem('token');
+            const token = store.getState().auth.token;
             if (token) {
-                if (isTokenExpired()){
-                    logout();
-                    window.location.href = '/login';
-                    return Promise.reject(new Error('Token expired'));
-                }
-                config.headers.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
         },
         (error) => Promise.reject(error)
+    );
+
+    axios.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response?.status === 401) {
+            store.dispatch(logoutSuccess());
+            window.location.href = '/login';
+            }
+            return Promise.reject(error);
+        }
     );
 };

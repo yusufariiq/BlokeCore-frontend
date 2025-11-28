@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { ProtectedRoute } from './components/Common/ProtectedRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import { setupAxiosInterceptors } from './utils/axiosInterceptor';
 
 import About from './pages/Static/About';
@@ -49,6 +49,7 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
 import VerifyAccount from './pages/Static/VerifyAccount';
 import ErrorPage from './pages/Error/Error';
+import PublicRoute from './routes/PublicRoute';
 
 function App() {
   setupAxiosInterceptors();
@@ -65,6 +66,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/clubs" element={<ClubsPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/latest" element={<LatestCollection />} />
+        <Route path="/faq" element={<Faq />} />
 
         <Route path="/clubs/english" element={<EnglishClubPage />} />
         <Route path="/clubs/french" element={<FranceClubPage />} />
@@ -72,12 +75,6 @@ function App() {
         <Route path="/clubs/italian" element={<ItalyClubPage />} />
         <Route path="/clubs/others" element={<OtherClubPage />} />
         <Route path="/clubs/spanish" element={<SpanishClubPage />} />
-
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/latest" element={<LatestCollection />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/nations" element={<NationsPage />} />
         <Route path="/nations/africa" element={<AfricaPage />} />
@@ -95,12 +92,38 @@ function App() {
 
         <Route path="/returns" element={<Return />} />
         <Route path="/search" element={<SearchResults />} />
-        <Route path="/signup" element={<Register />} />
+       
         <Route path="/shipping-info" element={<Shipping />} />
         <Route path="/slider-cart" element={<CartSlider />} />
         <Route path="/terms-conditions" element={<Terms />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/verify-email" element={<VerifyAccount />} />
+
+        <Route path="/forgot-password" element={
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+        } />
+        <Route path="/login" element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        } />
+        <Route path="/reset-password" element={
+          <PublicRoute>
+            <ResetPassword />
+          </PublicRoute>
+        } />
+        <Route path="/signup" element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        } />
+        <Route path="/verify-email" element={
+          <PublicRoute>
+            <VerifyAccount />
+          </PublicRoute>
+        } />
+      
 
         <Route path="/profile" element={
           <ProtectedRoute>

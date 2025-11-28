@@ -1,10 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from '../../context/AuthContext';
 
 export function AccountSidebar() {
-  const { user } = useAuth();
   const location = useLocation();
-  
+  const user = useSelector(state => state.auth.user);
+
   const links = [
     { 
       href: "/profile", 

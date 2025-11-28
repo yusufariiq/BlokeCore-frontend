@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { AccountSidebar } from '../../components/Layout/AccountSidebar' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../context/AuthContext'
 import EditProfileModal from '../../components/Common/EditProfileModal'
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
-  const { user } = useAuth();
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ editingField, setEditingField ] = useState(null);
-
-  useEffect(() => {
-  }, [user]);
+  const user = useSelector(state => state.auth.user);
   
   const handleEditClick = (field) => {
     setEditingField(field);

@@ -16,13 +16,6 @@ const AvatarDropdown = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
-
   const handleLogout = () => {
     try {
       dispatch(logoutSuccess());

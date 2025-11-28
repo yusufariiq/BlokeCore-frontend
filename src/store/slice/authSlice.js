@@ -40,7 +40,7 @@ const initialState = {
     user,
     token,
     loading: false,
-    isAuthenticated: !!loadUserFromStorage(),
+    isAuthenticated: !!(user && token),
 };
 
 const authSlice = createSlice({

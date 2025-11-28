@@ -8,12 +8,13 @@ import {
   faClipboardList,
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutSuccess } from '../../store/slice/authSlice';
 
 const AvatarDropdown = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -24,7 +25,7 @@ const AvatarDropdown = () => {
 
   const handleLogout = () => {
     try {
-      logout();
+      dispatch(logoutSuccess());
       toast.success('You have been logged out.');
       navigate('/login');
     } catch (error) {

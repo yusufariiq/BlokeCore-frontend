@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
 import { API_URL } from '../../config/apiConfig';
+import { useDispatch } from 'react-redux';
+import { updateUserData } from '../../store/slice/authSlice';
 
 const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
+  const dispatch = useDispatch()
   const [value, setValue] = useState(currentValue);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { updateUser } = useAuth();
 
   useEffect(() => {
     setValue(currentValue || '');
@@ -47,7 +48,7 @@ const EditProfileModal = ({ isOpen, onClose, fieldToEdit, currentValue }) => {
         throw new Error(data.errors?.[fieldToEdit] || data.error || 'Failed to update profile');
       }
   
-      updateUser({ [fieldToEdit]: value });
+      dispatch(updateUserData({[fieldToEdit]: value }))
       onClose();
       toast.success(`Successfully updated`)
     } catch (err) {

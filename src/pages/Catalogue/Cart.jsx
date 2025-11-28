@@ -3,7 +3,6 @@ import { ShopContext } from '../../context/ShopContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useCartData } from '../../hooks/useCartData';
-import { useAuth } from '../../context/AuthContext';
 
 import CartTotal from '../../components/Product/CartTotal';
 import EmptyCart from '../../components/Product/EmptyCart';
@@ -20,7 +19,6 @@ const Cart = () => {
     formatIDR,
     DEFAULT_DELIVERY_FEE,
   } = useContext(ShopContext);
-  const { isAuthenticated } = useAuth();
   const cartData = useCartData(cartItems);
 
   const [selectedShipping, setSelectedShipping] = useState('jne-reguler')

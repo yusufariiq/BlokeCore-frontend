@@ -8,12 +8,13 @@ import { API_URL } from '../../config/apiConfig'
 import GoogleButton from '../../components/Common/GoogleButton'
 
 const Register = () => {
+  const dispatch = useNavigate();
   const navigate = useNavigate();
+
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -56,43 +57,19 @@ const Register = () => {
     try {
       const response = await fetch(`${API_URL}/api/user/signup`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          agreedToPolicy: agreed
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, agreedToPolicy: agreed }),
       });
 
-      const contentType = response.headers.get('content-type');
-      let data;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          data = await response.json();
-        } catch (parseError) {
-          console.error('Failed to parse JSON:', parseError);
-          const text = await response.text();
-          console.error('Response text:', text);
-          throw new Error('Invalid server response');
-        }
-      } else {
-        const text = await response.text();
-        console.error('Non-JSON response:', text);
-        throw new Error('Invalid server response');
-      }
+      const data = await response.json();
 
       if (!response.ok) {
-        if (data.errors) {
-          setErrors(data.errors);
-        } else if (data.error) {
-          setErrors({ general: data.error });
-        }
+        if (data.errors) setErrors(data.errors);
+        else if (data.error) setErrors({ general: data.error });
         throw new Error('Registration failed');
       }
 
-      toast.success("Registration successful! Please check your email to verify your account.");
+      toast.success("Registration successful! Please check your email.");
       navigate('/login');
     } catch (err) {
       console.error('Registration error:', err);

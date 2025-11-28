@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import { API_URL, GOOGLE_CLIENT } from '../../config/apiConfig';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../store/slice/authSlice';
 
 const GoogleButton = ({ type = '' }) => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
 
   const handleGoogleSignIn = async (googleResponse) => {
     try {
@@ -24,7 +25,7 @@ const GoogleButton = ({ type = '' }) => {
         throw new Error(data.error || 'Google authentication failed');
       }
 
-      login(data.user, data.token);
+      dispatch(loginSuccess({user: data.user, token: data.token}));
       
       if (type === 'login') {
         navigate('/');

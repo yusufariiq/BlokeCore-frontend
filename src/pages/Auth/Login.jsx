@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { API_URL } from '../../config/apiConfig';
 import GoogleButton from '../../components/Common/GoogleButton';
+import { loginSuccess } from '../../store/slice/authSlice';
 
 const Login = () => {
-  const { login } = useAuth();
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [ showPassword, setShowPassword] = useState(false);
-  
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -79,7 +80,7 @@ const Login = () => {
         throw new Error('Login failed')
       }
 
-      login(data.user, data.token);
+      dispatch(loginSuccess({user: data.user, token: data.token}));
       const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
     } catch (err) {

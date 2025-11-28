@@ -4,8 +4,8 @@ import { Disclosure } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { Assets } from '../../assets/Assets'
-import { useAuth } from '../../context/AuthContext'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 const footerLinks = {
   legal: {
@@ -33,7 +33,7 @@ const footerLinks = {
 
 const Footer = () => {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useSelector(state => state.auth);
   const [email, setEmail] = useState('')
 
   // Reusable component for NavLinks
